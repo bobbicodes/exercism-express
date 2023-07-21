@@ -1,0 +1,234 @@
+; This is the Calva evaluation results output window.
+; TIPS: The keyboard shortcut `ctrl+alt+o o` shows and focuses this window
+;   when connected to a REPL session.
+; Please see https://calva.io/output/ for more info.
+; Happy coding! ♥️
+
+; Jacking in...
+; Connecting using "Babashka" project type.
+; You can make Calva auto-select this.
+;   - See https://calva.io/connect-sequences/
+; 
+; Starting Jack-in Terminal: pushd c:\Users\porko\Documents\GitHub\exercism\clojure\exercises\concept\card-games & bb --nrepl-server 50092 & popd
+; Using host:port 127.0.0.1:50092 ...
+; Hooking up nREPL sessions ...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+; Evaluating code from settings: 'calva.autoEvaluateCode.onConnect.clj'
+nil
+clj꞉user꞉>  ; Use `alt+enter` to evaluate
+clj꞉user꞉> 
+; Jack-in done.
+clj꞉user꞉> 
+; Evaluating file: card_games_test.clj
+; java.lang.Exception: Could not find namespace: card-games. card-games-test /c:/Users/porko/Documents/GitHub/exercism/clojure/exercises/concept/card-games/test/card_games_test.clj:2:3
+; Evaluation of file card_games_test.clj failed: class java.lang.Exception
+clj꞉card-games-test꞉> 
+; Evaluating file: card_games.clj
+nil
+clj꞉card-games꞉> 
+; Evaluating file: card_games_test.clj
+#'card-games-test/rounds-test
+clj꞉card-games-test꞉> 
+{:test 1, :pass 1, :fail 0, :error 0, :type :summary}
+clj꞉card-games-test꞉> 
+((0 1 2) (1 2 3) (10 11 12) (27 28 29) (99 100 101) (666 667 668))
+clj꞉card-games꞉> 
+; Evaluating file: card_games_test.clj
+nil
+clj꞉card-games-test꞉> 
+{:test 1, :pass 0, :fail 1, :error 0, :type :summary}
+clj꞉card-games-test꞉> 
+#'card-games-test/rounds-test
+clj꞉card-games-test꞉> 
+{:test 1, :pass 1, :fail 0, :error 0, :type :summary}
+clj꞉card-games-test꞉> 
+#'card-games/concat-rounds
+clj꞉card-games꞉> 
+(36 35 27 28 29)
+clj꞉card-games꞉> 
+#'card-games/concat-rounds
+clj꞉card-games꞉> 
+(35 36 27 28 29)
+clj꞉card-games꞉> 
+#'card-games/concat-rounds
+clj꞉card-games꞉> 
+(27 28 29 35 36)
+clj꞉card-games꞉> 
+#'card-games/rounds
+clj꞉card-games꞉> 
+{:test 1, :pass 0, :fail 1, :error 0, :type :summary}
+clj꞉card-games-test꞉> 
+#'card-games/rounds
+clj꞉card-games꞉> 
+{:test 1, :pass 0, :fail 1, :error 0, :type :summary}
+clj꞉card-games-test꞉> 
+#'card-games/rounds
+clj꞉card-games꞉> 
+{:test 1, :pass 1, :fail 0, :error 0, :type :summary}
+clj꞉card-games-test꞉> 
+#'card-games/concat-rounds
+clj꞉card-games꞉> 
+; Evaluating file: card_games.clj
+nil
+clj꞉card-games꞉> 
+#'card-games-test/concat-rounds-test
+clj꞉card-games-test꞉> 
+{:test 2, :pass 1, :fail 0, :error 1, :type :summary}
+clj꞉card-games-test꞉> 
+#'card-games-test/concat-rounds-test
+clj꞉card-games-test꞉> 
+{:test 2, :pass 1, :fail 0, :error 1, :type :summary}
+clj꞉card-games-test꞉> 
+#'card-games-test/concat-rounds-test
+clj꞉card-games-test꞉> 
+{:test 2, :pass 1, :fail 0, :error 1, :type :summary}
+clj꞉card-games-test꞉> 
+; java.lang.ClassCastException: clojure.lang.PersistentList$EmptyList cannot be cast to clojure.lang.IFn card-games-test c:\Users\porko\Documents\GitHub\exercism\clojure\exercises\concept\card-games\test\card_games_test.clj:1:33
+clj꞉card-games-test꞉> 
+()
+clj꞉card-games-test꞉> 
+#'card-games-test/concat-rounds-test
+clj꞉card-games-test꞉> 
+{:test 2, :pass 2, :fail 0, :error 0, :type :summary}
+clj꞉card-games-test꞉> 
+true
+clj꞉card-games꞉> 
+29
+clj꞉card-games꞉> 
+29
+clj꞉card-games꞉> 
+29
+clj꞉card-games꞉> 
+nil
+clj꞉card-games꞉> 
+#'card-games/contains-round?
+clj꞉card-games꞉> 
+true
+clj꞉card-games꞉> 
+; clojure.lang.ExceptionInfo: Could not resolve symbol: contains-round? card-games-test c:\Users\porko\Documents\GitHub\exercism\clojure\exercises\concept\card-games\src\card_games.clj:1:1
+clj꞉card-games꞉> 
+; clojure.lang.ExceptionInfo: Could not resolve symbol: contains-round? card-games-test c:\Users\porko\Documents\GitHub\exercism\clojure\exercises\concept\card-games\src\card_games.clj:1:1
+clj꞉card-games꞉> 
+#'card-games/contains-round?
+clj꞉card-games꞉> 
+true
+clj꞉card-games꞉> 
+false
+clj꞉card-games꞉> 
+#'card-games-test/contains-round-test
+clj꞉card-games-test꞉> 
+{:test 3, :pass 3, :fail 0, :error 0, :type :summary}
+clj꞉card-games-test꞉> 
+#'card-games/card-average
+clj꞉card-games꞉> 
+6
+clj꞉card-games꞉> 
+#'card-games-test/card-average-test
+clj꞉card-games-test꞉> 
+{:test 4, :pass 3, :fail 1, :error 0, :type :summary}
+clj꞉card-games-test꞉> 
+#'card-games/card-average
+clj꞉card-games꞉> 
+{:test 4, :pass 4, :fail 0, :error 0, :type :summary}
+clj꞉card-games-test꞉> 
+#'card-games/approx-average?
+clj꞉card-games꞉> 
+false
+clj꞉card-games꞉> 
+false
+clj꞉card-games꞉> 
+false
+clj꞉card-games꞉> 
+false
+clj꞉card-games꞉> 
+2.0
+clj꞉card-games꞉> 
+2
+clj꞉card-games꞉> 
+#'card-games/approx-average?
+clj꞉card-games꞉> 
+true
+clj꞉card-games꞉> 
+true
+clj꞉card-games꞉> 
+false
+clj꞉card-games꞉> 
+#'card-games-test/approx-average-test
+clj꞉card-games-test꞉> 
+{:test 5, :pass 4, :fail 0, :error 1, :type :summary}
+clj꞉card-games-test꞉> 
+#'card-games/approx-average?
+clj꞉card-games꞉> 
+{:test 5, :pass 4, :fail 0, :error 1, :type :summary}
+clj꞉card-games-test꞉> 
+#'card-games-test/approx-average-test
+clj꞉card-games-test꞉> 
+{:test 5, :pass 4, :fail 1, :error 0, :type :summary}
+clj꞉card-games-test꞉> 
+false
+clj꞉card-games꞉> 
+false
+clj꞉card-games꞉> 
+4.5
+clj꞉card-games꞉> 
+4.0
+clj꞉card-games꞉> 
+2.0
+clj꞉card-games꞉> 
+5
+clj꞉card-games꞉> 
+5/2
+clj꞉card-games꞉> 
+2.5
+clj꞉card-games꞉> 
+2
+clj꞉card-games꞉> 
+4
+clj꞉card-games꞉> 
+#'card-games/approx-average?
+clj꞉card-games꞉> 
+{:test 5, :pass 5, :fail 0, :error 0, :type :summary}
+clj꞉card-games-test꞉> 
+(1 2 3)
+clj꞉card-games꞉> 
+(2)
+clj꞉card-games꞉> 
+(1 3)
+clj꞉card-games꞉> 
+true
+clj꞉card-games꞉> 
+#'card-games/average-even-odd?
+clj꞉card-games꞉> 
+true
+clj꞉card-games꞉> 
+false
+clj꞉card-games꞉> 
+#'card-games-test/average-even-odd-test
+clj꞉card-games-test꞉> 
+{:test 6, :pass 6, :fail 0, :error 0, :type :summary}
+clj꞉card-games-test꞉> 
+#'card-games/maybe-double-last
+clj꞉card-games꞉> 
+(22 5 9)
+clj꞉card-games꞉> 
+#'card-games/maybe-double-last
+clj꞉card-games꞉> 
+#'card-games/maybe-double-last
+clj꞉card-games꞉> 
+(5 9 22)
+clj꞉card-games꞉> 
+#'card-games-test/maybe-double-last-test
+clj꞉card-games-test꞉> 
+{:test 7, :pass 7, :fail 0, :error 0, :type :summary}
+clj꞉card-games-test꞉> 
+(8 9 8)
+clj꞉international-calling-connoisseur꞉> 
+clojure.lang.Cons
+clj꞉international-calling-connoisseur꞉> 

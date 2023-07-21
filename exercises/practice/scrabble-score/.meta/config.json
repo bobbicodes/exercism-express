@@ -1,0 +1,32 @@
+{
+  "authors": [
+    "rubysolo"
+  ],
+  "contributors": [
+    "AndreaCrotti",
+    "arnab",
+    "canweriotnow",
+    "dkinzer",
+    "drewbs",
+    "geofflane",
+    "haus",
+    "kytrinyx",
+    "mathias",
+    "sjwarner-bp",
+    "yurrriq"
+  ],
+  "files": {
+    "solution": [
+      "src/scrabble_score.clj"
+    ],
+    "test": [
+      "test/scrabble_score_test.clj"
+    ],
+    "example": [
+      ".meta/src/example.clj"
+    ]
+  },
+  "blurb": "Given a word, compute the Scrabble score for that word.",
+  "source": "Inspired by the Extreme Startup game",
+  "source_url": "https://github.com/rchatley/extreme_startup"
+}

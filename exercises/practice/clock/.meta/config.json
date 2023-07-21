@@ -1,0 +1,23 @@
+{
+  "authors": [
+    "haus"
+  ],
+  "contributors": [
+    "andeemarks",
+    "AndreaCrotti"
+  ],
+  "files": {
+    "solution": [
+      "src/clock.clj"
+    ],
+    "test": [
+      "test/clock_test.clj"
+    ],
+    "example": [
+      ".meta/src/example.clj"
+    ]
+  },
+  "blurb": "Implement a clock that handles times without dates.",
+  "source": "Pairing session with Erin Drummond",
+  "source_url": "https://twitter.com/ebdrummond"
+}

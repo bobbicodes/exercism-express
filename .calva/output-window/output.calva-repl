@@ -1,0 +1,383 @@
+; This is the Calva evaluation results output window.
+; TIPS: The keyboard shortcut `ctrl+alt+o o` shows and focuses this window
+;   when connected to a REPL session.
+; Please see https://calva.io/output/ for more info.
+; Happy coding! ♥️
+
+; Jacking in...
+; Connecting using "Babashka" project type.
+; You can make Calva auto-select this.
+;   - See https://calva.io/connect-sequences/
+; 
+; Starting Jack-in Terminal: pushd c:\Users\porko\exercism-express & bb --nrepl-server 55215 & popd
+; Using host:port 127.0.0.1:55215 ...
+; Hooking up nREPL sessions ...
+; Connected session: clj
+; TIPS:
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+; Evaluating code from settings: 'calva.autoEvaluateCode.onConnect.clj'
+nil
+clj꞉user꞉>  ; Use `alt+enter` to evaluate
+clj꞉user꞉> 
+; Jack-in done.
+clj꞉user꞉> 
+nil
+clj꞉user꞉> 
+; clojure.lang.ExceptionInfo: [line 1, col 26] Unsupported escape character: \p. user c:\Users\porko\exercism-express\scratch.clj:1:
+clj꞉user꞉> 
+[#object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x1aa39d3 "exercises\\practice\\accumulate"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x39eef645 "exercises\\practice\\acronym"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x6c3c1cd8 "exercises\\practice\\all-your-base"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x3299d14 "exercises\\practice\\allergies"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x31bc6b9b "exercises\\practice\\anagram"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x757944d9 "exercises\\practice\\armstrong-numbers"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x61c409e8 "exercises\\practice\\atbash-cipher"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x2e28321c "exercises\\practice\\bank-account"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x2e9f5551 "exercises\\practice\\beer-song"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x46906234 "exercises\\practice\\binary"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x6a983970 "exercises\\practice\\binary-search"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0xdcb7be0 "exercises\\practice\\binary-search-tree"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x4ce12c0d "exercises\\practice\\bob"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x24f8d25a "exercises\\practice\\change"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x773902af "exercises\\practice\\clock"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x6c4422a0 "exercises\\practice\\collatz-conjecture"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x6b42dc92 "exercises\\practice\\complex-numbers"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x2dcdd667 "exercises\\practice\\crypto-square"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x40f9ecf7 "exercises\\practice\\diamond"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x46702c5e "exercises\\practice\\difference-of-squares"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x635642d6 "exercises\\practice\\dominoes"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x57c309a0 "exercises\\practice\\etl"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x46eb29ef "exercises\\practice\\flatten-array"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x227fa563 "exercises\\practice\\gigasecond"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x2e5867d6 "exercises\\practice\\go-counting"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x266f3416 "exercises\\practice\\grade-school"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x411fc2bc "exercises\\practice\\grains"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x26fc0b84 "exercises\\practice\\hamming"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x4209e010 "exercises\\practice\\hello-world"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x52e320c7 "exercises\\practice\\hexadecimal"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x53242a63 "exercises\\practice\\isbn-verifier"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x3e278774 "exercises\\practice\\isogram"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x22513e3f "exercises\\practice\\kindergarten-garden"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x2d61f43f "exercises\\practice\\largest-series-product"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x13b8cb18 "exercises\\practice\\leap"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x4e2495b3 "exercises\\practice\\luhn"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x692efe60 "exercises\\practice\\matching-brackets"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x2d0d8066 "exercises\\practice\\meetup"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x6cf08dfc "exercises\\practice\\minesweeper"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0xfde57d "exercises\\practice\\nth-prime"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x5669867a "exercises\\practice\\nucleotide-count"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x18ba71a9 "exercises\\practice\\octal"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x20ca9dcd "exercises\\practice\\pangram"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x42fb9300 "exercises\\practice\\pascals-triangle"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x30920c2a "exercises\\practice\\perfect-numbers"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x4c917f30 "exercises\\practice\\phone-number"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x18cff5ed "exercises\\practice\\pig-latin"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x6bd9f139 "exercises\\practice\\poker"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x174c2576 "exercises\\practice\\pov"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x42ab6806 "exercises\\practice\\prime-factors"]
+ ...]
+clj꞉user꞉> 
+; java.lang.IllegalArgumentException: Cannot open <#object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x4a7fbf5e "exercises\\practice\\accumulate"]> as an InputStream. user c:\Users\porko\exercism-express\scratch.clj:1:1
+clj꞉user꞉> 
+#object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x307e9f7e "exercises\\practice\\accumulate"]
+clj꞉user꞉> 
+#object[java.io.File 0x1973f6d0 "exercises\\practice\\accumulate\\src"]
+clj꞉user꞉> 
+[#object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x448b4d20 "exercises\\practice\\accumulate"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x45f77dd8 "exercises\\practice\\acronym"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x1f2052c8 "exercises\\practice\\all-your-base"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x7b68c3b9 "exercises\\practice\\allergies"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x11b8eb78 "exercises\\practice\\anagram"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x67b4f5cf "exercises\\practice\\armstrong-numbers"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x5ddb92b4 "exercises\\practice\\atbash-cipher"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x52454d74 "exercises\\practice\\bank-account"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x34cc2035 "exercises\\practice\\beer-song"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x538a6d3f "exercises\\practice\\binary"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x709cb0e3 "exercises\\practice\\binary-search"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x53df243f "exercises\\practice\\binary-search-tree"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x49c1a54 "exercises\\practice\\bob"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x12c37c1c "exercises\\practice\\change"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x42923303 "exercises\\practice\\clock"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x72078ea2 "exercises\\practice\\collatz-conjecture"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x315df21c "exercises\\practice\\complex-numbers"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x5721b607 "exercises\\practice\\crypto-square"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x480db7ee "exercises\\practice\\diamond"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x271e8429 "exercises\\practice\\difference-of-squares"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x1640a5dc "exercises\\practice\\dominoes"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x66567e "exercises\\practice\\etl"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x1758ab2e "exercises\\practice\\flatten-array"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x1ffcdc70 "exercises\\practice\\gigasecond"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x6b5d4a28 "exercises\\practice\\go-counting"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x7b25a4ea "exercises\\practice\\grade-school"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x38e3e57 "exercises\\practice\\grains"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x5f79ee1b "exercises\\practice\\hamming"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x81164b5 "exercises\\practice\\hello-world"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x76d6d89c "exercises\\practice\\hexadecimal"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x6425337b "exercises\\practice\\isbn-verifier"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x66db794e "exercises\\practice\\isogram"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x2d774fe4 "exercises\\practice\\kindergarten-garden"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x794ef63f "exercises\\practice\\largest-series-product"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x1da2f836 "exercises\\practice\\leap"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x4dfdcd67 "exercises\\practice\\luhn"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x46e6137 "exercises\\practice\\matching-brackets"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x42ea33b "exercises\\practice\\meetup"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x69a9c9d4 "exercises\\practice\\minesweeper"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x4535b93b "exercises\\practice\\nth-prime"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x52064378 "exercises\\practice\\nucleotide-count"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0xd28fe52 "exercises\\practice\\octal"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x7ef3264d "exercises\\practice\\pangram"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0xdbb2521 "exercises\\practice\\pascals-triangle"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x5448679b "exercises\\practice\\perfect-numbers"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x4a3460dd "exercises\\practice\\phone-number"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x3f9002da "exercises\\practice\\pig-latin"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x2343380d "exercises\\practice\\poker"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x13016ffd "exercises\\practice\\pov"]
+ #object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x1c951be5 "exercises\\practice\\prime-factors"]
+ ...]
+clj꞉user꞉> 
+#object[sun.nio.fs.WindowsPath$WindowsPathWithAttributes 0x11aca119 "exercises\\practice\\accumulate"]
+clj꞉user꞉> 
+"exercises\\practice\\accumulate"
+clj꞉user꞉> 
+"exercises\\"
+clj꞉user꞉> 
+"exercises\\practice"
+clj꞉user꞉> 
+"\\accumulate"
+clj꞉user꞉> 
+"ccumulate"
+clj꞉user꞉> 
+"accumulate"
+clj꞉user꞉> 
+#object[clojure.core$map$fn__5931 0x24ba6d8d "clojure.core$map$fn__5931@24ba6d8d"]
+clj꞉user꞉> 
+("accumulate"
+ "acronym"
+ "all-your-base"
+ "allergies"
+ "anagram"
+ "armstrong-numbers"
+ "atbash-cipher"
+ "bank-account"
+ "beer-song"
+ "binary"
+ "binary-search"
+ "binary-search-tree"
+ "bob"
+ "change"
+ "clock"
+ "collatz-conjecture"
+ "complex-numbers"
+ "crypto-square"
+ "diamond"
+ "difference-of-squares"
+ "dominoes"
+ "etl"
+ "flatten-array"
+ "gigasecond"
+ "go-counting"
+ "grade-school"
+ "grains"
+ "hamming"
+ "hello-world"
+ "hexadecimal"
+ "isbn-verifier"
+ "isogram"
+ "kindergarten-garden"
+ "largest-series-product"
+ "leap"
+ "luhn"
+ "matching-brackets"
+ "meetup"
+ "minesweeper"
+ "nth-prime"
+ "nucleotide-count"
+ "octal"
+ "pangram"
+ "pascals-triangle"
+ "perfect-numbers"
+ "phone-number"
+ "pig-latin"
+ "poker"
+ "pov"
+ "prime-factors"
+ ...)
+clj꞉user꞉> 
+#'user/exercises
+clj꞉user꞉> 
+#'user/practice-exercises
+clj꞉user꞉> 
+#object[java.io.File 0x2ec716ff "exercises\\practice\\minesweeper"]
+clj꞉user꞉> 
+#object[java.io.File 0x6970c3f "exercises\\practice\\minesweeper\\src"]
+clj꞉user꞉> 
+#object[java.io.File 0xf4e6375 "exercises\\practice\\minesweeper\\src\\minesweeper.clj"]
+clj꞉user꞉> 
+"(ns minesweeper)\r\n\r\n(defn draw [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+clj꞉user꞉> 
+nil
+clj꞉user꞉> 
+; java.lang.IllegalArgumentException: No implementation of method: :as-file of protocol: #'clojure.java.io/Coercions found for class: java.lang.Character user c:\Users\porko\exercism-express\scratch.clj:3:18
+clj꞉user꞉> 
+; java.lang.IllegalArgumentException: No implementation of method: :as-file of protocol: #'clojure.java.io/Coercions found for class: java.lang.Character user c:\Users\porko\exercism-express\scratch.clj:4:19
+clj꞉user꞉> 
+; java.lang.IllegalArgumentException: No implementation of method: :as-file of protocol: #'clojure.java.io/Coercions found for class: java.lang.Character user c:\Users\porko\exercism-express\scratch.clj:4:19
+clj꞉user꞉> 
+; java.lang.IllegalArgumentException: No implementation of method: :as-file of protocol: #'clojure.java.io/Coercions found for class: java.lang.Character user c:\Users\porko\exercism-express\scratch.clj:4:19
+clj꞉user꞉> 
+; java.lang.IllegalArgumentException: No implementation of method: :as-file of protocol: #'clojure.java.io/Coercions found for class: java.lang.Character user c:\Users\porko\exercism-express\scratch.clj:4:19
+clj꞉user꞉> 
+"accumulate"
+clj꞉user꞉> 
+\a
+clj꞉user꞉> 
+"accumulate"
+clj꞉user꞉> 
+"accumulate"
+clj꞉user꞉> 
+"accumulate"
+clj꞉user꞉> 
+; java.lang.IllegalArgumentException: No implementation of method: :as-file of protocol: #'clojure.java.io/Coercions found for class: java.lang.Character user c:\Users\porko\exercism-express\scratch.clj:4:19
+clj꞉user꞉> 
+; java.io.FileNotFoundException: exercises\practice\accumulate\src\a.clj (The system cannot find the file specified) user c:\Users\porko\exercism-express\scratch.clj:4:12
+clj꞉user꞉> 
+; java.io.FileNotFoundException: exercises\practice\accumulate\src\a.clj (The system cannot find the file specified) user c:\Users\porko\exercism-express\scratch.clj:4:12
+clj꞉user꞉> 
+; java.io.FileNotFoundException: exercises\practice\accumulate\src\a.clj (The system cannot find the file specified) user c:\Users\porko\exercism-express\scratch.clj:4:12
+clj꞉user꞉> 
+; java.io.FileNotFoundException: exercises\practice\accumulate\src\a.clj (The system cannot find the file specified) user c:\Users\porko\exercism-express\scratch.clj:3:11
+clj꞉user꞉> 
+; : Don't know how to create ISeq from: java.io.File user 
+clj꞉user꞉> 
+(#object[java.io.File 0x5df47296 "exercises\\practice\\accumulate\\src\\accumulate.clj"]
+ #object[java.io.File 0x425b2ce3 "exercises\\practice\\acronym\\src\\acronym.clj"]
+ #object[java.io.File 0x6de67c70 "exercises\\practice\\all-your-base\\src\\all_your_base.clj"]
+ #object[java.io.File 0x52b8eb6c "exercises\\practice\\allergies\\src\\allergies.clj"]
+ #object[java.io.File 0x4c8c7680 "exercises\\practice\\anagram\\src\\anagram.clj"]
+ #object[java.io.File 0xff057bd "exercises\\practice\\armstrong-numbers\\src\\armstrong_numbers.clj"]
+ #object[java.io.File 0x18a6ab81 "exercises\\practice\\atbash-cipher\\src\\atbash_cipher.clj"]
+ #object[java.io.File 0x1d86d9a2 "exercises\\practice\\bank-account\\src\\bank_account.clj"]
+ #object[java.io.File 0x10a938ef "exercises\\practice\\beer-song\\src\\beer_song.clj"]
+ #object[java.io.File 0x414f55f6 "exercises\\practice\\binary\\src\\binary.clj"]
+ #object[java.io.File 0x4f6c35a1 "exercises\\practice\\binary-search\\src\\binary_search.clj"]
+ #object[java.io.File 0x61cce584 "exercises\\practice\\binary-search-tree\\src\\binary_search_tree.clj"]
+ #object[java.io.File 0x30392276 "exercises\\practice\\bob\\src\\bob.clj"]
+ #object[java.io.File 0x2154c96e "exercises\\practice\\change\\src\\change.clj"]
+ #object[java.io.File 0x57c8c53b "exercises\\practice\\clock\\src\\clock.clj"]
+ #object[java.io.File 0x20845e19 "exercises\\practice\\collatz-conjecture\\src\\collatz_conjecture.clj"]
+ #object[java.io.File 0x2a276c32 "exercises\\practice\\complex-numbers\\src\\complex_numbers.clj"]
+ #object[java.io.File 0x566b54d2 "exercises\\practice\\crypto-square\\src\\crypto_square.clj"]
+ #object[java.io.File 0x21f45b63 "exercises\\practice\\diamond\\src\\diamond.clj"]
+ #object[java.io.File 0x6960bb55 "exercises\\practice\\difference-of-squares\\src\\difference_of_squares.clj"]
+ #object[java.io.File 0x3a1955c9 "exercises\\practice\\dominoes\\src\\dominoes.clj"]
+ #object[java.io.File 0x49f81562 "exercises\\practice\\etl\\src\\etl.clj"]
+ #object[java.io.File 0x4633747 "exercises\\practice\\flatten-array\\src\\flatten_array.clj"]
+ #object[java.io.File 0xedf4fbe "exercises\\practice\\gigasecond\\src\\gigasecond.clj"]
+ #object[java.io.File 0xa23d717 "exercises\\practice\\go-counting\\src\\go_counting.clj"]
+ #object[java.io.File 0x6ff0f5e6 "exercises\\practice\\grade-school\\src\\grade_school.clj"]
+ #object[java.io.File 0x536d2926 "exercises\\practice\\grains\\src\\grains.clj"]
+ #object[java.io.File 0x4d768ba4 "exercises\\practice\\hamming\\src\\hamming.clj"]
+ #object[java.io.File 0x66327507 "exercises\\practice\\hello-world\\src\\hello_world.clj"]
+ #object[java.io.File 0x54aa3a7e "exercises\\practice\\hexadecimal\\src\\hexadecimal.clj"]
+ #object[java.io.File 0x95f2d59 "exercises\\practice\\isbn-verifier\\src\\isbn_verifier.clj"]
+ #object[java.io.File 0x6d06cf0 "exercises\\practice\\isogram\\src\\isogram.clj"]
+ #object[java.io.File 0x7f836f2d "exercises\\practice\\kindergarten-garden\\src\\kindergarten_garden.clj"]
+ #object[java.io.File 0x6b893b7f "exercises\\practice\\largest-series-product\\src\\largest_series_product.clj"]
+ #object[java.io.File 0x54a08260 "exercises\\practice\\leap\\src\\leap.clj"]
+ #object[java.io.File 0x50917a7f "exercises\\practice\\luhn\\src\\luhn.clj"]
+ #object[java.io.File 0x390afd9f "exercises\\practice\\matching-brackets\\src\\matching_brackets.clj"]
+ #object[java.io.File 0x2de94c62 "exercises\\practice\\meetup\\src\\meetup.clj"]
+ #object[java.io.File 0x75b19456 "exercises\\practice\\minesweeper\\src\\minesweeper.clj"]
+ #object[java.io.File 0x7c51c66d "exercises\\practice\\nth-prime\\src\\nth_prime.clj"]
+ #object[java.io.File 0x20177e14 "exercises\\practice\\nucleotide-count\\src\\nucleotide_count.clj"]
+ #object[java.io.File 0x5cd6eeb6 "exercises\\practice\\octal\\src\\octal.clj"]
+ #object[java.io.File 0x63463f9e "exercises\\practice\\pangram\\src\\pangram.clj"]
+ #object[java.io.File 0x7fbb03e1 "exercises\\practice\\pascals-triangle\\src\\pascals_triangle.clj"]
+ #object[java.io.File 0x67535ffc "exercises\\practice\\perfect-numbers\\src\\perfect_numbers.clj"]
+ #object[java.io.File 0x5eac47f3 "exercises\\practice\\phone-number\\src\\phone_number.clj"]
+ #object[java.io.File 0x39f511fd "exercises\\practice\\pig-latin\\src\\pig_latin.clj"]
+ #object[java.io.File 0x74fb892b "exercises\\practice\\poker\\src\\poker.clj"]
+ #object[java.io.File 0x67e9d10b "exercises\\practice\\pov\\src\\pov.clj"]
+ #object[java.io.File 0x627b00 "exercises\\practice\\prime-factors\\src\\prime_factors.clj"]
+ ...)
+clj꞉user꞉> 
+("(ns accumulate)\r\n\r\n(defn accumulate [] ;; <- arglist goes here\r\n      ;; your code goes here\r\n)\r\n"
+ "(ns acronym)\r\n\r\n(defn acronym\r\n  \"Converts phrase to its acronym.\"\r\n  [phrase]\r\n  )\r\n"
+ "(ns all-your-base)\r\n\r\n(defn convert [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns allergies)\r\n\r\n(defn allergies [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn allergic-to? [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns anagram)\r\n\r\n(defn anagrams-for [word prospect-list] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns armstrong-numbers)\r\n\r\n(defn armstrong? [num] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns atbash-cipher)\r\n\r\n(defn encode [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns bank-account)\r\n\r\n(defn open-account [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n  )\r\n\r\n(defn close-account [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n  )\r\n\r\n(defn get-balance [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n  )\r\n\r\n(defn update-balance [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n  )\r\n"
+ "(ns beer-song)\r\n\r\n(defn verse\r\n  \"Returns the nth verse of the song.\"\r\n  [num])\r\n\r\n(defn sing\r\n  \"Given a start and an optional end, returns all verses in this interval. If\r\n  end is not given, the whole song from start is sung.\"\r\n  ([start])\r\n  ([start end]))\r\n"
+ "(ns binary)\r\n\r\n(defn to-decimal [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns binary-search)\r\n\r\n(defn search-for [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn middle [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns binary-search-tree)\r\n\r\n(defn value [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn singleton [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn insert [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn left [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn right [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn to-list [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn from-list [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns bob)\r\n\r\n(defn response-for [s] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns change)\r\n\r\n(defn issue [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns clock)\r\n\r\n(defn clock->string [clock] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn clock [hours minutes] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn add-time [clock time] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns collatz-conjecture)\r\n\r\n(defn collatz [num] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns complex-numbers)\r\n\r\n(defn real [[a b]] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn imaginary [[a b]] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn abs [[a b]] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn conjugate [[a b]] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn add [[a b] [c d]] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn sub [[a b] [c d]] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn mul [[a b] [c d]] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn div [[a b] [c d]] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns crypto-square)\r\n\r\n(defn normalize-plaintext [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn square-size [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn plaintext-segments [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn ciphertext [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn normalize-ciphertext [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns diamond)\r\n\r\n(defn diamond [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns difference-of-squares)\r\n\r\n(defn difference [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn sum-of-squares [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn square-of-sum [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns dominoes)\r\n\r\n(defn can-chain? [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns etl)\r\n\r\n(defn transform [source] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns flatten-array)\r\n\r\n(defn flatten [arr] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns gigasecond)\r\n\r\n(defn from []  ;; <- arglist goes here\r\n    ;; your code goes here\r\n)\r\n"
+ "(ns go-counting)\r\n\r\n(defn territory [grid [x y]])\r\n\r\n(defn territories [grid])\r\n"
+ "(ns grade-school)\r\n\r\n(defn grade [school grade]  ;; <- arglist goes here\r\n    ;; your code goes here\r\n)\r\n\r\n(defn add [school name grade]  ;; <- arglist goes here\r\n    ;; your code goes here\r\n)\r\n\r\n(defn sorted [school]  ;; <- arglist goes here\r\n    ;; your code goes here\r\n)\r\n"
+ "(ns grains)\r\n\r\n(defn square [] ;; <- arglist goes here\r\n    ;; your code goes here\r\n)\r\n\r\n(defn total []  ;; <- arglist goes here\r\n    ;; your code goes here\r\n)\r\n"
+ "(ns hamming)\r\n\r\n(defn distance [strand1 strand2] ; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns hello-world)\r\n\r\n(defn hello []\r\n  \"Goodbye, Mars!\")\r\n"
+ "(ns hexadecimal)\r\n\r\n(defn hex-to-int [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns isbn-verifier)\r\n\r\n(defn isbn? [isbn] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns isogram)\r\n\r\n(defn isogram? [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns kindergarten-garden)\r\n\r\n(defn garden [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns largest-series-product)\r\n\r\n(defn largest-product [] ;; <- arglist goes here\r\n      ;; your code goes here\r\n)\r\n"
+ "(ns leap)\r\n\r\n(defn leap-year? [year] ;; <- argslist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns luhn)\r\n\r\n(defn valid? [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns matching-brackets)\r\n\r\n(defn valid? [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns meetup)\r\n\r\n(defn meetup [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n  )"
+ "(ns minesweeper)\r\n\r\n(defn draw [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns nth-prime)\r\n\r\n(defn nth-prime \r\n  \"Returns the prime number in the nth position.\"\r\n  [n] ;; <- arglist goes here\r\n  ;; your code goes here\r\n  )\r\n"
+ "(ns nucleotide-count)\r\n\r\n(defn count-of-nucleotide-in-strand [nucleotide strand] ;; <- Arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n\r\n(defn nucleotide-counts [strand] ;; <- Arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns octal)\r\n\r\n(defn to-decimal [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns pangram)\r\n\r\n(defn pangram? [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns pascals-triangle)\r\n\r\n(def triangle)\r\n\r\n(defn row [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns perfect-numbers)\r\n\r\n(defn classify [] ;; <- arglist goes here\r\n      ;; your code goes here\r\n)\r\n"
+ "(ns phone-number)\r\n\r\n(defn number [num-string] ;; <- arglist goes here\r\n      ;; your code goes here\r\n)\r\n\r\n(defn area-code [num-string] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n\r\n(defn pretty-print [num-string] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns pig-latin)\r\n\r\n(defn translate [] ;; <- arglist goes here\r\n      ;; your code goes here\r\n)\r\n"
+ "(ns poker)\r\n\r\n(defn best-hands [hands] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns pov)\r\n\r\n(defn of [] ;; <- arglist goes here\r\n      ;; your code goes here\r\n)\r\n\r\n(defn path-from-to [] ;; <- arglist goes here\r\n  ;; your code goes here\r\n)\r\n"
+ "(ns prime-factors)\r\n\r\n(defn of [] ;; <- arglist goes here\r\n      ;; your code goes here\r\n)\r\n"
+ ...)
+clj꞉user꞉> 
+#'user/src-all
+clj꞉user꞉> 
+"{\r\n  \"diamond\" : \"(ns diamond)\\r\\n\\r\\n(defn diamond [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"isogram\" : \"(ns isogram)\\r\\n\\r\\n(defn isogram? [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"gigasecond\" : \"(ns gigasecond)\\r\\n\\r\\n(defn from []  ;; <- arglist goes here\\r\\n    ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"leap\" : \"(ns leap)\\r\\n\\r\\n(defn leap-year? [year] ;; <- argslist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"zipper\" : \"(ns zipper)\\r\\n\\r\\n(defn from-tree [] \\r\\n  )\\r\\n\\r\\n(defn value [] \\r\\n  )\\r\\n\\r\\n(defn left []\\r\\n  )\\r\\n\\r\\n(defn right []\\r\\n  )\\r\\n\\r\\n(defn to-tree []\\r\\n  )\\r\\n\\r\\n(defn up []\\r\\n  )\\r\\n\\r\\n(defn set-value []\\r\\n  )\\r\\n\\r\\n(defn set-left []\\r\\n  )\\r\\n\\r\\n(defn set-right []\\r\\n  )\\r\\n\",\r\n  \"roman-numerals\" : \"(ns roman-numerals)\\r\\n\\r\\n(defn numerals [] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"minesweeper\" : \"(ns minesweeper)\\r\\n\\r\\n(defn draw [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"pov\" : \"(ns pov)\\r\\n\\r\\n(defn of [] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn path-from-to [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"matching-brackets\" : \"(ns matching-brackets)\\r\\n\\r\\n(defn valid? [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"dominoes\" : \"(ns dominoes)\\r\\n\\r\\n(defn can-chain? [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"rotational-cipher\" : \"(ns rotational-cipher)\\r\\n\\r\\n(defn rotate [] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"kindergarten-garden\" : \"(ns kindergarten-garden)\\r\\n\\r\\n(defn garden [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"all-your-base\" : \"(ns all-your-base)\\r\\n\\r\\n(defn convert [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"spiral-matrix\" : \"(ns spiral-matrix)\\r\\n\\r\\n(defn spiral [n] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"anagram\" : \"(ns anagram)\\r\\n\\r\\n(defn anagrams-for [word prospect-list] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"atbash-cipher\" : \"(ns atbash-cipher)\\r\\n\\r\\n(defn encode [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"grade-school\" : \"(ns grade-school)\\r\\n\\r\\n(defn grade [school grade]  ;; <- arglist goes here\\r\\n    ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn add [school name grade]  ;; <- arglist goes here\\r\\n    ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn sorted [school]  ;; <- arglist goes here\\r\\n    ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"meetup\" : \"(ns meetup)\\r\\n\\r\\n(defn meetup [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n  )\",\r\n  \"two-fer\" : \"(ns two-fer)\\r\\n\\r\\n(defn two-fer [name] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"run-length-encoding\" : \"(ns run-length-encoding)\\r\\n\\r\\n(defn run-length-encode\\r\\n  \\\"encodes a string with run-length-encoding\\\"\\r\\n  [plain-text])\\r\\n\\r\\n(defn run-length-decode\\r\\n  \\\"decodes a run-length-encoded string\\\"\\r\\n  [cipher-text])\\r\\n\",\r\n  \"wordy\" : \"(ns wordy)\\r\\n\\r\\n(defn evaluate [] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"sieve\" : \"(ns sieve)\\r\\n\\r\\n(defn sieve [] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"binary\" : \"(ns binary)\\r\\n\\r\\n(defn to-decimal [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"pig-latin\" : \"(ns pig-latin)\\r\\n\\r\\n(defn translate [] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"bob\" : \"(ns bob)\\r\\n\\r\\n(defn response-for [s] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"rna-transcription\" : \"(ns rna-transcription)\\r\\n\\r\\n(defn to-rna [dna] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"pascals-triangle\" : \"(ns pascals-triangle)\\r\\n\\r\\n(def triangle)\\r\\n\\r\\n(defn row [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"space-age\" : \"(ns space-age)\\r\\n\\r\\n(defn on-mercury [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn on-venus [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn on-earth [] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn on-mars [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn on-jupiter [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn on-saturn [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn on-uranus [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn on-neptune [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"queen-attack\" : \"(ns queen-attack)\\r\\n\\r\\n(defn board-string [] ;; <- glister goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn can-attack [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"acronym\" : \"(ns acronym)\\r\\n\\r\\n(defn acronym\\r\\n  \\\"Converts phrase to its acronym.\\\"\\r\\n  [phrase]\\r\\n  )\\r\\n\",\r\n  \"secret-handshake\" : \"(ns secret-handshake)\\r\\n\\r\\n(defn commands [] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"crypto-square\" : \"(ns crypto-square)\\r\\n\\r\\n(defn normalize-plaintext [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn square-size [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn plaintext-segments [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn ciphertext [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn normalize-ciphertext [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"word-count\" : \"(ns word-count)\\r\\n\\r\\n(defn word-count [s] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"armstrong-numbers\" : \"(ns armstrong-numbers)\\r\\n\\r\\n(defn armstrong? [num] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"hamming\" : \"(ns hamming)\\r\\n\\r\\n(defn distance [strand1 strand2] ; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"scrabble-score\" : \"(ns scrabble-score)\\r\\n\\r\\n(defn score-letter [] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn score-word [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"octal\" : \"(ns octal)\\r\\n\\r\\n(defn to-decimal [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"raindrops\" : \"(ns raindrops)\\r\\n\\r\\n(defn convert [] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"binary-search-tree\" : \"(ns binary-search-tree)\\r\\n\\r\\n(defn value [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn singleton [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn insert [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn left [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn right [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn to-list [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn from-list [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"nth-prime\" : \"(ns nth-prime)\\r\\n\\r\\n(defn nth-prime \\r\\n  \\\"Returns the prime number in the nth position.\\\"\\r\\n  [n] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n  )\\r\\n\",\r\n  \"largest-series-product\" : \"(ns largest-series-product)\\r\\n\\r\\n(defn largest-product [] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"protein-translation\" : \"(ns protein-translation)\\r\\n\\r\\n(defn translate-codon [] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn translate-rna [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"sublist\" : \"(ns sublist)\\r\\n\\r\\n(defn classify [list1 list2] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"prime-factors\" : \"(ns prime-factors)\\r\\n\\r\\n(defn of [] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"triangle\" : \"(ns triangle)\\r\\n\\r\\n(defn is-valid? [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn equilateral? [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn isosceles? [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn scalene? [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"reverse-string\" : \"(ns reverse-string)\\r\\n\\r\\n(defn reverse-string [s] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"beer-song\" : \"(ns beer-song)\\r\\n\\r\\n(defn verse\\r\\n  \\\"Returns the nth verse of the song.\\\"\\r\\n  [num])\\r\\n\\r\\n(defn sing\\r\\n  \\\"Given a start and an optional end, returns all verses in this interval. If\\r\\n  end is not given, the whole song from start is sung.\\\"\\r\\n  ([start])\\r\\n  ([start end]))\\r\\n\",\r\n  \"binary-search\" : \"(ns binary-search)\\r\\n\\r\\n(defn search-for [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn middle [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"clock\" : \"(ns clock)\\r\\n\\r\\n(defn clock->string [clock] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn clock [hours minutes] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn add-time [clock time] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"allergies\" : \"(ns allergies)\\r\\n\\r\\n(defn allergies [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn allergic-to? [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"say\" : \"(ns say)\\r\\n\\r\\n(defn number [num] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"luhn\" : \"(ns luhn)\\r\\n\\r\\n(defn valid? [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"difference-of-squares\" : \"(ns difference-of-squares)\\r\\n\\r\\n(defn difference [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn sum-of-squares [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn square-of-sum [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"complex-numbers\" : \"(ns complex-numbers)\\r\\n\\r\\n(defn real [[a b]] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn imaginary [[a b]] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn abs [[a b]] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn conjugate [[a b]] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn add [[a b] [c d]] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn sub [[a b] [c d]] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn mul [[a b] [c d]] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn div [[a b] [c d]] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"poker\" : \"(ns poker)\\r\\n\\r\\n(defn best-hands [hands] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"go-counting\" : \"(ns go-counting)\\r\\n\\r\\n(defn territory [grid [x y]])\\r\\n\\r\\n(defn territories [grid])\\r\\n\",\r\n  \"accumulate\" : \"(ns accumulate)\\r\\n\\r\\n(defn accumulate [] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"hexadecimal\" : \"(ns hexadecimal)\\r\\n\\r\\n(defn hex-to-int [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"series\" : \"(ns series)\\r\\n\\r\\n(defn slices [string length] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"yacht\" : \"(ns yacht)\\r\\n\\r\\n(defn score []\\r\\n  )\\r\\n\",\r\n  \"grains\" : \"(ns grains)\\r\\n\\r\\n(defn square [] ;; <- arglist goes here\\r\\n    ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn total []  ;; <- arglist goes here\\r\\n    ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"robot-simulator\" : \"(ns robot-simulator)\\r\\n\\r\\n(defn robot [] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn simulate [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn turn-right [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn turn-left [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"proverb\" : \"(ns proverb)\\r\\n\\r\\n(defn recite [] ;; <- arglist goes here\\r\\n    ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"flatten-array\" : \"(ns flatten-array)\\r\\n\\r\\n(defn flatten [arr] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"pangram\" : \"(ns pangram)\\r\\n\\r\\n(defn pangram? [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"bank-account\" : \"(ns bank-account)\\r\\n\\r\\n(defn open-account [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n  )\\r\\n\\r\\n(defn close-account [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n  )\\r\\n\\r\\n(defn get-balance [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n  )\\r\\n\\r\\n(defn update-balance [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n  )\\r\\n\",\r\n  \"strain\" : \"(ns strain)\\r\\n\\r\\n(defn retain [] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn discard [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"sum-of-multiples\" : \"(ns sum-of-multiples)\\r\\n\\r\\n(defn sum-of-multiples [] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"collatz-conjecture\" : \"(ns collatz-conjecture)\\r\\n\\r\\n(defn collatz [num] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"trinary\" : \"(ns trinary)\\r\\n\\r\\n(defn to-decimal [] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"etl\" : \"(ns etl)\\r\\n\\r\\n(defn transform [source] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"perfect-numbers\" : \"(ns perfect-numbers)\\r\\n\\r\\n(defn classify [] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"hello-world\" : \"(ns hello-world)\\r\\n\\r\\n(defn hello []\\r\\n  \\\"Goodbye, Mars!\\\")\\r\\n\",\r\n  \"nucleotide-count\" : \"(ns nucleotide-count)\\r\\n\\r\\n(defn count-of-nucleotide-in-strand [nucleotide strand] ;; <- Arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n\\r\\n(defn nucleotide-counts [strand] ;; <- Arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"phone-number\" : \"(ns phone-number)\\r\\n\\r\\n(defn number [num-string] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn area-code [num-string] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn pretty-print [num-string] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"change\" : \"(ns change)\\r\\n\\r\\n(defn issue [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"isbn-verifier\" : \"(ns isbn-verifier)\\r\\n\\r\\n(defn isbn? [isbn] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\",\r\n  \"robot-name\" : \"(ns robot-name)\\r\\n\\r\\n(defn robot [] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn robot-name [robot] ;; <- arglist goes here\\r\\n      ;; your code goes here\\r\\n)\\r\\n\\r\\n(defn reset-name [robot] ;; <- arglist goes here\\r\\n  ;; your code goes here\\r\\n)\\r\\n\"\r\n}"
+clj꞉user꞉> 
+nil
+clj꞉user꞉> 
+#'user/practice-exercises
+clj꞉user꞉> 
+#'user/src-all
+clj꞉user꞉> 
+; java.io.FileNotFoundException: exercises\practice\all_your_base\src\all_your_base.clj (The system cannot find the path specified) user c:\Users\porko\exercism-express\scratch.clj:5:7
+clj꞉user꞉> 
+; java.lang.NullPointerException user c:\Users\porko\exercism-express\scratch.clj:1:46
+clj꞉user꞉> 
+#'user/practice-exercises
+clj꞉user꞉> 
+#'user/src-all
+clj꞉user꞉> 
+nil
+clj꞉user꞉> 
+; nREPL connection failed: Error: read ECONNRESET
+; Failed connecting.
+; nREPL Connection was closed

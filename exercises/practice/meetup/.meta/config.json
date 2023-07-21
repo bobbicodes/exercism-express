@@ -1,0 +1,31 @@
+{
+  "authors": [
+    "rubysolo"
+  ],
+  "contributors": [
+    "AndreaCrotti",
+    "awseward",
+    "canweriotnow",
+    "dkinzer",
+    "haus",
+    "jgwhite",
+    "kytrinyx",
+    "mathias",
+    "sjwarner-bp",
+    "yurrriq"
+  ],
+  "files": {
+    "solution": [
+      "src/meetup.clj"
+    ],
+    "test": [
+      "test/meetup_test.clj"
+    ],
+    "example": [
+      ".meta/src/example.clj"
+    ]
+  },
+  "blurb": "Calculate the date of meetups.",
+  "source": "Jeremy Hinegardner mentioned a Boulder meetup that happens on the Wednesteenth of every month",
+  "source_url": "https://twitter.com/copiousfreetime"
+}
