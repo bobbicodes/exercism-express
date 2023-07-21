@@ -28,3 +28,8 @@ select {
   color: rgb(129, 12, 119);
   background-color: rgb(106, 172, 248);
 }
+
+button {
+  color: #ff86eb;
+  background-color: rgb(104, 13, 116);
+}
