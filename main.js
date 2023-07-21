@@ -1,24 +1,29 @@
 import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+import { EditorView, basicSetup } from 'codemirror'
+import { EditorState } from '@codemirror/state'
+import { clojure } from "./src/clojure"
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+let editorState = EditorState.create({
+    doc: `(defn pos-neg-or-zero [n]
+  (cond
+    (< n 0) "negative"
+    (> n 0) "positive"
+    :else "zero"))
+      
+(pos-neg-or-zero -6)`,
+    extensions: [basicSetup, clojure()]
+})
 
-setupCounter(document.querySelector('#counter'))
+new EditorView({
+    state: editorState,
+    parent: document.querySelector('#app')
+}).focus()
+
+let topLevelText = "Alt+Enter = Eval top-level form"
+let keyBindings = "<strong>Key bindings:</strong>,Shift+Enter = Eval cell," +
+    topLevelText + ",Ctrl/Cmd+Enter = Eval at cursor";
+keyBindings = keyBindings.split(',');
+for (let i = 0; i < keyBindings.length; i++)
+    keyBindings[i] = "" + keyBindings[i] + "<br>";
+keyBindings = keyBindings.join('');
+document.getElementById("keymap").innerHTML = keyBindings;
