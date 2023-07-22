@@ -4,6 +4,7 @@ import { EditorState } from '@codemirror/state'
 import { clojure } from "./src/clojure"
 import config from './config.json';
 import exercises from './exercises.json';
+import instructions from './instructions.json';
 
 let editorState = EditorState.create({
   doc: `(defn pos-neg-or-zero [n]
@@ -50,10 +51,12 @@ select.addEventListener('change', function () {
 });
 
 function loadExercise(slug) {
+  const instructionsElement = document.getElementById("instructions")
   const k = slug.replaceAll("-", "_")
   const src = exercises[k]
   const doc = view.state.doc.toString()
   const end = doc.length
+  instructionsElement.innerHTML = instructions[k].substring(17).trim()
   view.dispatch({
     changes: { from: 0, to: end, insert: src},
     selection: { anchor: 0, head: 0 }

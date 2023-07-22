@@ -6,6 +6,11 @@
   (map #(subs (str %) 19)
        (fs/list-dir "exercises\\practice")))
 
+(def instructions-all
+  (for [slug practice-exercises]
+    (let [f (fs/file "exercises\\practice" slug "\\.docs\\instructions.md")]
+      (slurp f))))
+
 (def src-all
   (for [slug practice-exercises]
     (let [filename (str/replace slug "-" "_")
@@ -29,5 +34,10 @@
   (spit "tests.json"
         (json/generate-string
          (zipmap exercises test-all)
+         {:pretty true}))
+  (spit "instructions.json"
+        (json/generate-string
+         (zipmap (map #(str/replace % "-" "_") practice-exercises)
+                 instructions-all)
          {:pretty true}))
   )
