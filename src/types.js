@@ -145,7 +145,7 @@ export function postwalk(f, form) {
 
 // Functions
 export function _function(Eval, Env, ast, env, params) {
-    console.log("Defining function", ast)
+    //console.log("Defining function", ast)
     var fn = function() {
         return Eval(ast, new Env(env, params, arguments));
     };

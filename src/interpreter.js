@@ -74,7 +74,7 @@ export let deftests = []
 let testingString = ""
 
 function _EVAL(ast, env) {
-  console.log("Evaluating", ast, env)
+  //console.log("Evaluating", ast, env)
   
   while (true) {
 
@@ -132,6 +132,8 @@ function _EVAL(ast, env) {
         func._ismacro_ = true;
         return env.set(a1, func);
       case 'deftest':
+        var res = EVAL(a2, env);
+        return env.set(a1, res);
         deftests.push(ast.slice(1))
         console.log("Unit tests:", deftests)
         return EVAL(a2, env)
@@ -139,9 +141,6 @@ function _EVAL(ast, env) {
       case 'testing':
         testingString = testingString + a1
         return a2
-      case 'is':
-        console.log("a1:", a1)
-          return EVAL(a1, env)
       case 'macroexpand':
         return macroexpand(a1, env);
       case "try":

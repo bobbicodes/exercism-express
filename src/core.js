@@ -247,12 +247,17 @@ function js_method_call(object_method_str) {
     return js_to_mal(res);
 }
 
+function _is(a) {
+   return types._true_Q(a)
+}
+
 export const ns = {
     'type': types._obj_type,
     '=': types._equal_Q,
     'throw': mal_throw,
     'nil?': types._nil_Q,
     'true?': types._true_Q,
+    'is': _is,
     'false?': types._false_Q,
     'number?': types._number_Q,
     'string?': types._string_Q,

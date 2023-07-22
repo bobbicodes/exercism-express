@@ -2,7 +2,8 @@ import './style.css'
 import { EditorView, basicSetup } from 'codemirror'
 import { EditorState } from '@codemirror/state'
 import { clojure } from "./src/clojure"
-import { evalString, deftests, clearTests } from "./src/interpreter"
+import { evalString, EVAL, deftests, clearTests } from "./src/interpreter"
+import { Env } from "./src/env"
 import config from './config.json';
 import exercises from './exercises.json';
 import instructions from './instructions.json';
@@ -93,7 +94,10 @@ button.addEventListener('click', function () {
   const k = exercise.replaceAll("-", "_")
   const testSuite = testSuites[k + "_test"].trim()
   clearTests()
-  evalString("(do " + testSuite + ")")
+  let testEnv = new Env()
+  const doc = view.state.doc.toString()
+  EVAL("(do " + doc + ")", testEnv)
+  EVAL("(do " + testSuite + ")", testEnv)
   console.log("Deftests:", deftests)
 })
 
