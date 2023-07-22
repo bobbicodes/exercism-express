@@ -63,14 +63,17 @@ select.addEventListener('change', function () {
   console.log("set to", select.value)
 });
 
+let exercise = null
+
 function loadExercise(slug) {
+  exercise = slug
   const instructionsElement = document.getElementById("instructions")
   const k = slug.replaceAll("-", "_")
   const src = exercises[k].trim()
   const testSuite = testSuites[k + "_test"].trim()
-  clearTests()
-  evalString("(do " + testSuite + ")")
-  console.log("Deftests:", deftests)
+  //clearTests()
+  //evalString("(do " + testSuite + ")")
+  //console.log("Deftests:", deftests)
   const doc = view.state.doc.toString()
   const testDoc = testView.state.doc.toString()
   const end = doc.length
@@ -84,5 +87,14 @@ function loadExercise(slug) {
     selection: { anchor: 0, head: 0 }
   })
 }
+
+const button = document.getElementById("button")
+button.addEventListener('click', function () {
+  const k = exercise.replaceAll("-", "_")
+  const testSuite = testSuites[k + "_test"].trim()
+  clearTests()
+  evalString("(do " + testSuite + ")")
+  console.log("Deftests:", deftests)
+})
 
 loadExercise("hello-world")

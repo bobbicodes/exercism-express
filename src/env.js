@@ -1,3 +1,5 @@
+import {namespace} from './interpreter'
+
 // Env implementation
 export function Env(outer, binds, exprs) {
     this.data = {};
@@ -23,7 +25,9 @@ Env.prototype.find = function (key) {
     /* if (!key.constructor || key.constructor.name !== 'Symbol') {
         return "env.find key must be a symbol"
     } */
-    if (key.value in this.data) { return this; }
+    // ignore namespaces
+    const k = key.value.split("/")[1] || key.value
+    if (k in this.data) { return this; }
     else if (this.outer) {  return this.outer.find(key); }
     else { return null; }
 };
@@ -39,7 +43,8 @@ Env.prototype.get = function(key) {
     /* if (!key.constructor || key.constructor.name !== 'Symbol') {
         return "env.get key must be a symbol"
     } */
+    const k = key.value.split("/")[1] || key.value
     var env = this.find(key);
-    if (!env) { throw new Error("'" + key.value + "' not found"); }
-    return env.data[key.value];
+    if (!env) { throw new Error("'" + k + "' not found"); }
+    return env.data[k];
 };

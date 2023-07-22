@@ -69,8 +69,9 @@ function eval_ast(ast, env) {
   }
 }
 
-let namespace = "user"
+export let namespace = "user"
 export let deftests = []
+let testingString = ""
 
 function _EVAL(ast, env) {
   console.log("Evaluating", ast, env)
@@ -133,11 +134,14 @@ function _EVAL(ast, env) {
       case 'deftest':
         deftests.push(ast.slice(1))
         console.log("Unit tests:", deftests)
-        return "Defined test: " + a1
+        return EVAL(a2, env)
+        //return "Defined test: " + a1
       case 'testing':
+        testingString = testingString + a1
         return a2
       case 'is':
-          return "Assertion: " + a1
+        console.log("a1:", a1)
+          return EVAL(a1, env)
       case 'macroexpand':
         return macroexpand(a1, env);
       case "try":
