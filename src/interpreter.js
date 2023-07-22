@@ -70,6 +70,7 @@ function eval_ast(ast, env) {
 }
 
 let namespace = "user"
+let testAssertions = []
 
 function _EVAL(ast, env) {
   console.log("Evaluating", ast, env)
@@ -131,6 +132,12 @@ function _EVAL(ast, env) {
         return env.set(a1, func);
       case 'deftest':
           return a2
+      case 'testing':
+          return a2
+      case 'is':
+        testAssertions.push(a1)
+        console.log("Defined assertion:", a1)
+          return "Defined assertion: " + a1
       case 'macroexpand':
         return macroexpand(a1, env);
       case "try":
