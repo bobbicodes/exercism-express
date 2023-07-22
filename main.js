@@ -6,6 +6,7 @@ import config from './config.json';
 import exercises from './exercises.json';
 import instructions from './instructions.json';
 import testSuites from './tests.json';
+import {testCodeBeforeEval} from './src/eval-region'
 
 let editorState = EditorState.create({
   doc: `(defn pos-neg-or-zero [n]
@@ -24,7 +25,10 @@ let view = new EditorView({
 })
 
 let testState = EditorState.create({
-  extensions: [basicSetup, clojure()]
+  readOnly: true,
+  extensions: [
+    //EditorView.editable.of(false),
+    basicSetup, clojure()]
 })
 
 let testView = new EditorView({
@@ -62,8 +66,7 @@ function loadExercise(slug) {
   const instructionsElement = document.getElementById("instructions")
   const k = slug.replaceAll("-", "_")
   const src = exercises[k].trim()
-  const testSuite = testSuites[k + "_test"]
-  console.log(testSuite)
+  const testSuite = testSuites[k + "_test"].trim()
   const doc = view.state.doc.toString()
   const testDoc = testView.state.doc.toString()
   const end = doc.length

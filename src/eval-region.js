@@ -51,10 +51,17 @@ const topLevelString = (state) => rangeStr(state, topLevelNode(state))
 
 let evalResult = ""
 let codeBeforeEval = ""
+export let testCodeBeforeEval = ""
 let posBeforeEval = 0
+let testPosBeforeEval = 0
 
 const updateEditor = (view, text, pos) => {
+    const parent = view.dom.parentElement.id
+    console.log(view.dom.parentElement.id)
     const doc = view.state.doc.toString()
+    if (parent === 'test') {
+        testCodeBeforeEval = doc
+    }
     codeBeforeEval = doc
     const end = doc.length
     view.dispatch({
@@ -74,9 +81,16 @@ export function tryEval(s) {
 }
 
 export const clearEval = (view) => {
+    const parent = view.dom.parentElement.id
+    let previousDoc = codeBeforeEval
+    let previousPos = posBeforeEval
+    if (parent === 'test') {
+        previousDoc = testCodeBeforeEval
+        previousPos = testPosBeforeEval
+    }
     if (evalResult.length != 0) {
         evalResult = ""
-        updateEditor(view, codeBeforeEval, posBeforeEval)
+        updateEditor(view, previousDoc, previousPos)
     }
 }
 

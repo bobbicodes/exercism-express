@@ -129,13 +129,15 @@ function _EVAL(ast, env) {
         var func = types._clone(EVAL(a2, env));
         func._ismacro_ = true;
         return env.set(a1, func);
+      case 'deftest':
+          return a2
       case 'macroexpand':
         return macroexpand(a1, env);
-      case "try*":
+      case "try":
         try {
           return EVAL(a1, env);
         } catch (exc) {
-          if (a2 && a2[0].value === "catch*") {
+          if (a2 && a2[0].value === "catch") {
             if (exc instanceof Error) { exc = exc.message; }
             return EVAL(a2[2], new Env(env, [a2[1]], [exc]));
           } else {
