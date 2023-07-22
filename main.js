@@ -2,7 +2,7 @@ import './style.css'
 import { EditorView, basicSetup } from 'codemirror'
 import { EditorState } from '@codemirror/state'
 import { clojure } from "./src/clojure"
-import { evalString, deftests } from "./src/interpreter"
+import { evalString, deftests, clearTests } from "./src/interpreter"
 import config from './config.json';
 import exercises from './exercises.json';
 import instructions from './instructions.json';
@@ -68,8 +68,8 @@ function loadExercise(slug) {
   const k = slug.replaceAll("-", "_")
   const src = exercises[k].trim()
   const testSuite = testSuites[k + "_test"].trim()
+  clearTests()
   evalString("(do " + testSuite + ")")
-  console.log("testSuite:", testSuite)
   console.log("Deftests:", deftests)
   const doc = view.state.doc.toString()
   const testDoc = testView.state.doc.toString()
