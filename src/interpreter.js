@@ -134,7 +134,7 @@ function _EVAL(ast, env) {
       case 'deftest':
         var res = EVAL(a2, env);
         env.set(a1, res);
-        deftests.push(ast.slice(1))
+        deftests.push(res)
         console.log("Unit tests:", deftests)
         return EVAL(a2, env)
         //return "Defined test: " + a1
@@ -158,7 +158,7 @@ function _EVAL(ast, env) {
         console.log("Doing the do")
         console.log("do ast:", ast.slice(1))
         console.log("eval ast:", eval_ast(ast.slice(1), env))
-        eval_ast(ast.slice(1), env);
+        eval_ast(ast.slice(1, -1), env);
         ast = ast[ast.length - 1];
         console.log("do env(post):", env)
         break;

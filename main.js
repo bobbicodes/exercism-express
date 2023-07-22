@@ -90,6 +90,7 @@ function loadExercise(slug) {
 }
 
 const button = document.getElementById("button")
+const results = document.getElementById("results")
 button.addEventListener('click', function () {
   const k = exercise.replaceAll("-", "_")
   const testSuite = testSuites[k + "_test"].trim()
@@ -101,7 +102,15 @@ button.addEventListener('click', function () {
   evalString("(do " + doc + ")")
   //console.log("testEnv:", testEnv)
   evalString("(do " + testSuite + ")")
-  console.log("Test results ", evalString(deftests))
+  if (deftests.includes(false)) {
+    results.innerHTML = "Failed"
+    results.style.color = 'red';
+  } else {
+    results.innerHTML = "Passed"
+    results.style.color = 'green';
+  }
+  
+  console.log("Failure? ", deftests.includes(false))
 })
 
 loadExercise("hello-world")
