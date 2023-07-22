@@ -49,7 +49,7 @@ function macroexpand(ast, env) {
 }
 
 function eval_ast(ast, env) {
-  console.log("AST:", ast)
+//  console.log("AST:", ast)
   if (types._symbol_Q(ast)) {
     return env.get(ast);
   } else if (types._list_Q(ast)) {
@@ -74,7 +74,7 @@ export let deftests = []
 let testingString = ""
 
 function _EVAL(ast, env) {
-  //console.log("Evaluating", ast, env)
+ // console.log("Calling _EVAL", ast, env)
   
   while (true) {
 
@@ -133,7 +133,7 @@ function _EVAL(ast, env) {
         return env.set(a1, func);
       case 'deftest':
         var res = EVAL(a2, env);
-        return env.set(a1, res);
+        env.set(a1, res);
         deftests.push(ast.slice(1))
         console.log("Unit tests:", deftests)
         return EVAL(a2, env)
@@ -155,8 +155,12 @@ function _EVAL(ast, env) {
           }
         }
       case "do":
-        eval_ast(ast.slice(1, -1), env);
+        console.log("Doing the do")
+        console.log("do ast:", ast.slice(1))
+        console.log("eval ast:", eval_ast(ast.slice(1), env))
+        eval_ast(ast.slice(1), env);
         ast = ast[ast.length - 1];
+        console.log("do env(post):", env)
         break;
       case "if":
         var cond = EVAL(a1, env);
@@ -170,7 +174,7 @@ function _EVAL(ast, env) {
         return types._function(EVAL, Env, a2, env, a1);
       default:
         var el = eval_ast(ast, env), f = el[0];
-        console.log("Calling function:", f)
+        //console.log("Calling function:", f)
         if (f.__ast__) {
           ast = f.__ast__;
           env = f.__gen_env__(el.slice(1));
@@ -187,7 +191,9 @@ export function clearTests() {
 }
 
 export function EVAL(ast, env) {
+ // console.log("Calling _EVAl:", ast, "in env", env)
   var result = _EVAL(ast, env);
+ // console.log("Eval result:", result)
   return (typeof result !== "undefined") ? result : null;
 }
 

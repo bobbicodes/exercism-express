@@ -189,3 +189,6 @@ clj꞉user꞉> 
 clj꞉user꞉> 
 nil
 clj꞉user꞉> 
+; nREPL connection failed: Error: read ECONNRESET
+; Failed connecting.
+; nREPL Connection was closed
