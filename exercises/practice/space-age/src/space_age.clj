@@ -1,33 +1,25 @@
 (ns space-age)
 
-(defn on-mercury [] ;; <- arglist goes here
-  ;; your code goes here
-)
+(defn on-mercury [] 
+  )
 
-(defn on-venus [] ;; <- arglist goes here
-  ;; your code goes here
-)
+(defn on-venus [] 
+  )
 
-(defn on-earth [] ;; <- arglist goes here
-      ;; your code goes here
-)
+(defn on-earth [] 
+      )
 
-(defn on-mars [] ;; <- arglist goes here
-  ;; your code goes here
-)
+(defn on-mars [] 
+  )
 
-(defn on-jupiter [] ;; <- arglist goes here
-  ;; your code goes here
-)
+(defn on-jupiter [] 
+  )
 
-(defn on-saturn [] ;; <- arglist goes here
-  ;; your code goes here
-)
+(defn on-saturn [] 
+  )
 
-(defn on-uranus [] ;; <- arglist goes here
-  ;; your code goes here
-)
+(defn on-uranus [] 
+  )
 
-(defn on-neptune [] ;; <- arglist goes here
-  ;; your code goes here
-)
+(defn on-neptune [] 
+  )

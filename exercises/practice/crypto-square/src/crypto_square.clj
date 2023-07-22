@@ -1,21 +1,16 @@
 (ns crypto-square)
 
-(defn normalize-plaintext [] ;; <- arglist goes here
-  ;; your code goes here
-)
+(defn normalize-plaintext [] 
+  )
 
-(defn square-size [] ;; <- arglist goes here
-  ;; your code goes here
-)
+(defn square-size [] 
+  )
 
-(defn plaintext-segments [] ;; <- arglist goes here
-  ;; your code goes here
-)
+(defn plaintext-segments [] 
+  )
 
-(defn ciphertext [] ;; <- arglist goes here
-  ;; your code goes here
-)
+(defn ciphertext [] 
+  )
 
-(defn normalize-ciphertext [] ;; <- arglist goes here
-  ;; your code goes here
-)
+(defn normalize-ciphertext [] 
+  )

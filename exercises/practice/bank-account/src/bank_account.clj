@@ -1,17 +1,17 @@
 (ns bank-account)
 
-(defn open-account [] ;; <- arglist goes here
-  ;; your code goes here
+(defn open-account [] 
+  
   )
 
-(defn close-account [] ;; <- arglist goes here
-  ;; your code goes here
+(defn close-account [] 
+  
   )
 
-(defn get-balance [] ;; <- arglist goes here
-  ;; your code goes here
+(defn get-balance [] 
+  
   )
 
-(defn update-balance [] ;; <- arglist goes here
-  ;; your code goes here
+(defn update-balance [] 
+  
   )
