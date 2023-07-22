@@ -5,6 +5,7 @@ import { clojure } from "./src/clojure"
 import config from './config.json';
 import exercises from './exercises.json';
 import instructions from './instructions.json';
+import testSuites from './tests.json';
 
 let editorState = EditorState.create({
   doc: `(defn pos-neg-or-zero [n]
@@ -20,6 +21,15 @@ let editorState = EditorState.create({
 let view = new EditorView({
   state: editorState,
   parent: document.querySelector('#app')
+})
+
+let testState = EditorState.create({
+  extensions: [basicSetup, clojure()]
+})
+
+let testView = new EditorView({
+  state: testState,
+  parent: document.querySelector('#test')
 })
 
 let topLevelText = "Alt+Enter = Eval top-level form"
@@ -52,6 +62,8 @@ function loadExercise(slug) {
   const instructionsElement = document.getElementById("instructions")
   const k = slug.replaceAll("-", "_")
   const src = exercises[k].trim()
+  const testSuite = testSuites[k + "_test"]
+  console.log(testSuite)
   const doc = view.state.doc.toString()
   const end = doc.length
   instructionsElement.innerHTML = instructions[k].substring(17).trim()
@@ -59,6 +71,12 @@ function loadExercise(slug) {
     changes: { from: 0, to: end, insert: src},
     selection: { anchor: 0, head: 0 }
   })
+  testView.dispatch({
+    changes: { from: 0, insert: testSuite},
+    selection: { anchor: 0, head: 0 }
+  })
 }
+
+
 
 loadExercise("hello-world")
