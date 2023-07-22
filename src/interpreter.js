@@ -140,7 +140,7 @@ function _EVAL(ast, env) {
         //return "Defined test: " + a1
       case 'testing':
         testingString = testingString + a1
-        return a2
+        return EVAL(a2, env)
       case 'macroexpand':
         return macroexpand(a1, env);
       case "try":
@@ -209,6 +209,7 @@ export const evalString = function (str) { return PRINT(EVAL(READ(str), repl_env
 // core.js: defined using javascript
 for (var n in core.ns) { repl_env.set(types._symbol(n), core.ns[n]); }
 
+evalString("(def not (fn (a) (if a false true)))");
 evalString("(defmacro cond (fn (& xs) (if (> (count xs) 0) (list 'if (first xs) (if (> (count xs) 1) (nth xs 1) (throw \"odd number of forms to cond\")) (cons 'cond (rest (rest xs)))))))");
 evalString("(def dec (fn (a) (- a 1)))")
 evalString("(def zero? (fn (n) (= 0 n)))")
