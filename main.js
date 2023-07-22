@@ -65,6 +65,7 @@ function loadExercise(slug) {
   const testSuite = testSuites[k + "_test"]
   console.log(testSuite)
   const doc = view.state.doc.toString()
+  const testDoc = testView.state.doc.toString()
   const end = doc.length
   instructionsElement.innerHTML = instructions[k].substring(17).trim()
   view.dispatch({
@@ -72,11 +73,9 @@ function loadExercise(slug) {
     selection: { anchor: 0, head: 0 }
   })
   testView.dispatch({
-    changes: { from: 0, insert: testSuite},
+    changes: { from: 0, to: testDoc.length, insert: testSuite},
     selection: { anchor: 0, head: 0 }
   })
 }
-
-
 
 loadExercise("hello-world")
