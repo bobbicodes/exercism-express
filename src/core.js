@@ -258,6 +258,14 @@ function reSeq(re, s) {
     return s.match(re)
 }
 
+function upperCase(s) {
+    return s.toUpperCase()
+}
+
+function lowerCase(s) {
+    return s.toLowerCase()
+}
+
 export const ns = {
     'type': types._obj_type,
     '=': types._equal_Q,
@@ -278,6 +286,8 @@ export const ns = {
     'print': print,
     're-seq': reSeq,
     'str': str,
+    'upper-case': upperCase,
+    'lower-case': lowerCase,
     'prn': prn,
     'println': println,
     'read-string': read_str,
