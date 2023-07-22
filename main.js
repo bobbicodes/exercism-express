@@ -39,8 +39,6 @@ for (const exercise of config.exercises.practice) {
   select.appendChild(opt)
 }
 
-
-
 const select = document.getElementById("exercise-select")
 const opt = document.createElement('option')
 select.addEventListener('change', function () {
@@ -53,7 +51,7 @@ select.addEventListener('change', function () {
 function loadExercise(slug) {
   const instructionsElement = document.getElementById("instructions")
   const k = slug.replaceAll("-", "_")
-  const src = exercises[k]
+  const src = exercises[k].trim()
   const doc = view.state.doc.toString()
   const end = doc.length
   instructionsElement.innerHTML = instructions[k].substring(17).trim()
@@ -62,3 +60,5 @@ function loadExercise(slug) {
     selection: { anchor: 0, head: 0 }
   })
 }
+
+loadExercise("hello-world")

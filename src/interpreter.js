@@ -102,7 +102,7 @@ function _EVAL(ast, env) {
         const fn = types._function(EVAL, Env, a3, env, a2);
         console.log("a1:", a1)
         env.set(a1, fn)
-        return "#'" + namespace + "/" + a1
+        return "Defined: " + "#'" + namespace + "/" + a1
       case "let":
         var let_env = new Env(env);
         for (var i = 0; i < a1.length; i += 2) {
