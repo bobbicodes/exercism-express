@@ -247,3 +247,4 @@ evalString(`(def every?
     (cond (empty? xs)       true
           (pred (first xs)) (every? pred (rest xs))
           true              false)))`)
+evalString("(defn reverse [coll] (reduce conj () coll))")

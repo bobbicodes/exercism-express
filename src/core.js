@@ -194,6 +194,9 @@ export function seq(obj) {
     }
 }
 
+function repeat(n, x) {
+    return Array(n).fill(x)
+}
 
 function apply(f) {
     var args = Array.prototype.slice.call(arguments, 1);
@@ -310,6 +313,7 @@ export const ns = {
     'map': map,
     'filter': filter,
     'range': range,
+    'repeat': repeat,
     'conj': conj,
     'seq': seq,
     'pop': pop,
