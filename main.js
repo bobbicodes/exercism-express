@@ -65,8 +65,10 @@ select.addEventListener('change', function () {
 });
 
 let exercise = null
+const results = document.getElementById("results")
 
 function loadExercise(slug) {
+  results.innerHTML = ""
   exercise = slug
   const instructionsElement = document.getElementById("instructions")
   const k = slug.replaceAll("-", "_")
@@ -90,7 +92,7 @@ function loadExercise(slug) {
 }
 
 const button = document.getElementById("button")
-const results = document.getElementById("results")
+
 button.addEventListener('click', function () {
   const k = exercise.replaceAll("-", "_")
   const testSuite = testSuites[k + "_test"].trim()
