@@ -254,6 +254,10 @@ function _is(a) {
    return types._true_Q(a)
 }
 
+function reSeq(re, s) {
+    return s.match(re)
+}
+
 export const ns = {
     'type': types._obj_type,
     '=': types._equal_Q,
@@ -272,6 +276,7 @@ export const ns = {
     'macro?': types._macro_Q,
     'pr-str': pr_str,
     'print': print,
+    're-seq': reSeq,
     'str': str,
     'prn': prn,
     'println': println,

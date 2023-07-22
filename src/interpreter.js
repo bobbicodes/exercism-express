@@ -121,6 +121,10 @@ function _EVAL(ast, env) {
         env = let_env;
         break;
       case "dispatch":
+        if (types._string_Q(a1)) {
+          const re = new RegExp(a1)
+          return re
+        }
         let fun = [types._symbol('fn')]
         const args = ast.toString().match(/%\d?/g).map(types._symbol)
         let body = ast.slice(1)[0]
