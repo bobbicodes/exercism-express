@@ -106,15 +106,16 @@ button.addEventListener('click', function () {
   evalString("(do " + testSuite + ")")
   let fails = []
   for (const test of deftests) {
-    if (!test.results) {
+    if (!test.result) {
+      console.log("test result")
       fails.push(test.test.value)
     }
-    console.log(fails)
+    console.log("fails:", fails)
   }
   const uniqueFails = [...new Set(fails)];
-  console.log("Deftests ", uniqueFails.join(","))
+  console.log("Deftests ", deftests)
 
-  if (fails) {
+  if (fails.length > 0) {
     results.innerHTML = "Failed: " + uniqueFails[0]
     results.style.color = 'red';
   } else {
