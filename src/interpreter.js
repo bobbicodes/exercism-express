@@ -70,7 +70,7 @@ function eval_ast(ast, env) {
 }
 
 let namespace = "user"
-let testAssertions = []
+export let deftests = []
 
 function _EVAL(ast, env) {
   console.log("Evaluating", ast, env)
@@ -131,13 +131,13 @@ function _EVAL(ast, env) {
         func._ismacro_ = true;
         return env.set(a1, func);
       case 'deftest':
-          return a2
+        deftests.push(ast)
+        console.log("Unit tests:", deftests)
+        return "Defined test: " + a1
       case 'testing':
-          return a2
+        return a2
       case 'is':
-        testAssertions.push(a1)
-        console.log("Defined assertion:", a1)
-          return "Defined assertion: " + a1
+          return "Assertion: " + a1
       case 'macroexpand':
         return macroexpand(a1, env);
       case "try":
