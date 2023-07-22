@@ -102,15 +102,24 @@ button.addEventListener('click', function () {
   evalString("(do " + doc + ")")
   //console.log("testEnv:", testEnv)
   evalString("(do " + testSuite + ")")
-  if (deftests.includes(false)) {
-    results.innerHTML = "Failed"
+  let fails = []
+  for (const test of deftests) {
+    if (!test.results) {
+      fails.push(test.test.value)
+    }
+    console.log(fails)
+  }
+  const uniqueFails = [...new Set(fails)];
+  console.log("Deftests ", uniqueFails.join(","))
+
+  if (fails) {
+    results.innerHTML = "Failed: " + uniqueFails[0]
     results.style.color = 'red';
   } else {
-    results.innerHTML = "Passed"
+    results.innerHTML = "Passed!"
     results.style.color = 'green';
   }
   
-  console.log("Failure? ", deftests.includes(false))
 })
 
 loadExercise("hello-world")

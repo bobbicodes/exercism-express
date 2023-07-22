@@ -134,7 +134,7 @@ function _EVAL(ast, env) {
       case 'deftest':
         var res = EVAL(a2, env);
         env.set(a1, res);
-        deftests.push(res)
+        deftests.push({test: a1, result: res})
         console.log("Unit tests:", deftests)
         return EVAL(a2, env)
         //return "Defined test: " + a1
