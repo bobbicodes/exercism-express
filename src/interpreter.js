@@ -131,7 +131,7 @@ function _EVAL(ast, env) {
         func._ismacro_ = true;
         return env.set(a1, func);
       case 'deftest':
-        deftests.push(ast)
+        deftests.push(ast.slice(1))
         console.log("Unit tests:", deftests)
         return "Defined test: " + a1
       case 'testing':
