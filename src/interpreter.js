@@ -49,7 +49,7 @@ function macroexpand(ast, env) {
 }
 
 function eval_ast(ast, env) {
-//  console.log("AST:", ast)
+  //  console.log("AST:", ast)
   if (types._symbol_Q(ast)) {
     return env.get(ast);
   } else if (types._list_Q(ast)) {
@@ -74,8 +74,8 @@ export let deftests = []
 let testingString = ""
 
 function _EVAL(ast, env) {
- // console.log("Calling _EVAL", ast, env)
-  
+  // console.log("Calling _EVAL", ast, env)
+
   while (true) {
 
     //printer.println("EVAL:", printer._pr_str(ast, true));
@@ -92,7 +92,7 @@ function _EVAL(ast, env) {
       return ast;
     }
 
-    var a0 = ast[0], a1 = ast[1], a2 = ast[2], a3 = ast[3];
+    var a0 = ast[0], a1 = ast[1], a2 = ast[2], a3 = ast[3], a4 = ast[4]
     switch (a0.value) {
       case "ns":
         namespace = a1
@@ -101,7 +101,14 @@ function _EVAL(ast, env) {
         var res = EVAL(a2, env);
         return env.set(a1, res);
       case "defn":
-        const fn = types._function(EVAL, Env, a3, env, a2);
+        // Support docstrings
+        let fnbody = a3
+        let fnargs = a2
+        if (types._string_Q(a2) && types._vector_Q(a3)) {
+          fnbody = a4
+          fnargs = a3
+        }
+        const fn = types._function(EVAL, Env, fnbody, env, fnargs);
         console.log("a1:", a1)
         env.set(a1, fn)
         return "Defined: " + "#'" + namespace + "/" + a1
@@ -134,10 +141,10 @@ function _EVAL(ast, env) {
       case 'deftest':
         var res = EVAL(a2, env);
         env.set(a1, res);
-        deftests.push({test: a1, result: res})
+        deftests.push({ test: a1, result: res })
         console.log("Unit tests:", deftests)
         return EVAL(a2, env)
-        //return "Defined test: " + a1
+      //return "Defined test: " + a1
       case 'testing':
         testingString = testingString + a1
         return EVAL(a2, env)
@@ -191,9 +198,9 @@ export function clearTests() {
 }
 
 export function EVAL(ast, env) {
- // console.log("Calling _EVAl:", ast, "in env", env)
+  // console.log("Calling _EVAl:", ast, "in env", env)
   var result = _EVAL(ast, env);
- // console.log("Eval result:", result)
+  // console.log("Eval result:", result)
   return (typeof result !== "undefined") ? result : null;
 }
 
