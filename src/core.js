@@ -251,7 +251,7 @@ function js_method_call(object_method_str) {
 }
 
 function _is(a) {
-   return types._true_Q(a)
+    return types._true_Q(a)
 }
 
 function _join(sep, coll) {
@@ -259,7 +259,7 @@ function _join(sep, coll) {
         return coll.join()
     }
     return a.join(sep)
- }
+}
 
 function reSeq(re, s) {
     return s.match(re)
@@ -279,6 +279,13 @@ function _replace(s, match, replacement) {
 
 function re_matches(re, s) {
     return re.exec(s)
+}
+
+function _subs(s, start, end) {
+    if (end) {
+        return s.substring(start, end)
+    }
+    return s.substring(start)
 }
 
 export const ns = {
@@ -306,6 +313,7 @@ export const ns = {
     'lower-case': lowerCase,
     'prn': prn,
     'println': println,
+    'subs': _subs,
     'read-string': read_str,
     'slurp': slurp,
     '<': function (a, b) { return a < b; },
