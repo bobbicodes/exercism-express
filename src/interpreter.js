@@ -260,3 +260,4 @@ evalString(`(def every?
           (pred (first xs)) (every? pred (rest xs))
           true              false)))`)
 evalString("(defn reverse [coll] (reduce conj () coll))")
+evalString("(defmacro when (fn [x & xs] (list 'if x (cons 'do xs))))")

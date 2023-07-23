@@ -33,7 +33,7 @@
   "crypto_square" : "(ns crypto-square)\r\n\r\n(defn normalize-plaintext [])\r\n\r\n(defn square-size [])\r\n\r\n(defn plaintext-segments [])\r\n\r\n(defn ciphertext [])\r\n\r\n(defn normalize-ciphertext [])\r\n",
   "word_count" : "(ns word-count)\r\n\r\n(defn word-count [s])\r\n",
   "armstrong_numbers" : "(ns armstrong-numbers)\r\n\r\n(defn armstrong? [num])\r\n",
-  "hamming" : "(ns hamming)\r\n\r\n(defn distance [strand1 strand2] ; <- arglist goes here\r\n  \r\n)\r\n",
+  "hamming" : "(ns hamming)\r\n\r\n(defn distance [strand1 strand2])\r\n",
   "scrabble_score" : "(ns scrabble-score)\r\n\r\n(defn score-letter [] \r\n      \r\n)\r\n\r\n(defn score-word [])\r\n",
   "octal" : "(ns octal)\r\n\r\n(defn to-decimal [])\r\n",
   "raindrops" : "(ns raindrops)\r\n\r\n(defn convert [] \r\n      \r\n)\r\n",
