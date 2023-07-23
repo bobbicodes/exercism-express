@@ -254,6 +254,13 @@ function _is(a) {
    return types._true_Q(a)
 }
 
+function _join(sep, coll) {
+    if (!coll) {
+        return coll.join()
+    }
+    return a.join(sep)
+ }
+
 function reSeq(re, s) {
     return s.match(re)
 }
@@ -330,6 +337,7 @@ export const ns = {
     'range': range,
     'repeat': repeat,
     'conj': conj,
+    'join': _join,
     'seq': seq,
     'pop': pop,
     'with-meta': with_meta,
