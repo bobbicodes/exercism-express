@@ -273,6 +273,10 @@ function lowerCase(s) {
     return s.toLowerCase()
 }
 
+function _replace(s, match, replacement) {
+    return s.replace(match, replacement)
+}
+
 export const ns = {
     'type': types._obj_type,
     '=': types._equal_Q,
@@ -338,6 +342,7 @@ export const ns = {
     'repeat': repeat,
     'conj': conj,
     'join': _join,
+    'replace': _replace,
     'seq': seq,
     'pop': pop,
     'with-meta': with_meta,

@@ -110,7 +110,7 @@ function _EVAL(ast, env) {
           fnargs = a3
         }
         const fn = types._function(EVAL, Env, fnbody, env, fnargs);
-        console.log("a1:", a1)
+        //console.log("a1:", a1)
         env.set(a1, fn)
         return "Defined: " + "#'" + namespace + "/" + a1
       case "let":
