@@ -122,7 +122,7 @@ function _EVAL(ast, env) {
         break;
       case "dispatch":
         if (types._string_Q(a1)) {
-          const re = new RegExp(a1)
+          const re = new RegExp(a1, 'g')
           return re
         }
         let fun = [types._symbol('fn')]
