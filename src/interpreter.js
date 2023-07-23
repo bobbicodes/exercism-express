@@ -101,6 +101,7 @@ function _EVAL(ast, env) {
         var res = EVAL(a2, env);
         return env.set(a1, res);
       case "defn":
+      case "defn-":
         // Support docstrings
         let fnbody = a3
         let fnargs = a2
