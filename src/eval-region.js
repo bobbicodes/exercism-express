@@ -1,7 +1,7 @@
 import {Prec} from '@codemirror/state'
 import {keymap} from '@codemirror/view'
 import {syntaxTree} from "@codemirror/language"
-import {evalString} from "./interpreter"
+import {evalString, namespace} from "./interpreter"
 
 const up = (node) => node.parent;
 const isTopType = (nodeType) => nodeType.isTop
@@ -71,7 +71,7 @@ const updateEditor = (view, text, pos) => {
 }
 
 export function tryEval(s) {
-    console.log("Trying to eval", s)
+   // console.log("Trying to eval", s)
     try {
         return evalString(s)
       } catch (err) {
@@ -130,7 +130,7 @@ export const evalCell = (view) => {
     //console.log("doc:", doc)
     posBeforeEval = view.state.selection.main.head
     evalResult = tryEval("(do " + view.state.doc.text.join(" ") + ")")
-    const codeWithResult = doc + "\n" + " => " + evalResult
+    const codeWithResult = doc + "\n" + evalResult
     updateEditor(view, codeWithResult, posBeforeEval)
     return true
 }

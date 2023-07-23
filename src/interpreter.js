@@ -72,6 +72,12 @@ function eval_ast(ast, env) {
 export let namespace = "user"
 export let deftests = []
 let testingString = ""
+// loop variables are identified positionally by `recur`,
+       // so we keep track of the order they're defined
+let loopVars = []
+ // We need to store the ast so we can
+// pass it to recur later
+let loopAST = []
 
 function _EVAL(ast, env) {
   // console.log("Calling _EVAL", ast, env)
@@ -121,6 +127,39 @@ function _EVAL(ast, env) {
         ast = a2;
         env = let_env;
         break;
+      case "loop":
+        loopVars = []
+        var loopVals = {}
+        var loop_env = new Env(env)
+        loopAST = ast.slice(2)
+        // Here we are printing the loop env right after defining it:
+        console.log("loop_env ('before initialization):", loop_env)
+        
+        // but SOMEHOW... its value is changed by the code
+        // we HAVEN'T gotten to yet... (why? how?)
+        for (var i = 0; i < a1.length; i += 2) {
+          loop_env.set(a1[i], EVAL(a1[i+1], loop_env))
+          console.log("initialized binding", a1[i], "to", EVAL(a1[i+1], loop_env))
+          loopVars.push(a1[i])
+          loopVals[a1[i]] = (EVAL(a1[i+1], loop_env))
+          
+        }
+        //return "stop"
+        ast = a2;
+        env = loop_env;
+        console.log("loop_env:", loop_env)
+        break;
+      case "recur":
+        //console.log("loop_env:", loop_env)
+        let recurEnv = new Env(loop_env)
+        console.log("recurEnv:", loop_env)
+          for (var i = 0; i < loopVars.length; i += 1) {
+            console.log("re-binding", loopVars[i].value, 
+               "from", loop_env.get(loopVars[i]), "to", EVAL(ast[i + 1], recurEnv))
+            loop_env.set(loopVars[i], EVAL(ast[i + 1], recurEnv));
+          }
+           ast =  loopAST[0]
+           break;
       case "dispatch":
         if (types._string_Q(a1)) {
           const re = new RegExp(a1, 'g')
@@ -169,7 +208,6 @@ function _EVAL(ast, env) {
       case "do":
         eval_ast(ast.slice(1, -1), env);
         ast = ast[ast.length - 1];
-        console.log("do env(post):", env)
         break;
       case "if":
         var cond = EVAL(a1, env);
