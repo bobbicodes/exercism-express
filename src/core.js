@@ -204,6 +204,9 @@ function apply(f) {
 }
 
 function map(f, lst) {
+    if (types._string_Q(lst)) {
+        lst = seq(lst)
+    }
     return lst.map(function (el) { return f(el); });
 }
 

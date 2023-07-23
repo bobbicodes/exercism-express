@@ -61,7 +61,6 @@ select.addEventListener('change', function () {
   const doc = view.state.doc.toString()
   const end = doc.length
   loadExercise(select.value)
-  console.log("set to", select.value)
 });
 
 let exercise = null

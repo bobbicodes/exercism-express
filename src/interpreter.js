@@ -167,9 +167,6 @@ function _EVAL(ast, env) {
           }
         }
       case "do":
-        console.log("Doing the do")
-        console.log("do ast:", ast.slice(1))
-        console.log("eval ast:", eval_ast(ast.slice(1), env))
         eval_ast(ast.slice(1, -1), env);
         ast = ast[ast.length - 1];
         console.log("do env(post):", env)
