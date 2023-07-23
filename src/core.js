@@ -288,9 +288,14 @@ function _subs(s, start, end) {
     return s.substring(start)
 }
 
+function notEquals(a, b) {
+    return a != b
+}
+
 export const ns = {
     'type': types._obj_type,
     '=': types._equal_Q,
+    'not=': notEquals,
     'throw': mal_throw,
     'nil?': types._nil_Q,
     'true?': types._true_Q,
