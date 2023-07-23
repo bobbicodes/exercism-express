@@ -214,7 +214,6 @@ function filter(f, lst) {
     return lst.filter(function (el) { return f(el); });
 }
 
-
 // Metadata functions
 function with_meta(obj, m) {
     var new_obj = types._clone(obj);
@@ -292,7 +291,7 @@ function _subs(s, start, end) {
 }
 
 function notEquals(a, b) {
-    return a != b
+    return a !== b
 }
 
 export const ns = {

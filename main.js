@@ -112,12 +112,15 @@ button.addEventListener('click', function () {
     console.log("fails:", fails)
   }
   const uniqueFails = [...new Set(fails)];
-  console.log("Deftests ", deftests)
-
-  if (fails.length > 0) {
-    results.innerHTML = "Failed: " + uniqueFails[0]
+  console.log("uniqueFails: ", uniqueFails)
+  if (uniqueFails.length == 1) {
+    results.innerHTML = "1 fail: " + uniqueFails[0]
     results.style.color = 'red';
-  } else {
+  } else if (uniqueFails.length > 1) {
+    results.innerHTML = uniqueFails.length + " fails: " + uniqueFails.join(", ")
+    results.style.color = 'red';
+  }
+   else {
     results.innerHTML = "Passed!"
     results.style.color = 'green';
   }
