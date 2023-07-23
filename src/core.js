@@ -277,6 +277,10 @@ function _replace(s, match, replacement) {
     return s.replace(match, replacement)
 }
 
+function re_matches(re, s) {
+    return re.exec(s)
+}
+
 export const ns = {
     'type': types._obj_type,
     '=': types._equal_Q,
@@ -296,6 +300,7 @@ export const ns = {
     'pr-str': pr_str,
     'print': print,
     're-seq': reSeq,
+    're-matches': re_matches,
     'str': str,
     'upper-case': upperCase,
     'lower-case': lowerCase,

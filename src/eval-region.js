@@ -57,7 +57,7 @@ let testPosBeforeEval = 0
 
 const updateEditor = (view, text, pos) => {
     const parent = view.dom.parentElement.id
-    console.log(view.dom.parentElement.id)
+  //  console.log(view.dom.parentElement.id)
     const doc = view.state.doc.toString()
     if (parent === 'test') {
         testCodeBeforeEval = doc
