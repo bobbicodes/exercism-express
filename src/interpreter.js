@@ -132,31 +132,20 @@ function _EVAL(ast, env) {
         var loopVals = {}
         var loop_env = new Env(env)
         loopAST = ast.slice(2)
-        // Here we are printing the loop env right after defining it:
-        console.log("loop_env ('before initialization):", loop_env)
-        
-        // but SOMEHOW... its value is changed by the code
-        // we HAVEN'T gotten to yet... (why? how?)
         for (var i = 0; i < a1.length; i += 2) {
           loop_env.set(a1[i], EVAL(a1[i+1], loop_env))
           console.log("initialized binding", a1[i], "to", EVAL(a1[i+1], loop_env))
           loopVars.push(a1[i])
           loopVals[a1[i]] = (EVAL(a1[i+1], loop_env))
-          
         }
-        //return "stop"
         ast = a2;
         env = loop_env;
         console.log("loop_env:", loop_env)
         break;
       case "recur":
-        //console.log("loop_env:", loop_env)
-        let recurEnv = new Env(loop_env)
-        console.log("recurEnv:", loop_env)
+         const savedAST = eval_ast(ast.slice(1), loop_env)
           for (var i = 0; i < loopVars.length; i += 1) {
-            console.log("re-binding", loopVars[i].value, 
-               "from", loop_env.get(loopVars[i]), "to", EVAL(ast[i + 1], recurEnv))
-            loop_env.set(loopVars[i], EVAL(ast[i + 1], recurEnv));
+            loop_env.set(loopVars[i], savedAST[i]);
           }
            ast =  loopAST[0]
            break;
