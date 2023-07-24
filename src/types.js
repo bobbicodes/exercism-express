@@ -86,11 +86,11 @@ export function _string_Q(obj) {
 
 // Symbols
 export function Symbol(name) {
-    
+
     this.value = name;
     return this;
 }
-Symbol.prototype.toString = function() { return this.value; }
+Symbol.prototype.toString = function () { return this.value; }
 export function _symbol(name) { return new Symbol(name); }
 export function _symbol_Q(obj) { return obj instanceof Symbol; }
 
@@ -110,6 +110,7 @@ export function _keyword_Q(obj) {
 
 // Ported from clojure.walk: https://github.com/clojure/clojure/blob/master/src/clj/clojure/walk.clj
 function walk(inner, outer, form) {
+    //console.log("Walking form:", form)
     if (_list_Q(form)) {
         return outer(form.map(inner))
     } else if (_vector_Q(form)) {
@@ -143,15 +144,61 @@ export function postwalk(f, form) {
   return x
 }, [1, 2, { a: 3, b: 4}])) */
 
+// We need a function that will tell us if the ast 
+// has a `loop` in it.
+
+function hasLoop(ast) {
+    let loops = []
+    postwalk(x => {
+        if (x.value == _symbol("loop")) {
+            loops.push(true)
+            return true
+        } else {
+            return x
+        }
+        return x
+    }, ast)
+    if (loops.length > 0) {
+        return true
+    } else {
+        return false
+    }
+}
+
+function swapRecur(ast, f) {
+    postwalk(x => {
+        if (x.value == _symbol("recur")) {
+           return f
+        } else {
+            return x
+        }
+        return x
+    }, ast)
+} 
+
 // Functions
 export function _function(Eval, Env, ast, env, params) {
-    //console.log("Defining function", ast)
-    var fn = function() {
+    console.log("Function AST:", ast)
+    let loops = []
+    postwalk(x => {
+        if (x.value == _symbol("loop")) {
+            return true
+        } else {
+            loops.push(true)
+            return x
+        }
+        return x
+    }, ast)
+    console.log("Function has loop?", hasLoop(ast))
+    if (!hasLoop(ast)) {
+        ast = swapRecur(ast)
+    }
+    var fn = function () {
         return Eval(ast, new Env(env, params, arguments));
     };
     fn.__meta__ = null;
     fn.__ast__ = ast;
-    fn.__gen_env__ = function(args) { return new Env(env, params, args); };
+    fn.__gen_env__ = function (args) { return new Env(env, params, args); };
     fn._ismacro_ = false;
     return fn;
 }

@@ -73,11 +73,12 @@ export let namespace = "user"
 export let deftests = []
 let testingString = ""
 // loop variables are identified positionally by `recur`,
-       // so we keep track of the order they're defined
+// so we keep track of the order they're defined
 let loopVars = []
- // We need to store the ast so we can
+// We need to store the ast so we can
 // pass it to recur later
 let loopAST = []
+var loop_env = new Env(repl_env)
 
 
 function _EVAL(ast, env) {
@@ -104,9 +105,19 @@ function _EVAL(ast, env) {
       case "ns":
         namespace = a1
         return null
+      case "let":
+        var let_env = new Env(env);
+        for (var i = 0; i < a1.length; i += 2) {
+          let_env.set(a1[i], EVAL(a1[i + 1], let_env));
+        }
+        ast = a2;
+        env = let_env;
+        break;
       case "def":
         var res = EVAL(a2, env);
         return env.set(a1, res);
+      case "fn":
+        return types._function(EVAL, Env, a2, env, a1);
       case "defn":
       case "defn-":
         // Support docstrings
@@ -116,36 +127,34 @@ function _EVAL(ast, env) {
           fnbody = a4
           fnargs = a3
         }
+        var loop_env = new Env(env)
+        loopVars = fnargs
+        loopAST = fnbody
+        for (var i = 0; i < a1.length; i += 2) {
+          loop_env.set(a1[i], EVAL(a1[i + 1], loop_env))
+          loopVars.push(a1[i])
+        }
         const fn = types._function(EVAL, Env, fnbody, env, fnargs);
-        //console.log("a1:", a1)
         env.set(a1, fn)
         return "Defined: " + "#'" + namespace + "/" + a1
-      case "let":
-        var let_env = new Env(env);
-        for (var i = 0; i < a1.length; i += 2) {
-          let_env.set(a1[i], EVAL(a1[i + 1], let_env));
-        }
-        ast = a2;
-        env = let_env;
-        break;
       case "loop":
         loopVars = []
-        var loop_env = new Env(env)
+        loop_env = new Env(env)
         loopAST = ast.slice(2)
         for (var i = 0; i < a1.length; i += 2) {
-          loop_env.set(a1[i], EVAL(a1[i+1], loop_env))
+          loop_env.set(a1[i], EVAL(a1[i + 1], loop_env))
           loopVars.push(a1[i])
         }
         ast = a2;
         env = loop_env;
         break;
       case "recur":
-         const savedAST = eval_ast(ast.slice(1), loop_env)
-          for (var i = 0; i < loopVars.length; i += 1) {
-            loop_env.set(loopVars[i], savedAST[i]);
-          }
-           ast =  loopAST[0]
-           break;
+        const savedAST = eval_ast(ast.slice(1), loop_env)
+        for (var i = 0; i < loopVars.length; i += 1) {
+          loop_env.set(loopVars[i], savedAST[i]);
+        }
+        ast = loopAST[0]
+        break;
       case "dispatch":
         if (types._string_Q(a1)) {
           const re = new RegExp(a1, 'g')
@@ -203,11 +212,20 @@ function _EVAL(ast, env) {
           ast = a2;
         }
         break;
-      case "fn":
-        return types._function(EVAL, Env, a2, env, a1);
       default:
         var el = eval_ast(ast, env), f = el[0];
         //console.log("Calling function:", f)
+        // Here we need to populate the loop_env in case we are
+       // running a function that has a `recur` in it. 
+       // Recur needs to know what the current values of the loop variables are.
+       // The names were defined above, inside the `defn` case.
+       // The values are passed in here, which is `el.slice(1)`.
+       loop_env = new Env(env)
+       console.log(loop_env)
+       console.log("loopVars:", loopVars)
+       for (let i = 0; i < loopVars.length; i++) {
+        loop_env.set(loopVars[i], el.slice(1)[i + 1], loop_env)
+       }
         if (f.__ast__) {
           ast = f.__ast__;
           env = f.__gen_env__(el.slice(1));
@@ -260,8 +278,8 @@ evalString(`(def gensym
   (let [counter (atom 0)]
     (fn []
       (symbol (str "G__" (swap! counter inc))))))`)
-evalString("(defmacro or (fn (& xs) (if (empty? xs) nil (if (= 1 (count xs)) (first xs) (let (condvar (gensym)) `(let (~condvar ~(first xs)) (if ~condvar ~condvar (or ~@(rest xs)))))))))")
-evalString(`(def memoize
+//evalString("(defmacro or (fn (& xs) (if (empty? xs) nil (if (= 1 (count xs)) (first xs) (let (condvar (gensym)) `(let (~condvar ~(first xs)) (if ~condvar ~condvar (or ~@(rest xs)))))))))")
+/* evalString(`(def memoize
   (fn [f]
     (let [mem (atom {})]
       (fn [& args]
@@ -271,7 +289,7 @@ evalString(`(def memoize
             (let [ret (apply f args)]
               (do
                 (swap! mem assoc key ret)
-                ret))))))))`)
+                ret))))))))`) */
 evalString(`(def partial (fn [pfn & args]
   (fn [& args-inner]
     (apply pfn (concat args args-inner)))))`)

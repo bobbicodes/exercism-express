@@ -12,14 +12,14 @@ import {testCodeBeforeEval} from './src/eval-region'
 
 let editorState = EditorState.create({
   doc: `(defn compute-across [func elements value]
-  (if (empty? elements)
+    (if (empty? elements)
       value
       (recur func (rest elements) (func value (first elements)))))
   
-(defn total-of [numbers]
-  (compute-across + numbers 0))
+  (defn total-of [numbers]
+    (compute-across + numbers 0))
   
-(total-of [1 2 3 4])`,
+  (total-of [1 2 3])`,
   extensions: [basicSetup, clojure()]
 })
 
@@ -114,7 +114,7 @@ button.addEventListener('click', function () {
     console.log("fails:", fails)
   }
   const uniqueFails = [...new Set(fails)];
-  console.log("uniqueFails: ", uniqueFails)
+  //console.log("uniqueFails: ", uniqueFails)
   if (uniqueFails.length == 1) {
     results.innerHTML = "1 fail: " + uniqueFails[0]
     results.style.color = 'red';
