@@ -108,11 +108,75 @@ export function _keyword_Q(obj) {
     return typeof obj === 'string' && obj[0] === '\u029e';
 }
 
+function walk(inner, outer, form) {
+    //console.log("Walking form:", form)
+    if (_list_Q(form)) {
+        return outer(form.map(inner))
+    } else if (_vector_Q(form)) {
+        let v = outer(form.map(inner))
+        v.__isvector__ = true;
+        return v
+    } else if (form.__mapEntry__) {
+        const k = inner(form[0])
+        const v = inner(form[1])
+        let mapEntry = [k, v]
+        mapEntry.__mapEntry__ = true
+        return outer(mapEntry)
+    } else if (_hash_map_Q(form)) {
+        const entries = seq(form).map(inner)
+        let newMap = {}
+        entries.forEach(mapEntry => {
+            newMap[mapEntry[0]] = mapEntry[1]
+        });
+        return outer(newMap)
+    } else {
+        return outer(form)
+    }
+}
+
+export function postwalk(f, form) {
+    return walk(x => postwalk(f, x), f, form)
+}
+
+function hasLoop(ast) {
+    let loops = []
+    postwalk(x => {
+        if (x.value == _symbol("loop")) {
+            loops.push(true)
+            return true
+        } else {
+            return x
+        }
+        return x
+    }, ast)
+    if (loops.length > 0) {
+        return true
+    } else {
+        return false
+    }
+}
+
 // Functions
 export function _function(Eval, Env, ast, env, params) {
+    console.log("fn AST:", ast)
     var fn = function () {
-        return Eval(ast, new Env(env, params, arguments));
-    };
+        return Eval(ast, new Env(env, params, arguments))
+    }
+    let swapRecur = postwalk(x => {
+        if (x.value == _symbol("recur")) {
+            return fn
+        } else {
+            return x
+        }
+        return x
+    }, ast)
+    if (!hasLoop(ast)) {
+        ast = swapRecur
+        fn = function () {
+            return Eval(ast, new Env(env, params, arguments))
+        }
+    }
+    console.log("fn AST (after):", ast)
     fn.__meta__ = null;
     fn.__ast__ = ast;
     fn.__gen_env__ = function (args) { return new Env(env, params, args); };
