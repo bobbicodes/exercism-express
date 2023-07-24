@@ -108,63 +108,6 @@ export function _keyword_Q(obj) {
     return typeof obj === 'string' && obj[0] === '\u029e';
 }
 
-// Ported from clojure.walk: https://github.com/clojure/clojure/blob/master/src/clj/clojure/walk.clj
-function walk(inner, outer, form) {
-    //console.log("Walking form:", form)
-    if (_list_Q(form)) {
-        return outer(form.map(inner))
-    } else if (_vector_Q(form)) {
-        let v = outer(form.map(inner))
-        v.__isvector__ = true;
-        return v
-    } else if (form.__mapEntry__) {
-        const k = inner(form[0])
-        const v = inner(form[1])
-        let mapEntry = [k, v]
-        mapEntry.__mapEntry__ = true
-        return outer(mapEntry)
-    } else if (_hash_map_Q(form)) {
-        const entries = seq(form).map(inner)
-        let newMap = {}
-        entries.forEach(mapEntry => {
-            newMap[mapEntry[0]] = mapEntry[1]
-        });
-        return outer(newMap)
-    } else {
-        return outer(form)
-    }
-}
-
-export function postwalk(f, form) {
-    return walk(x => postwalk(f, x), f, form)
-}
-
-/* console.log(postwalk(x => {
-  console.log("Walked:", x)
-  return x
-}, [1, 2, { a: 3, b: 4}])) */
-
-// We need a function that will tell us if the ast 
-// has a `loop` in it.
-
-function hasLoop(ast) {
-    let loops = []
-    postwalk(x => {
-        if (x.value == _symbol("loop")) {
-            loops.push(true)
-            return true
-        } else {
-            return x
-        }
-        return x
-    }, ast)
-    if (loops.length > 0) {
-        return true
-    } else {
-        return false
-    }
-}
-
 // Functions
 export function _function(Eval, Env, ast, env, params) {
     var fn = function () {

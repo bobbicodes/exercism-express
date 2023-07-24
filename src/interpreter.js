@@ -80,6 +80,57 @@ let loopVars = []
 let loopAST = []
 var loop_env = new Env(repl_env)
 
+// We need a function that will tell us if the ast 
+// has a `loop` in it.
+
+// Ported from clojure.walk: https://github.com/clojure/clojure/blob/master/src/clj/clojure/walk.clj
+function walk(inner, outer, form) {
+  //console.log("Walking form:", form)
+  if (types._list_Q(form)) {
+      return outer(form.map(inner))
+  } else if (types._vector_Q(form)) {
+      let v = outer(form.map(inner))
+      v.__isvector__ = true;
+      return v
+  } else if (form.__mapEntry__) {
+      const k = inner(form[0])
+      const v = inner(form[1])
+      let mapEntry = [k, v]
+      mapEntry.__mapEntry__ = true
+      return outer(mapEntry)
+  } else if (types._hash_map_Q(form)) {
+      const entries = seq(form).map(inner)
+      let newMap = {}
+      entries.forEach(mapEntry => {
+          newMap[mapEntry[0]] = mapEntry[1]
+      });
+      return outer(newMap)
+  } else {
+      return outer(form)
+  }
+}
+
+export function postwalk(f, form) {
+  return walk(x => postwalk(f, x), f, form)
+}
+
+function hasLoop(ast) {
+  let loops = []
+  postwalk(x => {
+      if (x.value == types._symbol("loop")) {
+          loops.push(true)
+          return true
+      } else {
+          return x
+      }
+      return x
+  }, ast)
+  if (loops.length > 0) {
+      return true
+  } else {
+      return false
+  }
+}
 
 function _EVAL(ast, env) {
   // console.log("Calling _EVAL", ast, env)
@@ -103,8 +154,8 @@ function _EVAL(ast, env) {
     // We want to support Clojure's `recur`.
     // Since we have real, implicit TCO,
     // we can simply walk the AST and replace any
-    // `recur` with the function name.
-    let swapRecur = types.postwalk(x => {
+    // `recur` with the function name
+    let swapRecur = postwalk(x => {
       if (x.value == types._symbol("recur")) {
         return types._symbol(ast[1].value)
       } else {
@@ -133,15 +184,18 @@ function _EVAL(ast, env) {
         return types._function(EVAL, Env, a2, env, a1);
       case "defn":
       case "defn-":
+        
         console.log("ast:", ast)
         console.log("env:", env)
         console.log("swapRecur:", swapRecur)
-        ast = swapRecur
-        a0 = ast[0]
-        a1 = ast[1]
-        a2 = ast[2]
-        a3 = ast[3]
-        a4 = ast[4]
+        if (!hasLoop(ast)) {
+          ast = swapRecur
+          a0 = ast[0]
+          a1 = ast[1]
+          a2 = ast[2]
+          a3 = ast[3]
+          a4 = ast[4]
+        }
 
         // Support docstrings
         let fnbody = a3
