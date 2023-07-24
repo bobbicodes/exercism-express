@@ -11,10 +11,15 @@ import testSuites from './tests.json';
 import {testCodeBeforeEval} from './src/eval-region'
 
 let editorState = EditorState.create({
-  doc: `(loop [a 3 b []]
-  (if (= a 0)
-      b
-      (recur (dec a) (conj b a))))`,
+  doc: `(defn compute-across [func elements value]
+  (if (empty? elements)
+      value
+      (recur func (rest elements) (func value (first elements)))))
+  
+(defn total-of [numbers]
+  (compute-across + numbers 0))
+  
+(total-of [1 2 3 4])`,
   extensions: [basicSetup, clojure()]
 })
 

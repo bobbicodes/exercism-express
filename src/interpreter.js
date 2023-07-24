@@ -79,6 +79,7 @@ let loopVars = []
 // pass it to recur later
 let loopAST = []
 
+
 function _EVAL(ast, env) {
   // console.log("Calling _EVAL", ast, env)
 
@@ -129,18 +130,14 @@ function _EVAL(ast, env) {
         break;
       case "loop":
         loopVars = []
-        var loopVals = {}
         var loop_env = new Env(env)
         loopAST = ast.slice(2)
         for (var i = 0; i < a1.length; i += 2) {
           loop_env.set(a1[i], EVAL(a1[i+1], loop_env))
-          console.log("initialized binding", a1[i], "to", EVAL(a1[i+1], loop_env))
           loopVars.push(a1[i])
-          loopVals[a1[i]] = (EVAL(a1[i+1], loop_env))
         }
         ast = a2;
         env = loop_env;
-        console.log("loop_env:", loop_env)
         break;
       case "recur":
          const savedAST = eval_ast(ast.slice(1), loop_env)
