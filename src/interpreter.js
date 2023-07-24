@@ -265,16 +265,6 @@ function _EVAL(ast, env) {
         break;
       default:
         var el = eval_ast(ast, env), f = el[0];
-        //console.log("Calling function:", f)
-        // Here we need to populate the loop_env in case we are
-        // running a function that has a `recur` in it. 
-        // Recur needs to know what the current values of the loop variables are.
-        // The names were defined above, inside the `defn` case.
-        // The values are passed in here, which is `el.slice(1)`.
-        loop_env = new Env(env)
-        for (let i = 0; i < loopVars.length; i++) {
-          loop_env.set(loopVars[i], el.slice(1)[i + 1], loop_env)
-        }
         if (f.__ast__) {
           ast = f.__ast__;
           env = f.__gen_env__(el.slice(1));
@@ -327,8 +317,8 @@ evalString(`(def gensym
   (let [counter (atom 0)]
     (fn []
       (symbol (str "G__" (swap! counter inc))))))`)
-//evalString("(defmacro or (fn (& xs) (if (empty? xs) nil (if (= 1 (count xs)) (first xs) (let (condvar (gensym)) `(let (~condvar ~(first xs)) (if ~condvar ~condvar (or ~@(rest xs)))))))))")
-/* evalString(`(def memoize
+evalString("(defmacro or (fn (& xs) (if (empty? xs) nil (if (= 1 (count xs)) (first xs) (let (condvar (gensym)) `(let (~condvar ~(first xs)) (if ~condvar ~condvar (or ~@(rest xs)))))))))")
+evalString(`(def memoize
   (fn [f]
     (let [mem (atom {})]
       (fn [& args]
@@ -338,7 +328,7 @@ evalString(`(def gensym
             (let [ret (apply f args)]
               (do
                 (swap! mem assoc key ret)
-                ret))))))))`) */
+                ret))))))))`)
 evalString(`(def partial (fn [pfn & args]
   (fn [& args-inner]
     (apply pfn (concat args args-inner)))))`)

@@ -1,4 +1,5 @@
 import { Env } from './env.js'
+import { seq } from './core.js'
 
 export function _obj_type(obj) {
     if (_symbol_Q(obj)) { return 'symbol'; }
@@ -109,19 +110,16 @@ export function _keyword_Q(obj) {
 }
 
 function walk(inner, outer, form) {
-    //console.log("Walking form:", form)
+    console.log("Walking form:", form)
+    if (form == null) {
+        return null
+    }
     if (_list_Q(form)) {
         return outer(form.map(inner))
     } else if (_vector_Q(form)) {
         let v = outer(form.map(inner))
         v.__isvector__ = true;
         return v
-    } else if (form.__mapEntry__) {
-        const k = inner(form[0])
-        const v = inner(form[1])
-        let mapEntry = [k, v]
-        mapEntry.__mapEntry__ = true
-        return outer(mapEntry)
     } else if (_hash_map_Q(form)) {
         const entries = seq(form).map(inner)
         let newMap = {}
@@ -129,6 +127,12 @@ function walk(inner, outer, form) {
             newMap[mapEntry[0]] = mapEntry[1]
         });
         return outer(newMap)
+    } else if (form.__mapEntry__) {
+        const k = inner(form[0])
+        const v = inner(form[1])
+        let mapEntry = [k, v]
+        mapEntry.__mapEntry__ = true
+        return outer(mapEntry)
     } else {
         return outer(form)
     }
@@ -156,9 +160,19 @@ function hasLoop(ast) {
     }
 }
 
+function downloadObjectAsJson(exportObj, exportName) {
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+    var downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", exportName + ".json");
+    document.body.appendChild(downloadAnchorNode); // required for firefox
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+}
+
 // Functions
 export function _function(Eval, Env, ast, env, params) {
-    console.log("fn AST:", ast)
+   // console.log("fn AST:", ast)
     var fn = function () {
         return Eval(ast, new Env(env, params, arguments))
     }
@@ -176,7 +190,11 @@ export function _function(Eval, Env, ast, env, params) {
             return Eval(ast, new Env(env, params, arguments))
         }
     }
+    fn = function () {
+        return Eval(ast, new Env(env, params, arguments))
+    }
     console.log("fn AST (after):", ast)
+    //downloadObjectAsJson(ast, "ast.json")
     fn.__meta__ = null;
     fn.__ast__ = ast;
     fn.__gen_env__ = function (args) { return new Env(env, params, args); };
