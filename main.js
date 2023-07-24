@@ -11,13 +11,10 @@ import testSuites from './tests.json';
 import {testCodeBeforeEval} from './src/eval-region'
 
 let editorState = EditorState.create({
-  doc: `(defn pos-neg-or-zero [n]
-  (cond
-    (< n 0) "negative"
-    (> n 0) "positive"
-    :else "zero"))
-      
-(pos-neg-or-zero -6)`,
+  doc: `(loop [a 3 b []]
+  (if (= a 0)
+      b
+      (recur (dec a) (conj b a))))`,
   extensions: [basicSetup, clojure()]
 })
 
@@ -127,4 +124,4 @@ button.addEventListener('click', function () {
   
 })
 
-loadExercise("hello-world")
+//loadExercise("hello-world")
