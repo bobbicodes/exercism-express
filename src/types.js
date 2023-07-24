@@ -165,34 +165,8 @@ function hasLoop(ast) {
     }
 }
 
-function swapRecur(ast, f) {
-    postwalk(x => {
-        if (x.value == _symbol("recur")) {
-           return f
-        } else {
-            return x
-        }
-        return x
-    }, ast)
-} 
-
 // Functions
 export function _function(Eval, Env, ast, env, params) {
-    console.log("Function AST:", ast)
-    let loops = []
-    postwalk(x => {
-        if (x.value == _symbol("loop")) {
-            return true
-        } else {
-            loops.push(true)
-            return x
-        }
-        return x
-    }, ast)
-    console.log("Function has loop?", hasLoop(ast))
-    if (!hasLoop(ast)) {
-        ast = swapRecur(ast)
-    }
     var fn = function () {
         return Eval(ast, new Env(env, params, arguments));
     };

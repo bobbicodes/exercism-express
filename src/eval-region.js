@@ -130,7 +130,7 @@ export const evalCell = (view) => {
     //console.log("doc:", doc)
     posBeforeEval = view.state.selection.main.head
     evalResult = tryEval("(do " + view.state.doc.text.join(" ") + ")")
-    const codeWithResult = doc + "\n" + evalResult
+    const codeWithResult = doc + "\n" + "=> " + evalResult
     updateEditor(view, codeWithResult, posBeforeEval)
     return true
 }

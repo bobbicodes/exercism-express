@@ -100,6 +100,19 @@ function _EVAL(ast, env) {
       return ast;
     }
 
+    // We want to support Clojure's `recur`.
+    // Since we have real, implicit TCO,
+    // we can simply walk the AST and replace any
+    // `recur` with the function name.
+    let swapRecur = types.postwalk(x => {
+      if (x.value == types._symbol("recur")) {
+        return types._symbol(ast[1].value)
+      } else {
+        return x
+      }
+      return x
+    }, ast)
+
     var a0 = ast[0], a1 = ast[1], a2 = ast[2], a3 = ast[3], a4 = ast[4]
     switch (a0.value) {
       case "ns":
@@ -120,6 +133,16 @@ function _EVAL(ast, env) {
         return types._function(EVAL, Env, a2, env, a1);
       case "defn":
       case "defn-":
+        console.log("ast:", ast)
+        console.log("env:", env)
+        console.log("swapRecur:", swapRecur)
+        ast = swapRecur
+        a0 = ast[0]
+        a1 = ast[1]
+        a2 = ast[2]
+        a3 = ast[3]
+        a4 = ast[4]
+
         // Support docstrings
         let fnbody = a3
         let fnargs = a2
@@ -216,16 +239,16 @@ function _EVAL(ast, env) {
         var el = eval_ast(ast, env), f = el[0];
         //console.log("Calling function:", f)
         // Here we need to populate the loop_env in case we are
-       // running a function that has a `recur` in it. 
-       // Recur needs to know what the current values of the loop variables are.
-       // The names were defined above, inside the `defn` case.
-       // The values are passed in here, which is `el.slice(1)`.
-       loop_env = new Env(env)
-       console.log(loop_env)
-       console.log("loopVars:", loopVars)
-       for (let i = 0; i < loopVars.length; i++) {
-        loop_env.set(loopVars[i], el.slice(1)[i + 1], loop_env)
-       }
+        // running a function that has a `recur` in it. 
+        // Recur needs to know what the current values of the loop variables are.
+        // The names were defined above, inside the `defn` case.
+        // The values are passed in here, which is `el.slice(1)`.
+        loop_env = new Env(env)
+        console.log(loop_env)
+        console.log("loopVars:", loopVars)
+        for (let i = 0; i < loopVars.length; i++) {
+          loop_env.set(loopVars[i], el.slice(1)[i + 1], loop_env)
+        }
         if (f.__ast__) {
           ast = f.__ast__;
           env = f.__gen_env__(el.slice(1));
