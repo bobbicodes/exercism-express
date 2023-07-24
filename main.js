@@ -123,10 +123,10 @@ button.addEventListener('click', function () {
     results.style.color = 'red';
   }
    else {
-    results.innerHTML = "Passed!"
+    results.innerHTML = "Passed 😍"
     results.style.color = 'green';
   }
   
 })
 
-//loadExercise("hello-world")
+loadExercise("hello-world")
