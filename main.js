@@ -104,7 +104,14 @@ button.addEventListener('click', function () {
   //console.log("Doc:", doc)
   evalString("(do " + doc + ")")
   //console.log("testEnv:", testEnv)
-  evalString("(do " + testSuite + ")")
+  try {
+    evalString("(do " + testSuite + ")")
+  } catch (error) {
+    results.innerHTML = "Error: " + error
+    results.style.color = 'red';
+    return null
+  }
+  
   let fails = []
   for (const test of deftests) {
     if (!test.result) {
