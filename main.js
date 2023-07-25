@@ -108,10 +108,9 @@ button.addEventListener('click', function () {
   let fails = []
   for (const test of deftests) {
     if (!test.result) {
-      console.log("test result")
       fails.push(test.test.value)
     }
-    console.log("fails:", fails)
+    //console.log("fails:", fails)
   }
   const uniqueFails = [...new Set(fails)];
   //console.log("uniqueFails: ", uniqueFails)

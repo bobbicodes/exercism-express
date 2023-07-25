@@ -153,6 +153,8 @@ function _EVAL(ast, env) {
 
     var a0 = ast[0], a1 = ast[1], a2 = ast[2], a3 = ast[3], a4 = ast[4]
     switch (a0.value) {
+      case "comment":
+        return null
       case "ns":
         namespace = a1
         return null
@@ -232,7 +234,7 @@ function _EVAL(ast, env) {
         var res = EVAL(a2, env);
         env.set(a1, res);
         deftests.push({ test: a1, result: res })
-        console.log("Unit tests:", deftests)
+        //console.log("Unit tests:", deftests)
         return EVAL(a2, env)
       //return "Defined test: " + a1
       case 'testing':

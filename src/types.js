@@ -110,7 +110,7 @@ export function _keyword_Q(obj) {
 }
 
 function walk(inner, outer, form) {
-    console.log("Walking form:", form)
+    //console.log("Walking form:", form)
     if (form == null) {
         return null
     }
@@ -193,7 +193,7 @@ export function _function(Eval, Env, ast, env, params) {
     fn = function () {
         return Eval(ast, new Env(env, params, arguments))
     }
-    console.log("fn AST (after):", ast)
+    //console.log("fn AST (after):", ast)
     //downloadObjectAsJson(ast, "ast.json")
     fn.__meta__ = null;
     fn.__ast__ = ast;
