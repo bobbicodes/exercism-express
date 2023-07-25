@@ -11,7 +11,9 @@ import testSuites from './tests.json';
 import {testCodeBeforeEval} from './src/eval-region'
 
 let editorState = EditorState.create({
-  doc: `(partition 4 (range 20))`,
+  doc: `(defn two-fer
+    ([] (str "One for you, one for me."))
+    ([name] (str "One for " name ", one for me.")))`,
   extensions: [basicSetup, clojure()]
 })
 
@@ -126,4 +128,4 @@ button.addEventListener('click', function () {
   }
 })
 
-//loadExercise("hello-world")
+//loadExercise("two-fer")

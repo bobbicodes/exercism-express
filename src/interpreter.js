@@ -136,7 +136,7 @@ function _EVAL(ast, env) {
   // console.log("Calling _EVAL", ast, env)
 
   while (true) {
-
+    //console.log(JSON.parse(JSON.stringify(env)))
     //printer.println("EVAL:", printer._pr_str(ast, true));
     if (!types._list_Q(ast)) {
       return eval_ast(ast, env);
@@ -174,7 +174,32 @@ function _EVAL(ast, env) {
         return types._function(EVAL, Env, a2, env, a1);
       case "defn":
       case "defn-":
-        // Support docstrings
+        // Multi-arity functions
+        const fnBody = ast.slice(2)
+        // Create list of fn bodies, one for each arity
+        let arities = []
+        for (let i = 0; i < fnBody.length; i++) {
+          if (types._list_Q(fnBody[i])) {
+            arities.push(fnBody[i])
+          }
+        }
+        console.log("arities", arities)
+        
+        // Define each arity as a separate function
+        for (let i = 0; i < arities.length; i++) {
+          const args = arities[0]
+          const body = arities[1]
+          const fn = types._function(EVAL, Env, body, env, args);
+          const fnName = types._symbol(a1 + "-arity-" + i)
+          console.log(fnName)
+          console.log(typeof a1)
+          env.set(fnName, fn)
+        }
+        console.log("env", env)
+
+        return null
+
+       /*  // Support docstrings
         let fnbody = a3
         let fnargs = a2
         if (types._string_Q(a2) && types._vector_Q(a3)) {
@@ -190,7 +215,7 @@ function _EVAL(ast, env) {
         }
         const fn = types._function(EVAL, Env, fnbody, env, fnargs);
         env.set(a1, fn)
-        return "Defined: " + "#'" + namespace + "/" + a1
+        return "Defined: " + "#'" + namespace + "/" + a1 */
       case "loop":
         loopVars = []
         loop_env = new Env(env)
@@ -217,12 +242,12 @@ function _EVAL(ast, env) {
         }
         // Anonymous function shorthand
         if (types._list_Q(a1)) {
-        let fun = [types._symbol('fn')]
-        const args = ast.toString().match(/%\d?/g).map(types._symbol)
-        let body = ast.slice(1)[0]
-        fun.push(args)
-        fun.push(body)
-        return types._function(EVAL, Env, body, env, args);
+          let fun = [types._symbol('fn')]
+          const args = ast.toString().match(/%\d?/g).map(types._symbol)
+          let body = ast.slice(1)[0]
+          fun.push(args)
+          fun.push(body)
+          return types._function(EVAL, Env, body, env, args);
         }
       case "quote":
         return a1;
@@ -344,5 +369,5 @@ evalString(`(def every?
     (cond (empty? xs)       true
           (pred (first xs)) (every? pred (rest xs))
           true              false)))`)
-evalString("(defn reverse [coll] (reduce conj () coll))")
+//evalString("(defn reverse [coll] (reduce conj () coll))")
 evalString("(defmacro when (fn [x & xs] (list 'if x (cons 'do xs))))")
