@@ -107,7 +107,7 @@ button.addEventListener('click', function () {
   try {
     evalString("(do " + testSuite + ")")
   } catch (error) {
-    results.innerHTML = "Error: " + error
+    results.innerHTML = error
     results.style.color = 'red';
     return null
   }
