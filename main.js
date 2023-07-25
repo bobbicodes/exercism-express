@@ -13,7 +13,10 @@ import {testCodeBeforeEval} from './src/eval-region'
 let editorState = EditorState.create({
   doc: `(defn two-fer
     ([] (str "One for you, one for me."))
-    ([name] (str "One for " name ", one for me.")))`,
+    ([name] (str "One for " name ", one for me.")))
+
+(two-fer)
+(two-fer "hi")`,
   extensions: [basicSetup, clojure()]
 })
 

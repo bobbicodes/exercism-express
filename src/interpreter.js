@@ -176,6 +176,7 @@ function _EVAL(ast, env) {
       case "defn-":
         // Multi-arity functions
         const fnBody = ast.slice(2)
+        console.log("fnBody", fnBody)
         // Create list of fn bodies, one for each arity
         let arities = []
         for (let i = 0; i < fnBody.length; i++) {
@@ -187,17 +188,19 @@ function _EVAL(ast, env) {
         
         // Define each arity as a separate function
         for (let i = 0; i < arities.length; i++) {
-          const args = arities[0]
-          const body = arities[1]
+          const args = arities[i][0]
+          const body = arities[i][1]
+          console.log("args:", args)
+          console.log("body:", body)
           const fn = types._function(EVAL, Env, body, env, args);
           const fnName = types._symbol(a1 + "-arity-" + i)
-          console.log(fnName)
-          console.log(typeof a1)
+          //console.log(fnName)
+          //console.log(typeof a1)
           env.set(fnName, fn)
         }
-        console.log("env", env)
+        //console.log("env", env)
 
-        return null
+        return "Defined: #'" + namespace + "/" + a1
 
        /*  // Support docstrings
         let fnbody = a3
@@ -296,12 +299,27 @@ function _EVAL(ast, env) {
         }
         break;
       default:
-        var el = eval_ast(ast, env), f = el[0];
-        if (f.__ast__) {
-          ast = f.__ast__;
-          env = f.__gen_env__(el.slice(1));
+        console.log("AST:", ast)
+        const args = eval_ast(ast.slice(1), env)
+        const arity = args.length
+        // Check if fn is defined by arity
+        console.log("args:", args)
+        let f = null
+        console.log("ast[0]:", ast[0])
+        if (Object.keys(env.data).includes(ast[0] + "-arity-" + arity)) {
+          const fSym = types._symbol(ast[0] + "-arity-" + arity)
+          f = EVAL(fSym, env)
+          console.log("Calling:", ast[0] + "-arity-" + arity)
+          console.log("env:", env)
         } else {
-          return f.apply(f, el.slice(1));
+          f = EVAL(ast[0], env)
+        }
+        
+        if (f.__ast__) {  
+          ast = f.__ast__;
+          env = f.__gen_env__(args);
+        } else {
+          return f.apply(f, args);
         }
     }
 
@@ -331,7 +349,7 @@ export const evalString = function (str) { return PRINT(EVAL(READ(str), repl_env
 // core.js: defined using javascript
 for (var n in core.ns) { repl_env.set(types._symbol(n), core.ns[n]); }
 
-evalString("(def not (fn (a) (if a false true)))");
+/* evalString("(def not (fn (a) (if a false true)))");
 evalString("(defmacro cond (fn (& xs) (if (> (count xs) 0) (list 'if (first xs) (if (> (count xs) 1) (nth xs 1) (throw \"odd number of forms to cond\")) (cons 'cond (rest (rest xs)))))))");
 evalString("(def dec (fn (a) (- a 1)))")
 evalString("(def zero? (fn (n) (= 0 n)))")
@@ -368,6 +386,6 @@ evalString(`(def every?
   (fn (pred xs)
     (cond (empty? xs)       true
           (pred (first xs)) (every? pred (rest xs))
-          true              false)))`)
+          true              false)))`) */
 //evalString("(defn reverse [coll] (reduce conj () coll))")
-evalString("(defmacro when (fn [x & xs] (list 'if x (cons 'do xs))))")
+//evalString("(defmacro when (fn [x & xs] (list 'if x (cons 'do xs))))")
