@@ -17,7 +17,7 @@ function tokenize(str) {
         if (match[0] === ';') { continue; }
         results.push(match);
     }
-    console.log("tokens:", results)
+    //console.log("tokens:", results)
     return results;
 }
 

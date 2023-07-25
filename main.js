@@ -11,7 +11,7 @@ import testSuites from './tests.json';
 import {testCodeBeforeEval} from './src/eval-region'
 
 let editorState = EditorState.create({
-  doc: `#{"a" 1 "b" 2}`,
+  doc: `(partition 4 (range 20))`,
   extensions: [basicSetup, clojure()]
 })
 
@@ -124,7 +124,6 @@ button.addEventListener('click', function () {
     results.innerHTML = "Passed 😍"
     results.style.color = 'green';
   }
-  
 })
 
-loadExercise("hello-world")
+//loadExercise("hello-world")

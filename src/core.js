@@ -304,6 +304,21 @@ function notEquals(a, b) {
     return a !== b
 }
 
+function take(n, coll) {
+    return coll.slice(0, n)
+}
+
+function drop(n, coll) {
+    return coll.slice(-n)
+}
+
+function partition(n, step, pad, coll) {
+    if (arguments.length === 2) {
+        const s = seq(step)
+        return take(n, s)
+    }
+}
+
 export const ns = {
     'type': types._obj_type,
     '=': types._equal_Q,
@@ -350,12 +365,15 @@ export const ns = {
     'hash-map': types._hash_map,
     'map?': types._hash_map_Q,
     'assoc': assoc,
+    'partition': partition,
     'dissoc': dissoc,
     'get': get,
     'contains?': contains_Q,
     'keys': keys,
     'vals': vals,
     'sequential?': types._sequential_Q,
+    'take': take,
+    'drop': drop,
     'cons': cons,
     'concat': concat,
     'vec': vec,
