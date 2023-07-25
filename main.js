@@ -98,7 +98,7 @@ button.addEventListener('click', function () {
   const k = exercise.replaceAll("-", "_")
   const testSuite = testSuites[k + "_test"].trim()
   clearTests()
-  console.log("Running tests")
+  //console.log("Running tests")
   //let testEnv = new Env()
   const doc = view.state.doc.toString()
   //console.log("Doc:", doc)

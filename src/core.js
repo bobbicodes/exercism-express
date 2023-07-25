@@ -173,6 +173,16 @@ function pop(lst) {
     }
 }
 
+function sort(lst) {
+    if (types._list_Q(lst)) {
+        return lst.sort()
+    } else {
+        var v = lst.sort()
+        v.__isvector__ = true;
+        return v;
+    }
+}
+
 export function seq(obj) {
     if (types._list_Q(obj)) {
         return obj.length > 0 ? obj : null;
@@ -350,6 +360,7 @@ export const ns = {
     'concat': concat,
     'vec': vec,
     'nth': nth,
+    'sort': sort,
     'first': first,
     'last': last,
     'rest': rest,
