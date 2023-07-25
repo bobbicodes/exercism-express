@@ -175,50 +175,74 @@ function _EVAL(ast, env) {
       case "defn":
       case "defn-":
         // Multi-arity functions
-        const fnBody = ast.slice(2)
-        console.log("fnBody", fnBody)
-        // Create list of fn bodies, one for each arity
-        let arities = []
-        for (let i = 0; i < fnBody.length; i++) {
-          if (types._list_Q(fnBody[i])) {
-            arities.push(fnBody[i])
-          }
-        }
-        console.log("arities", arities)
-        
-        // Define each arity as a separate function
-        for (let i = 0; i < arities.length; i++) {
-          const args = arities[i][0]
-          const body = arities[i][1]
-          console.log("args:", args)
-          console.log("body:", body)
-          const fn = types._function(EVAL, Env, body, env, args);
-          const fnName = types._symbol(a1 + "-arity-" + i)
-          //console.log(fnName)
-          //console.log(typeof a1)
-          env.set(fnName, fn)
-        }
-        //console.log("env", env)
+        // We need to tell whether the function is multi-arity,
+        // and have it work with docstrings as well.
+        let arglist
+        let fnBody
+        let isMultiArity
 
-        return "Defined: #'" + namespace + "/" + a1
-
-       /*  // Support docstrings
-        let fnbody = a3
-        let fnargs = a2
         if (types._string_Q(a2) && types._vector_Q(a3)) {
-          fnbody = a4
-          fnargs = a3
+          // fn has a docstring and is single-arity
+          arglist = a3
+          fnBody = ast.slice(4)
+          isMultiArity = false
         }
-        var loop_env = new Env(env)
+        if (types._vector_Q(a2)) {
+          // fn has no docstring and is single-arity
+          arglist = a2
+          fnBody = ast.slice(3)
+          isMultiArity = false
+        }
+        if (types._string_Q(a2) && types._list_Q(a3)) {
+          // fn has a docstring and is multi-arity
+          fnBody = ast.slice(3)
+          isMultiArity = true
+        }
+        if (types._list_Q(a2)) {
+          // fn has no docstring and is multi-arity
+          fnBody = ast.slice(2)
+          isMultiArity = true
+        }
+        console.log("fnBody", fnBody)
+
+        if (isMultiArity) {
+          // Create list of fn bodies, one for each arity
+          let arities = []
+          for (let i = 0; i < fnBody.length; i++) {
+            if (types._list_Q(fnBody[i])) {
+              arities.push(fnBody[i])
+            }
+          }
+          console.log("arities", arities)
+
+          // Define each arity as a separate function
+          for (let i = 0; i < arities.length; i++) {
+            const args = arities[i][0]
+            const body = arities[i][1]
+            console.log("args:", args)
+            console.log("body:", body)
+            const fn = types._function(EVAL, Env, body, env, args);
+            const fnName = types._symbol(a1 + "-arity-" + i)
+            //console.log(fnName)
+            //console.log(typeof a1)
+            env.set(fnName, fn)
+          }
+          //console.log("env", env)
+
+          return "Defined: #'" + namespace + "/" + a1
+        } else {
+          const fn = types._function(EVAL, Env, fnBody, env, arglist);
+          env.set(a1, fn)
+          return "Defined: " + "#'" + namespace + "/" + a1
+        }
+        /* var loop_env = new Env(env)
         loopVars = fnargs
         loopAST = fnbody
         for (var i = 0; i < a1.length; i += 2) {
           loop_env.set(a1[i], EVAL(a1[i + 1], loop_env))
           loopVars.push(a1[i])
-        }
-        const fn = types._function(EVAL, Env, fnbody, env, fnargs);
-        env.set(a1, fn)
-        return "Defined: " + "#'" + namespace + "/" + a1 */
+        } */
+
       case "loop":
         loopVars = []
         loop_env = new Env(env)
@@ -303,7 +327,6 @@ function _EVAL(ast, env) {
         const args = eval_ast(ast.slice(1), env)
         const arity = args.length
         // Check if fn is defined by arity
-        console.log("args:", args)
         let f = null
         console.log("ast[0]:", ast[0])
         if (Object.keys(env.data).includes(ast[0] + "-arity-" + arity)) {
@@ -312,17 +335,19 @@ function _EVAL(ast, env) {
           console.log("Calling:", ast[0] + "-arity-" + arity)
           console.log("env:", env)
         } else {
-          f = EVAL(ast[0], env)
+          const el = eval_ast(ast, env)
+          f = el[0]
+          console.log("Calling single-arity function:", f)
+          console.log("args:", args)
         }
-        
-        if (f.__ast__) {  
+
+        if (f.__ast__) {
           ast = f.__ast__;
           env = f.__gen_env__(args);
         } else {
           return f.apply(f, args);
         }
     }
-
   }
 }
 

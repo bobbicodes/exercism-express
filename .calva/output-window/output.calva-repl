@@ -192,3 +192,15 @@ clj꞉user꞉> 
 ; nREPL connection failed: Error: read ECONNRESET
 ; Failed connecting.
 ; nREPL Connection was closed
+#'two-fer/two-fer
+clj꞉two-fer꞉> 
+; clojure.lang.ExceptionInfo: Could not resolve symbol: two-fer user c:\Users\porko\exercism-express\scratch.clj:1:1
+clj꞉user꞉> 
+#'user/two-fer
+clj꞉user꞉> 
+"One for you, one for me."
+clj꞉user꞉> 
+#'user/two-fer
+clj꞉user꞉> 
+"One for you, one for me."
+clj꞉user꞉> 
