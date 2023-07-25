@@ -6,6 +6,7 @@ export function _obj_type(obj) {
     else if (_list_Q(obj)) { return 'list'; }
     else if (_vector_Q(obj)) { return 'vector'; }
     else if (_hash_map_Q(obj)) { return 'hash-map'; }
+    else if (_set_Q(obj)) { return 'set'; }
     else if (_nil_Q(obj)) { return 'nil'; }
     else if (_true_Q(obj)) { return 'true'; }
     else if (_false_Q(obj)) { return 'false'; }
@@ -241,8 +242,20 @@ export function _hash_map_Q(hm) {
         !Array.isArray(hm) &&
         !(hm === null) &&
         !(hm instanceof Symbol) &&
+        !(hm instanceof Set) &&
         !(hm instanceof Atom);
 }
+
+// Sets
+export function _set() {
+    return new Set(arguments)
+}
+
+export function _set_Q(set) {
+    return typeof set === "object" &&
+    (set instanceof Set)
+}
+
 export function _assoc(hm) {
     if (arguments.length % 2 !== 1) {
         throw new Error("Odd number of assoc arguments");

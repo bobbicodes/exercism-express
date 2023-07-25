@@ -210,16 +210,20 @@ function _EVAL(ast, env) {
         ast = loopAST[0]
         break;
       case "dispatch":
+        // Regex
         if (types._string_Q(a1)) {
           const re = new RegExp(a1, 'g')
           return re
         }
+        // Anonymous function shorthand
+        if (types._list_Q(a1)) {
         let fun = [types._symbol('fn')]
         const args = ast.toString().match(/%\d?/g).map(types._symbol)
         let body = ast.slice(1)[0]
         fun.push(args)
         fun.push(body)
         return types._function(EVAL, Env, body, env, args);
+        }
       case "quote":
         return a1;
       case "quasiquoteexpand":

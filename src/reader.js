@@ -1,4 +1,4 @@
-import { _keyword, _symbol, _vector, _hash_map } from './types.js'
+import { _keyword, _symbol, _vector, _hash_map, _set } from './types.js'
 
 class Reader {
     constructor(tokens) {
@@ -10,13 +10,14 @@ class Reader {
 }
 
 function tokenize(str) {
-    var re = /[\s,]*(~@|[\[\]{}()'`~^@]|"(?:\\.|[^\\"])*"?|;.*|[^\s\[\]{}('"`,;)]*)/g;
+    var re = /[\s,]*(~@|#{|[\[\]{}()'`~^@]|"(?:\\.|[^\\"])*"?|;.*|[^\s\[\]{}('"`,;)]*)/g;
     var results = [];
     let match = ''
     while ((match = re.exec(str)[1]) != '') {
         if (match[0] === ';') { continue; }
         results.push(match);
     }
+    console.log("tokens:", results)
     return results;
 }
 
@@ -76,6 +77,12 @@ function read_hash_map(reader) {
     return _hash_map.apply(null, lst);
 }
 
+// read set
+function read_set(reader) {
+    var lst = read_list(reader, '#{', '}');
+    return _set.apply(null, lst);
+}
+
 function read_form(reader) {
     var token = reader.peek();
     switch (token) {
@@ -106,6 +113,9 @@ function read_form(reader) {
         // vector
         case ']': throw new Error("unexpected ']'");
         case '[': return read_vector(reader);
+
+        // set
+        case '#{': return read_set(reader);
 
         // hash-map
         case '}': throw new Error("unexpected '}'");
