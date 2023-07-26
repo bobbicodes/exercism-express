@@ -43,6 +43,7 @@ Env.prototype.get = function(key) {
     /* if (!key.constructor || key.constructor.name !== 'Symbol') {
         return "env.get key must be a symbol"
     } */
+    // Ignore namespace prefixes
     const k = key.value.split("/")[1] || key.value
     var env = this.find(key);
     if (!env) { throw new Error("'" + k + "' not found"); }
