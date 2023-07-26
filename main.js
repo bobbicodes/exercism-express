@@ -136,4 +136,4 @@ button.addEventListener('click', function () {
   }
 })
 
-//loadExercise("two-fer")
+loadExercise("two-fer")
