@@ -16,25 +16,12 @@ let editorState = EditorState.create({
       ([] (str "One for you, one for me."))
       ([name] (str "One for " name ", one for me.")))
 
-(defn two-fer-nodoc
-      ([] (str "One for you, one for me."))
-      ([name] (str "One for " name ", one for me.")))
-
-(two-fer)
 (two-fer "McCoy")
-(two-fer-nodoc "McCoy") => "One for McCoy, one for me." 
 
-(defn myfun 
-    "docstring"
-    [n] 
+(defn myfun [n] 
     (+ 2 n))
 
-(myfun 5)
-
-(defn nodocfun [n] 
-    (+ 2 n))
-
-(nodocfun 2)`,
+(myfun 2)`,
   extensions: [basicSetup, clojure()]
 })
 
