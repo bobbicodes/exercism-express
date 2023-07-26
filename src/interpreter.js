@@ -133,7 +133,7 @@ function hasLoop(ast) {
 }
 
 function _EVAL(ast, env) {
-  // console.log("Calling _EVAL", ast, env)
+   //console.log("Calling _EVAL", ast, env)
 
   while (true) {
     //console.log(JSON.parse(JSON.stringify(env)))
@@ -235,13 +235,13 @@ function _EVAL(ast, env) {
           env.set(a1, fn)
           return "Defined: " + "#'" + namespace + "/" + a1
         }
-      /* var loop_env = new Env(env)
-      loopVars = fnargs
-      loopAST = fnbody
+      var loop_env = new Env(env)
+      loopVars = arglist
+      loopAST = fnBody
       for (var i = 0; i < a1.length; i += 2) {
         loop_env.set(a1[i], EVAL(a1[i + 1], loop_env))
         loopVars.push(a1[i])
-      } */
+      }
 
       case "loop":
         loopVars = []
@@ -328,7 +328,9 @@ function _EVAL(ast, env) {
         // Check if fn is defined by arity
         let f = null
         console.log("ast[0]:", ast[0])
-        if (Object.keys(env.data).includes(ast[0] + "-arity-" + arity)) {
+        console.log("env:", env)
+        const fnName = ast[0].value.split("/")[1] || ast[0].value
+        if (Object.keys(env.data).includes(fnName + "-arity-" + arity)) {
           console.log("AST:", ast)
 
           const fSym = types._symbol(ast[0] + "-arity-" + arity)
