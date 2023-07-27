@@ -319,6 +319,52 @@ function partition(n, step, pad, coll) {
     }
 }
 
+export class Atom {
+    constructor(val) { this.val = val; }
+}
+
+export function _symbol_Q(obj) { return obj instanceof Symbol; }
+export function _list_Q(obj) { return Array.isArray(obj) && !obj.__isvector__; }
+export function _vector_Q(obj) { return Array.isArray(obj) && !!obj.__isvector__; }
+export function _nil_Q(a) { return a === null ? true : false; }
+export function _true_Q(a) { return a === true ? true : false; }
+export function _false_Q(a) { return a === false ? true : false; }
+export function _atom_Q(atm) { return atm instanceof Atom; }
+
+export function _set_Q(set) {
+    return typeof set === "object" &&
+    (set instanceof Set)
+}
+
+export function _hash_map_Q(hm) {
+    return typeof hm === "object" &&
+        !Array.isArray(hm) &&
+        !(hm === null) &&
+        !(hm instanceof Symbol) &&
+        !(hm instanceof Set) &&
+        !(hm instanceof Atom);
+}
+
+export function _obj_type(obj) {
+    if (_symbol_Q(obj)) { return 'symbol'; }
+    else if (_list_Q(obj)) { return 'list'; }
+    else if (_vector_Q(obj)) { return 'vector'; }
+    else if (_hash_map_Q(obj)) { return 'hash-map'; }
+    else if (_set_Q(obj)) { return 'set'; }
+    else if (_nil_Q(obj)) { return 'nil'; }
+    else if (_true_Q(obj)) { return 'true'; }
+    else if (_false_Q(obj)) { return 'false'; }
+    else if (_atom_Q(obj)) { return 'atom'; }
+    else {
+        switch (typeof (obj)) {
+            case 'number': return 'number';
+            case 'function': return 'function';
+            case 'string': return obj[0] == '\u029e' ? 'keyword' : 'string';
+            default: throw new Error("Unknown type '" + typeof (obj) + "'");
+        }
+    }
+}
+
 export function _equal_Q(a, b) {
     var ota = _obj_type(a), otb = _obj_type(b);
     if (!(ota === otb || (_sequential_Q(a) && _sequential_Q(b)))) {

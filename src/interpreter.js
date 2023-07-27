@@ -151,7 +151,7 @@ function _EVAL(ast, env) {
           fnBody = ast.slice(2)
           isMultiArity = true
         }
-        console.log("fnBody", fnBody)
+        //console.log("fnBody", fnBody)
 
         if (isMultiArity) {
           // Create list of fn bodies, one for each arity
@@ -169,8 +169,8 @@ function _EVAL(ast, env) {
           for (let i = 0; i < arities.length; i++) {
             const args = arities[i][0]
             const body = arities[i][1]
-            console.log("args:", args)
-            console.log("body:", body)
+            //console.log("args:", args)
+            //console.log("body:", body)
             let variadic = false
             for (let i = 0; i < args.length; i++) {
               if (args[i].value === '&') {
@@ -188,7 +188,7 @@ function _EVAL(ast, env) {
             //console.log(typeof a1)
             env.set(fnName, fn)
           }
-          console.log("env", env)
+          //console.log("env", env)
           return "Defined: #'" + namespace + "/" + a1
         } else {
           const fn = types._function(EVAL, Env, fnBody, env, arglist);
@@ -288,7 +288,7 @@ function _EVAL(ast, env) {
         let f
         let fSym
         console.log("ast[0]:", ast[0])
-        console.log("env:", env)
+        //console.log("env:", env)
         const fnName = ast[0].value.split("/")[1] || ast[0].value
         // First check if there is a variadic arity defined
         if (Object.keys(env.data).includes(fnName + "-variadic")) {
@@ -301,7 +301,7 @@ function _EVAL(ast, env) {
             console.log("Calling variadic function:", f)
           }
           f = EVAL(fSym, env)
-          console.log("env:", env)
+          //console.log("env:", env)
           // check again if there's a (fixed) multi-arity that matches
         } else if (Object.keys(env.data).includes(fnName + "-arity-" + arity)) {
           fSym = types._symbol(ast[0] + "-arity-" + arity)
@@ -311,8 +311,8 @@ function _EVAL(ast, env) {
           var el = eval_ast(ast, env)
           f = el[0];
           console.log("Calling single-arity function:", f)
-          console.log("ast:", ast)
-          console.log("args:", args)
+          //console.log("ast:", ast)
+          //console.log("args:", args)
         }
         if (f.__ast__) {
           ast = f.__ast__;

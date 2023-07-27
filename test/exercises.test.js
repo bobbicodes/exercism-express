@@ -7,7 +7,7 @@ import testSuites from '../tests.json';
 // Edit an assertion and save to see HMR in action
 
 test('Exercism exercises', () => {
-    console.log(Object.keys(solutions)[0])
+
     //for (let exercise = 0; exercise < Object.keys(solutions).length; exercise++) {        }
 
     evalString("(do " + solutions.two_fer + ")")
