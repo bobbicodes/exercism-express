@@ -11,17 +11,11 @@ import testSuites from './tests.json';
 import {testCodeBeforeEval} from './src/eval-region'
 
 let editorState = EditorState.create({
-  doc: `(defn two-fer
-    "Docstring"
-      ([] (str "One for you, one for me."))
-      ([name] (str "One for " name ", one for me.")))
-
-(two-fer "McCoy")
-
-(defn myfun [n] 
-    (+ 2 n))
-
-(myfun 2)`,
+  doc: `(defn a
+    ([] "no args")
+    ([x] x)
+    ([x y] (str x y))
+    ([x y & more] (str x y "and" (apply str more))))`,
   extensions: [basicSetup, clojure()]
 })
 
@@ -135,4 +129,4 @@ button.addEventListener('click', function () {
   }
 })
 
-loadExercise("two-fer")
+//loadExercise("two-fer")
