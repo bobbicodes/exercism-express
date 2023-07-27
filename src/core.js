@@ -231,9 +231,11 @@ function with_meta(obj, m) {
     return new_obj;
 }
 
+export function _sequential_Q(lst) { return _list_Q(lst) || _vector_Q(lst); }
+
 function meta(obj) {
     // TODO: support symbols and atoms
-    if ((!types._sequential_Q(obj)) &&
+    if ((!_sequential_Q(obj)) &&
         (!(types._hash_map_Q(obj))) &&
         (!(types._function_Q(obj)))) {
         throw new Error("attempt to get metadata from: " + types._obj_type(obj));
@@ -319,9 +321,82 @@ function partition(n, step, pad, coll) {
     }
 }
 
+export class Atom {
+    constructor(val) { this.val = val; }
+}
+
+export function _symbol_Q(obj) { return obj instanceof Symbol; }
+export function _list_Q(obj) { return Array.isArray(obj) && !obj.__isvector__; }
+export function _vector_Q(obj) { return Array.isArray(obj) && !!obj.__isvector__; }
+export function _nil_Q(a) { return a === null ? true : false; }
+export function _true_Q(a) { return a === true ? true : false; }
+export function _false_Q(a) { return a === false ? true : false; }
+export function _atom_Q(atm) { return atm instanceof Atom; }
+
+export function _set_Q(set) {
+    return typeof set === "object" &&
+    (set instanceof Set)
+}
+
+export function _hash_map_Q(hm) {
+    return typeof hm === "object" &&
+        !Array.isArray(hm) &&
+        !(hm === null) &&
+        !(hm instanceof Symbol) &&
+        !(hm instanceof Set) &&
+        !(hm instanceof Atom);
+}
+
+export function _obj_type(obj) {
+    if (_symbol_Q(obj)) { return 'symbol'; }
+    else if (_list_Q(obj)) { return 'list'; }
+    else if (_vector_Q(obj)) { return 'vector'; }
+    else if (_hash_map_Q(obj)) { return 'hash-map'; }
+    else if (_set_Q(obj)) { return 'set'; }
+    else if (_nil_Q(obj)) { return 'nil'; }
+    else if (_true_Q(obj)) { return 'true'; }
+    else if (_false_Q(obj)) { return 'false'; }
+    else if (_atom_Q(obj)) { return 'atom'; }
+    else {
+        switch (typeof (obj)) {
+            case 'number': return 'number';
+            case 'function': return 'function';
+            case 'string': return obj[0] == '\u029e' ? 'keyword' : 'string';
+            default: throw new Error("Unknown type '" + typeof (obj) + "'");
+        }
+    }
+}
+
+export function _equal_Q(a, b) {
+    var ota = _obj_type(a), otb = _obj_type(b);
+    if (!(ota === otb || (_sequential_Q(a) && _sequential_Q(b)))) {
+        return false;
+    }
+    switch (ota) {
+        case 'symbol': return a.value === b.value;
+        case 'list':
+        case 'vector':
+            if (a.length !== b.length) { return false; }
+            for (var i = 0; i < a.length; i++) {
+                if (!_equal_Q(a[i], b[i])) { return false; }
+            }
+            return true;
+        case 'hash-map':
+            if (Object.keys(a).length !== Object.keys(b).length) { return false; }
+            for (var k in a) {
+                if (!_equal_Q(a[k], b[k])) { return false; }
+            }
+            return true;
+        default:
+            return a === b;
+    }
+}
+
+export function _atom(val) { return new Atom(val); }
+
 export const ns = {
     'type': types._obj_type,
-    '=': types._equal_Q,
+    '=': _equal_Q,
     'not=': notEquals,
     'throw': mal_throw,
     'nil?': types._nil_Q,
@@ -371,7 +446,7 @@ export const ns = {
     'contains?': contains_Q,
     'keys': keys,
     'vals': vals,
-    'sequential?': types._sequential_Q,
+    'sequential?': _sequential_Q,
     'take': take,
     'drop': drop,
     'cons': cons,
@@ -396,7 +471,7 @@ export const ns = {
     'pop': pop,
     'with-meta': with_meta,
     'meta': meta,
-    'atom': types._atom,
+    'atom': _atom,
     'atom?': types._atom_Q,
     "deref": deref,
     "reset!": reset_BANG,

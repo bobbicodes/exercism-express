@@ -11,6 +11,11 @@
     (let [f (fs/file "exercises\\practice" slug "\\.docs\\instructions.md")]
       (slurp f))))
 
+(def solutions-all
+  (for [slug practice-exercises]
+    (let [f (fs/file "exercises\\practice" slug "\\.meta\\src\\example.clj")]
+      (slurp f))))
+
 (def src-all
   (for [slug practice-exercises]
     (let [filename (str/replace slug "-" "_")
@@ -39,5 +44,10 @@
         (json/generate-string
          (zipmap (map #(str/replace % "-" "_") practice-exercises)
                  instructions-all)
+         {:pretty true}))
+  (spit "solutions.json"
+        (json/generate-string
+         (zipmap (map #(str/replace % "-" "_") practice-exercises)
+                 solutions-all)
          {:pretty true}))
   )
