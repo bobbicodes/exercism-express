@@ -162,20 +162,33 @@ function _EVAL(ast, env) {
             }
           }
           console.log("arities", arities)
-
           // Define each arity as a separate function
+          // Check if arglist contains a rest param (&)
+          // There can only be one.
+          // If so, store it accordingly
           for (let i = 0; i < arities.length; i++) {
             const args = arities[i][0]
             const body = arities[i][1]
             console.log("args:", args)
             console.log("body:", body)
+            let variadic = false
+            for (let i = 0; i < args.length; i++) {
+              if (args[i].value === '&') {
+                variadic = true
+              }
+            }
             const fn = types._function(EVAL, Env, body, env, args);
-            const fnName = types._symbol(a1 + "-arity-" + i)
+            let fnName
+            if (variadic) {
+              fnName = types._symbol(a1 + "-variadic")
+            } else {
+              fnName = types._symbol(a1 + "-arity-" + i)
+            }
             //console.log(fnName)
             //console.log(typeof a1)
             env.set(fnName, fn)
           }
-          //console.log("env", env)
+          console.log("env", env)
 
           return "Defined: #'" + namespace + "/" + a1
         } else {
