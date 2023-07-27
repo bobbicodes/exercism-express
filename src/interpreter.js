@@ -80,58 +80,6 @@ let loopVars = []
 let loopAST = []
 var loop_env = new Env(repl_env)
 
-// We need a function that will tell us if the ast 
-// has a `loop` in it.
-
-// Ported from clojure.walk: https://github.com/clojure/clojure/blob/master/src/clj/clojure/walk.clj
-function walk(inner, outer, form) {
-  //console.log("Walking form:", form)
-  if (types._list_Q(form)) {
-    return outer(form.map(inner))
-  } else if (types._vector_Q(form)) {
-    let v = outer(form.map(inner))
-    v.__isvector__ = true;
-    return v
-  } else if (form.__mapEntry__) {
-    const k = inner(form[0])
-    const v = inner(form[1])
-    let mapEntry = [k, v]
-    mapEntry.__mapEntry__ = true
-    return outer(mapEntry)
-  } else if (types._hash_map_Q(form)) {
-    const entries = seq(form).map(inner)
-    let newMap = {}
-    entries.forEach(mapEntry => {
-      newMap[mapEntry[0]] = mapEntry[1]
-    });
-    return outer(newMap)
-  } else {
-    return outer(form)
-  }
-}
-
-export function postwalk(f, form) {
-  return walk(x => postwalk(f, x), f, form)
-}
-
-function hasLoop(ast) {
-  let loops = []
-  postwalk(x => {
-    if (x.value == types._symbol("loop")) {
-      loops.push(true)
-      return true
-    } else {
-      return x
-    }
-    return x
-  }, ast)
-  if (loops.length > 0) {
-    return true
-  } else {
-    return false
-  }
-}
-
 function _EVAL(ast, env) {
    //console.log("Calling _EVAL", ast, env)
 
@@ -214,21 +162,33 @@ function _EVAL(ast, env) {
             }
           }
           console.log("arities", arities)
-
           // Define each arity as a separate function
+          // Check if arglist contains a rest param (&)
+          // There can only be one.
+          // If so, store it accordingly
           for (let i = 0; i < arities.length; i++) {
             const args = arities[i][0]
             const body = arities[i][1]
             console.log("args:", args)
             console.log("body:", body)
+            let variadic = false
+            for (let i = 0; i < args.length; i++) {
+              if (args[i].value === '&') {
+                variadic = true
+              }
+            }
             const fn = types._function(EVAL, Env, body, env, args);
-            const fnName = types._symbol(a1 + "-arity-" + i)
+            let fnName
+            if (variadic) {
+              fnName = types._symbol(a1 + "-variadic")
+            } else {
+              fnName = types._symbol(a1 + "-arity-" + i)
+            }
             //console.log(fnName)
             //console.log(typeof a1)
             env.set(fnName, fn)
           }
-          //console.log("env", env)
-
+          console.log("env", env)
           return "Defined: #'" + namespace + "/" + a1
         } else {
           const fn = types._function(EVAL, Env, fnBody, env, arglist);
@@ -242,7 +202,6 @@ function _EVAL(ast, env) {
         loop_env.set(a1[i], EVAL(a1[i + 1], loop_env))
         loopVars.push(a1[i])
       }
-
       case "loop":
         loopVars = []
         loop_env = new Env(env)
@@ -326,17 +285,22 @@ function _EVAL(ast, env) {
         const args = eval_ast(ast.slice(1), env)
         const arity = args.length
         // Check if fn is defined by arity
-        let f = null
+        let f
+        let fSym
         console.log("ast[0]:", ast[0])
         console.log("env:", env)
         const fnName = ast[0].value.split("/")[1] || ast[0].value
-        if (Object.keys(env.data).includes(fnName + "-arity-" + arity)) {
-          console.log("AST:", ast)
-
-          const fSym = types._symbol(ast[0] + "-arity-" + arity)
+        // First check if there is a variadic arity defined
+        if (Object.keys(env.data).includes(fnName + "-variadic")) {
+          // if there is, then check if there's a fixed arity that matches
+          if (Object.keys(env.data).includes(fnName + "-arity-" + arity)) {
+            fSym = types._symbol(ast[0] + "-arity-" + arity)
+            console.log("Calling multi-arity function:", f)
+          } else {
+            fSym = types._symbol(ast[0] + "-variadic")
+            console.log("Calling variadic function:", f)
+          }
           f = EVAL(fSym, env)
-          console.log("Calling multi-arity function:", f)
-          //console.log("Calling:", ast[0] + "-arity-" + arity)
           console.log("env:", env)
         } else {
           var el = eval_ast(ast, env)
