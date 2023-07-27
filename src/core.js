@@ -319,9 +319,34 @@ function partition(n, step, pad, coll) {
     }
 }
 
+export function _equal_Q(a, b) {
+    var ota = _obj_type(a), otb = _obj_type(b);
+    if (!(ota === otb || (_sequential_Q(a) && _sequential_Q(b)))) {
+        return false;
+    }
+    switch (ota) {
+        case 'symbol': return a.value === b.value;
+        case 'list':
+        case 'vector':
+            if (a.length !== b.length) { return false; }
+            for (var i = 0; i < a.length; i++) {
+                if (!_equal_Q(a[i], b[i])) { return false; }
+            }
+            return true;
+        case 'hash-map':
+            if (Object.keys(a).length !== Object.keys(b).length) { return false; }
+            for (var k in a) {
+                if (!_equal_Q(a[k], b[k])) { return false; }
+            }
+            return true;
+        default:
+            return a === b;
+    }
+}
+
 export const ns = {
     'type': types._obj_type,
-    '=': types._equal_Q,
+    '=': _equal_Q,
     'not=': notEquals,
     'throw': mal_throw,
     'nil?': types._nil_Q,

@@ -11,25 +11,13 @@ test('Exercism exercises', () => {
     //for (let exercise = 0; exercise < Object.keys(solutions).length; exercise++) {        }
 
     evalString("(do " + solutions.two_fer + ")")
-    //evalString("(do " + testSuites.two_fer_test + ")")
+    evalString("(do " + testSuites.two_fer_test + ")")
+    //evalString("testSuites.two_fer_test")
     console.log(testSuites.two_fer_test)
 
 
 
 
     expect(Math.sqrt(4)).toBe(2)
-    expect(Math.sqrt(144)).toBe(12)
-    expect(Math.sqrt(2)).toBe(Math.SQRT2)
 })
 
-test('JSON', () => {
-    const input = {
-        foo: 'hello',
-        bar: 'world',
-    }
-
-    const output = JSON.stringify(input)
-
-    expect(output).eq('{"foo":"hello","bar":"world"}')
-    assert.deepEqual(JSON.parse(output), input, 'matches original')
-})
