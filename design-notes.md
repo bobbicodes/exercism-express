@@ -1135,3 +1135,171 @@
 	- Say we input a test expression, `#{"a" 1}`.
 	- First `read_str` calls `read_form` passing it a new Reader which is passed its tokens `['#', '{', '"a"', '1', '}']`
 	- Got it done, but I had to modify the reader, including the tokenizer to recognize `#{` as an opening token.
+
+- So now that multiarity functions work, we can try to work through the Clojure source. Slowly, obviously. Because there will doubtlessly be half a dozen other things that won't work at every step...
+- # When-let
+	- This is a macro. It needs to only evaluate the body if the test is true.
+	- Haha this is the best way to get me to actually learn everything
+	-
+	  ``` clojure
+	  		  (defmacro when-let
+	  		    "bindings => binding-form test
+	  		  
+	  		    When test is true, evaluates body with binding-form bound to the value of test"
+	  		    {:added "1.0"}
+	  		    [bindings & body]
+	  		    (assert-args
+	  		       (vector? bindings) "a vector for its binding"
+	  		       (= 2 (count bindings)) "exactly 2 forms in binding vector")
+	  		     (let [form (bindings 0) tst (bindings 1)]
+	  		      `(let [temp# ~tst]
+	  		         (when temp#
+	  		           (let [~form temp#]
+	  		             ~@body)))))
+	  ```
+	- So first we need `assert-args`
+	-
+	  ``` clojure
+	  		  (defmacro ^{:private true} assert-args
+	  		    [& pairs]
+	  		    `(do (when-not ~(first pairs)
+	  		           (throw (IllegalArgumentException.
+	  		                    (str (first ~'&form) " requires " ~(second pairs) " in " ~'*ns* ":" (:line (meta ~'&form))))))
+	  		       ~(let [more (nnext pairs)]
+	  		          (when more
+	  		            (list* `assert-args more)))))
+	  ```
+	- There seems to be a critical difference in how macros work.
+	- In mine, the body needs to be inside a function:
+	-
+	  ``` clojure
+	  		  (defmacro when (fn [x & xs] (list 'if x (cons 'do xs))))
+	  ```
+	- But in Clojure it's done implicitly:
+	-
+	  ``` clojure
+	  		  (defmacro when [test & body] (list 'if test (cons 'do body)))
+	  ```
+	-
+	  ``` js
+	  		  case 'defmacro':
+	  		          var func = types._clone(EVAL(a2, env));
+	  		          func._ismacro_ = true;
+	  		          return env.set(a1, func);
+	  ```
+	- So yes, it doesn't define a function, rather it clones one. Let's see if we can change that.
+	- It keeps getting deeper. for assert-args, we need this:
+	-
+	  ``` clojure
+	  		  (defn spread
+	  		    {:private true
+	  		     :static true}
+	  		    [arglist]
+	  		    (cond
+	  		     (nil? arglist) nil
+	  		     (nil? (next arglist)) (seq (first arglist))
+	  		     :else (cons (first arglist) (spread (next arglist)))))
+	  		  
+	  		  (defn list*
+	  		    "Creates a new seq containing the items prepended to the rest, the
+	  		    last of which will be treated as a sequence."
+	  		    {:added "1.0"
+	  		     :static true}
+	  		    ([args] (seq args))
+	  		    ([a args] (cons a args))
+	  		    ([a b args] (cons a (cons b args)))
+	  		    ([a b c args] (cons a (cons b (cons c args))))
+	  		    ([a b c d & more]
+	  		       (cons a (cons b (cons c (cons d (spread more)))))))
+	  ```
+	- So there's a problem with our multiarity handling that prevents the variadic arity being called.
+	- Besides that, it *almost* works:
+	-
+	  ``` clojure
+	  		  (list* 1 2 [3 4])
+	  		  => (1 2 [3 4] nil)
+	  ```
+	- The `nil` should not be there. Which doesn't make sense because the first arity just calls seq on the args, which works:
+	-
+	  ``` clojure
+	  		  (seq [3 4])
+	  		  => (3 4)
+	  ```
+	- We have the basic variadic functionality:
+	-
+	  ``` clojure
+	  		  (defn yo [a & more]
+	  		    [a more])
+	  		  
+	  		  (yo 1 2 3 4 5)
+	  		  => [1 (2 3 4 5)]
+	  ```
+	- Which means that if we look for an `&` in the arglist, we could define it as `<function>-variadic`, and find it when it's called likewise.
+	- Continue this in section below
+- # `core.clj`
+	- I kind of want to start a proper thing now. Do we have load-file?
+	- no, actually `slurp` doesn't even work. But I thought it did...
+	- God this is so annoying. I think I'm gonna give up because this is so stupid.
+	- The only lead I have is to do something like what I did for the download feature in MECCA:
+	-
+	  ``` clojure
+	  		  [:button
+	  		         {:on-click #(let [file-blob (js/Blob. [@(subscribe [:notes])] #js {"type" "text/plain"})
+	  		                           link (.createElement js/document "a")]
+	  		                       (set! (.-href link) (.createObjectURL js/URL file-blob))
+	  		                       (.setAttribute link "download" "mecca.txt")
+	  		                       (.appendChild (.-body js/document) link)
+	  		                       (.click link)
+	  		                       (.removeChild (.-body js/document) link))}
+	  		         "Download"]
+	  ```
+	- This makes me think that it could be possible to do the opposite. I just found the code somewhere and it seems sufficiently hacky, i.e. it accomplishes something that afaict shouldn't be possible. It makes a fake link and automatically clicks it.
+	- I don't think I feel like doing this now because I'm ultra pissed and was sort of happy working on my actual project. I just thought it would be nice to not have to evaluate code using 100 calls to `evalString`, but alas.
+- # Multi-arity with variadic
+	- I took a peek at how SCI does it: https://github.com/babashka/sci/blob/master/src/sci/impl/fns.cljc
+	- Here's the basic idea:
+	-
+	  ``` clojure
+	  		  (defn fn-arity-map [ctx enclosed-array fn-name macro? fn-bodies]
+	  		    (reduce
+	  		     (fn [arity-map fn-body]
+	  		       (let [f (fun ctx enclosed-array fn-body fn-name macro?)
+	  		             var-arg? (:var-arg-name fn-body)
+	  		             fixed-arity (:fixed-arity fn-body)]
+	  		         (if var-arg?
+	  		           (assoc arity-map :variadic f)
+	  		           (assoc arity-map fixed-arity f))))
+	  		     {}
+	  		     fn-bodies))
+	  ```
+	- I just tried to break out the function stuff into a separate module to organize the project better, but I couldn't get it to work. Another annoying fail, that's 2 today. Like ok, I'll just have this giant pile of shit
+	- Anyway. Is there allowed to be more than one arity that is variadic? I need to find out.
+	- I didn't find the answer in the docs. I might have missed it. But it only took 10 seconds at the repl:
+	-
+	  ``` clojure
+	  		  (defn a
+	  		    ([] "no args")
+	  		    ([x] x)
+	  		    ([x y] (str x y))
+	  		    ([x y & more] (str x y "and" (apply str more)))
+	  		    ([x y z & more] (str x y z "and" (apply str more))))
+	  		  ; clojure.lang.ExceptionInfo: Can't have more than 1 variadic overload user
+	  ```
+	- So there we go! That makes it easier, because all we have to do is look for the `&`.
+	- Got it! The definition part, anyway. Now I need to handle calls.
+	- ![image.png](../assets/image_1690452072921_0.png)
+	- Alright! That went surprisingly well!
+- # Testing (CI)
+	- So I figured out why the tests have been broken... though I don't understand why.
+	- I remember noticing when the env is printed to the console, certain symbols are undefined but I was unable to discern any pattern. Well, it turns out the ones that failed to load are the ones from types.js. But it doesn't make sense why those functions aren't available. It does work, however, if I simply copy the function into the core module! Whaaaat?
+	- OK so now it's failing because it is looking for plain old simple `two-fer`, and not the appropriate arity... which are properly defined in the env - I can plainly see that. Why would it be doing that? The lookup logic is built into the interpreter. Let's see what we can debug.
+	- It correctly outputs `fn has no docstring and is multi-arity`
+	- Could there be a bug in my calling logic? If so, it should also fail in the editor...
+	- Aha! It does fail!
+	- I see what the problem is. The logic is incomplete.
+		- It first checks if there is a variadic arity defined
+		- if there is, then check if there's a fixed arity that matches
+		- otherwise we call the variadic function
+		- but... we then need to recheck if there's a fixed-multiarity! Derp
+		- Got it!
+	- Cool, so now I've completed the workflow that I was aiming for when I started this Exercism Express thing in the first place. I wanted a way to help guide the process of working towards the goal of being able to use it for solving exercises as if it is Clojure. And I can't think of any better way to test the thing, either. All the example solutions are idiomatic Clojure, using pretty much, the most commonly used functions. Match made in heaven.
