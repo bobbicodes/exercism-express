@@ -394,12 +394,17 @@ export function _equal_Q(a, b) {
 
 export function _atom(val) { return new Atom(val); }
 
+function char(int) {
+    return String.fromCharCode(int)
+}
+
 export const ns = {
     'type': types._obj_type,
     '=': _equal_Q,
     'not=': notEquals,
     'throw': mal_throw,
     'nil?': types._nil_Q,
+    'char': char,
     'true?': types._true_Q,
     'is': _is,
     'false?': types._false_Q,
