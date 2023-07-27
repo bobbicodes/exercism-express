@@ -189,7 +189,6 @@ function _EVAL(ast, env) {
             env.set(fnName, fn)
           }
           console.log("env", env)
-
           return "Defined: #'" + namespace + "/" + a1
         } else {
           const fn = types._function(EVAL, Env, fnBody, env, arglist);
@@ -203,7 +202,6 @@ function _EVAL(ast, env) {
         loop_env.set(a1[i], EVAL(a1[i + 1], loop_env))
         loopVars.push(a1[i])
       }
-
       case "loop":
         loopVars = []
         loop_env = new Env(env)
@@ -287,17 +285,22 @@ function _EVAL(ast, env) {
         const args = eval_ast(ast.slice(1), env)
         const arity = args.length
         // Check if fn is defined by arity
-        let f = null
+        let f
+        let fSym
         console.log("ast[0]:", ast[0])
         console.log("env:", env)
         const fnName = ast[0].value.split("/")[1] || ast[0].value
-        if (Object.keys(env.data).includes(fnName + "-arity-" + arity)) {
-          console.log("AST:", ast)
-
-          const fSym = types._symbol(ast[0] + "-arity-" + arity)
+        // First check if there is a variadic arity defined
+        if (Object.keys(env.data).includes(fnName + "-variadic")) {
+          // if there is, then check if there's a fixed arity that matches
+          if (Object.keys(env.data).includes(fnName + "-arity-" + arity)) {
+            fSym = types._symbol(ast[0] + "-arity-" + arity)
+            console.log("Calling multi-arity function:", f)
+          } else {
+            fSym = types._symbol(ast[0] + "-variadic")
+            console.log("Calling variadic function:", f)
+          }
           f = EVAL(fSym, env)
-          console.log("Calling multi-arity function:", f)
-          //console.log("Calling:", ast[0] + "-arity-" + arity)
           console.log("env:", env)
         } else {
           var el = eval_ast(ast, env)
