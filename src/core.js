@@ -231,9 +231,11 @@ function with_meta(obj, m) {
     return new_obj;
 }
 
+export function _sequential_Q(lst) { return _list_Q(lst) || _vector_Q(lst); }
+
 function meta(obj) {
     // TODO: support symbols and atoms
-    if ((!types._sequential_Q(obj)) &&
+    if ((!_sequential_Q(obj)) &&
         (!(types._hash_map_Q(obj))) &&
         (!(types._function_Q(obj)))) {
         throw new Error("attempt to get metadata from: " + types._obj_type(obj));
@@ -444,7 +446,7 @@ export const ns = {
     'contains?': contains_Q,
     'keys': keys,
     'vals': vals,
-    'sequential?': types._sequential_Q,
+    'sequential?': _sequential_Q,
     'take': take,
     'drop': drop,
     'cons': cons,
