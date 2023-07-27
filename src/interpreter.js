@@ -136,7 +136,7 @@ function _EVAL(ast, env) {
           isMultiArity = false
         }
         if (types._vector_Q(a2)) {
-          console.log("fn has no docstring and is single-arity")
+          //console.log("fn has no docstring and is single-arity")
           arglist = a2
           fnBody = a3
           isMultiArity = false
@@ -147,7 +147,7 @@ function _EVAL(ast, env) {
           isMultiArity = true
         }
         if (types._list_Q(a2)) {
-          console.log("fn has no docstring and is multi-arity")
+          //console.log("fn has no docstring and is multi-arity")
           fnBody = ast.slice(2)
           isMultiArity = true
         }
@@ -161,7 +161,7 @@ function _EVAL(ast, env) {
               arities.push(fnBody[i])
             }
           }
-          console.log("arities", arities)
+          //console.log("arities", arities)
           // Define each arity as a separate function
           // Check if arglist contains a rest param (&)
           // There can only be one.
@@ -287,7 +287,7 @@ function _EVAL(ast, env) {
         // Check if fn is defined by arity
         let f
         let fSym
-        console.log("ast[0]:", ast[0])
+        //console.log("ast[0]:", ast[0])
         //console.log("env:", env)
         const fnName = ast[0].value.split("/")[1] || ast[0].value
         // First check if there is a variadic arity defined
@@ -295,7 +295,7 @@ function _EVAL(ast, env) {
           // if there is, then check if there's a fixed arity that matches
           if (Object.keys(env.data).includes(fnName + "-arity-" + arity)) {
             fSym = types._symbol(ast[0] + "-arity-" + arity)
-            console.log("Calling multi-arity function:", f)
+            //console.log("Calling multi-arity function:", f)
           } else {
             fSym = types._symbol(ast[0] + "-variadic")
             console.log("Calling variadic function:", f)
@@ -306,11 +306,11 @@ function _EVAL(ast, env) {
         } else if (Object.keys(env.data).includes(fnName + "-arity-" + arity)) {
           fSym = types._symbol(ast[0] + "-arity-" + arity)
           f = EVAL(fSym, env)
-          console.log("Calling multi-arity function:", f)
+          //console.log("Calling multi-arity function:", f)
         } else {
           var el = eval_ast(ast, env)
           f = el[0];
-          console.log("Calling single-arity function:", f)
+          //console.log("Calling single-arity function:", f)
           //console.log("ast:", ast)
           //console.log("args:", args)
         }
