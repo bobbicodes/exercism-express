@@ -189,7 +189,7 @@ function _EVAL(ast, env) {
             //console.log(typeof a1)
             env.set(fnName, fn)
           }
-          console.log("env", env)
+          //console.log("env", env)
           return "Defined: #'" + namespace + "/" + a1
         } else {
           const fn = types._function(EVAL, Env, fnBody, env, arglist);
@@ -293,6 +293,7 @@ function _EVAL(ast, env) {
         const fnName = ast[0].value.split("/")[1] || ast[0].value
         // First check if there is a variadic arity defined
         if (Object.keys(env.data).includes(fnName + "-variadic")) {
+          console.log("Fn has variadic arity defined")
           // if there is, then check if there's a fixed arity that matches
           if (Object.keys(env.data).includes(fnName + "-arity-" + arity)) {
             fSym = types._symbol(ast[0] + "-arity-" + arity)
