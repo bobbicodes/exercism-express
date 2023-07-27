@@ -11,11 +11,11 @@ import testSuites from './tests.json';
 import {testCodeBeforeEval} from './src/eval-region'
 
 let editorState = EditorState.create({
-  doc: `(defn a
-    ([] "no args")
-    ([x] x)
-    ([x y] (str x y))
-    ([x y & more] (str x y "and" (apply str more))))`,
+  doc: `(ns two-fer)
+
+  (defn two-fer
+    ([] (str "One for you, one for me."))
+    ([name] (str "One for " name ", one for me.")))`,
   extensions: [basicSetup, clojure()]
 })
 
