@@ -183,13 +183,13 @@ function _EVAL(ast, env) {
             if (variadic) {
               fnName = types._symbol(a1 + "-variadic")
             } else {
-              fnName = types._symbol(a1 + "-arity-" + i)
+              fnName = types._symbol(a1 + "-arity-" + args.length)
             }
             //console.log(fnName)
             //console.log(typeof a1)
             env.set(fnName, fn)
           }
-          //console.log("env", env)
+          console.log("env", env)
           return "Defined: #'" + namespace + "/" + a1
         } else {
           const fn = types._function(EVAL, Env, fnBody, env, arglist);

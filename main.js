@@ -97,7 +97,7 @@ button.addEventListener('click', function () {
   //console.log("Running tests")
   //let testEnv = new Env()
   const doc = view.state.doc.toString()
-  console.log("Doc:", doc)
+  //console.log("Doc:", doc)
   evalString("(do " + doc + ")")
   try {
     evalString("(do " + testSuite + ")")
