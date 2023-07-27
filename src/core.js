@@ -390,6 +390,8 @@ export function _equal_Q(a, b) {
     }
 }
 
+export function _atom(val) { return new Atom(val); }
+
 export const ns = {
     'type': types._obj_type,
     '=': _equal_Q,
@@ -467,7 +469,7 @@ export const ns = {
     'pop': pop,
     'with-meta': with_meta,
     'meta': meta,
-    'atom': types._atom,
+    'atom': _atom,
     'atom?': types._atom_Q,
     "deref": deref,
     "reset!": reset_BANG,

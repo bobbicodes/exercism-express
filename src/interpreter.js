@@ -34,6 +34,7 @@ function quasiquote(ast) {
 }
 
 function is_macro_call(ast, env) {
+  //console.log("checking function", ast[0])
   return types._list_Q(ast) &&
     types._symbol_Q(ast[0]) &&
     env.find(ast[0]) &&
@@ -347,7 +348,7 @@ export const evalString = function (str) { return PRINT(EVAL(READ(str), repl_env
 // core.js: defined using javascript
 for (var n in core.ns) { repl_env.set(types._symbol(n), core.ns[n]); }
 
-/* evalString("(def not (fn (a) (if a false true)))");
+evalString("(def not (fn (a) (if a false true)))");
 evalString("(defmacro cond (fn (& xs) (if (> (count xs) 0) (list 'if (first xs) (if (> (count xs) 1) (nth xs 1) (throw \"odd number of forms to cond\")) (cons 'cond (rest (rest xs)))))))");
 evalString("(def dec (fn (a) (- a 1)))")
 evalString("(def zero? (fn (n) (= 0 n)))")
@@ -386,4 +387,4 @@ evalString(`(def every?
           (pred (first xs)) (every? pred (rest xs))
           true              false)))`)
 evalString("(defn reverse [coll] (reduce conj () coll))")
-evalString("(defmacro when (fn [x & xs] (list 'if x (cons 'do xs))))") */
+evalString("(defmacro when (fn [x & xs] (list 'if x (cons 'do xs))))")
