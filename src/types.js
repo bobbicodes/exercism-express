@@ -248,7 +248,8 @@ export function _hash_map_Q(hm) {
 
 // Sets
 export function _set() {
-    return new Set(arguments)
+    console.log(arguments)
+    return new Set(arguments[0])
 }
 
 export function _set_Q(set) {

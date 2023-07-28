@@ -172,7 +172,7 @@ function testSolution(slug) {
   }
 }
 
-const exercisesToTest = ["hello-world", "two-fer", "reverse-string"]
+const exercisesToTest = ["hello-world", "two-fer", "reverse-string", "accumulate", "series"]
 
 function testExercises() {
   let passes = []

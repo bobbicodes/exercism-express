@@ -61,6 +61,7 @@ const updateEditor = (view, text, pos) => {
     const doc = view.state.doc.toString()
     if (parent === 'test') {
         testCodeBeforeEval = doc
+        testPosBeforeEval = pos
     }
     codeBeforeEval = doc
     const end = doc.length
@@ -81,6 +82,9 @@ export function tryEval(s) {
 }
 
 export const clearEval = (view) => {
+    posBeforeEval = view.state.selection.main.head
+    testPosBeforeEval = view.state.selection.main.head
+    console.log("Clearing previous evaluation result")
     const parent = view.dom.parentElement.id
     let previousDoc = codeBeforeEval
     let previousPos = posBeforeEval
@@ -100,12 +104,15 @@ export const evalAtCursor = (view) => {
     //console.log("doc:", doc)
     codeBeforeEval = doc
     posBeforeEval = view.state.selection.main.head
+    testPosBeforeEval = view.state.selection.main.head
+    console.log("posBeforeEval set to", posBeforeEval)
     const codeBeforeCursor = codeBeforeEval.slice(0, posBeforeEval)
     const codeAfterCursor = codeBeforeEval.slice(posBeforeEval, codeBeforeEval.length)
     evalResult = tryEval(cursorNodeString(view.state))
     const codeWithResult = codeBeforeCursor + " => " + evalResult + " " + codeAfterCursor
     updateEditor(view, codeWithResult, posBeforeEval)
     view.dispatch({selection: {anchor: posBeforeEval, head: posBeforeEval}})
+
     return true
 }
 

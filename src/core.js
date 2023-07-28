@@ -220,7 +220,7 @@ function apply(f) {
 }
 
 function map(f, lst) {
-    if (_string_Q(lst)) {
+    if (types._string_Q(lst)) {
         lst = seq(lst)
     }
     return lst.map(function (el) { return f(el); });
@@ -373,6 +373,7 @@ export const ns = {
     'list': types._list,
     'list?': types._list_Q,
     'vector': types._vector,
+    'set': types._set,
     'vector?': types._vector_Q,
     'hash-map': types._hash_map,
     'map?': types._hash_map_Q,
