@@ -6,6 +6,7 @@ import { evalString, EVAL, deftests, clearTests } from "./src/interpreter"
 import { Env } from "./src/env"
 import config from './config.json';
 import exercises from './exercises.json';
+import solutions from './solutions.json';
 import instructions from './instructions.json';
 import testSuites from './tests.json';
 import {testCodeBeforeEval} from './src/eval-region'
@@ -129,4 +130,64 @@ button.addEventListener('click', function () {
   }
 })
 
+function testSolution(slug) {
+  loadExercise(slug)
+  const k = slug.replaceAll("-", "_")
+  const src = solutions[k].trim()
+  let doc = view.state.doc.toString()
+  const end = doc.length
+  view.dispatch({
+    changes: { from: 0, to: end, insert: src},
+    selection: { anchor: 0, head: 0 }
+  })
+  clearTests()
+  doc = view.state.doc.toString()
+  const testSuite = testSuites[k + "_test"].trim()
+  evalString("(do " + doc + ")")
+  try {
+    evalString("(do " + testSuite + ")")
+  } catch (error) {
+    results.innerHTML = error
+    results.style.color = 'red';
+    return null
+  }
+  let fails = []
+  for (const test of deftests) {
+    if (!test.result) {
+      fails.push(test.test.value)
+    }
+    //console.log("fails:", fails)
+  }
+  const uniqueFails = [...new Set(fails)];
+  if (uniqueFails.length == 1) {
+    results.innerHTML = "1 fail: " + uniqueFails[0]
+    results.style.color = 'red';
+  } else if (uniqueFails.length > 1) {
+    results.innerHTML = uniqueFails.length + " fails: " + uniqueFails.join(", ")
+    results.style.color = 'red';
+  }
+   else {
+    results.innerHTML = "Passed 😍"
+    results.style.color = 'green';
+  }
+}
+
+const exercisesToTest = ["hello-world", "two-fer", "reverse-string"]
+
+function testExercises() {
+  let passes = []
+  for (let exercise = 0; exercise < exercisesToTest.length; exercise++) {
+    testSolution(exercisesToTest[exercise])
+    if (results.innerHTML === "Passed 😍") {
+      passes.push(exercisesToTest[exercise])
+      results.innerHTML = passes.length + " solutions passed 😍"
+    } else {
+      results.innerHTML = passes.length + " solutions passed, " + exercisesToTest[exercise] + " failed"
+      return null
+    }
+  }
+}
+
 loadExercise("two-fer")
+
+//testExercises()

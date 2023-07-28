@@ -50,5 +50,7 @@ export const clojureLanguage = LRLanguage.define({
 })
 
 export function clojure() {
-  return new LanguageSupport(clojureLanguage, [evalExtension])
+  return new LanguageSupport(clojureLanguage, 
+    [evalExtension]
+    )
 }

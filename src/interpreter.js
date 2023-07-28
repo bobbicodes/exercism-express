@@ -34,7 +34,7 @@ function quasiquote(ast) {
 }
 
 function is_macro_call(ast, env) {
-  //console.log("checking function", ast[0])
+  //console.log("checking function", ast[0].value)
   return types._list_Q(ast) &&
     types._symbol_Q(ast[0]) &&
     env.find(ast[0]) &&
@@ -71,7 +71,7 @@ function eval_ast(ast, env) {
 }
 
 export let namespace = "user"
-export let deftests = []
+export var deftests = []
 let testingString = ""
 // loop variables are identified positionally by `recur`,
 // so we keep track of the order they're defined
@@ -82,7 +82,7 @@ let loopAST = []
 var loop_env = new Env(repl_env)
 
 function _EVAL(ast, env) {
-  //console.log("Calling _EVAL", ast, env)
+  //console.log("Calling _EVAL", ast)
 
   while (true) {
     //console.log(JSON.parse(JSON.stringify(env)))
@@ -343,7 +343,7 @@ function PRINT(exp) {
 }
 
 // repl
-var repl_env = new Env();
+export var repl_env = new Env();
 export const evalString = function (str) { return PRINT(EVAL(READ(str), repl_env)); };
 
 // core.js: defined using javascript
@@ -389,3 +389,5 @@ evalString(`(def every?
           true              false)))`)
 evalString("(defn reverse [coll] (reduce conj () coll))")
 evalString("(defmacro when (fn [x & xs] (list 'if x (cons 'do xs))))")
+
+//console.log(repl_env)
