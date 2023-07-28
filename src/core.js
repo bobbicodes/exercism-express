@@ -334,6 +334,10 @@ function toSet() {
     return new Set(arguments[0])
 }
 
+function rand_int() {
+    return Math.floor(Math.random() * arguments[0]);
+}
+
 export const ns = {
     'type': types._obj_type,
     '=': types._equal_Q,
@@ -419,5 +423,6 @@ export const ns = {
     "reset!": reset_BANG,
     "swap!": swap_BANG,
     'js-eval': js_eval,
-    '.': js_method_call
+    '.': js_method_call,
+    'rand-int': rand_int
 };
