@@ -338,6 +338,11 @@ function rand_int() {
     return Math.floor(Math.random() * arguments[0]);
 }
 
+function rand_nth() {
+    const n = Math.floor(Math.random() * arguments[0].length)
+    return arguments[0][n]
+}
+
 export const ns = {
     'type': types._obj_type,
     '=': types._equal_Q,
@@ -424,5 +429,6 @@ export const ns = {
     "swap!": swap_BANG,
     'js-eval': js_eval,
     '.': js_method_call,
-    'rand-int': rand_int
+    'rand-int': rand_int,
+    'rand-nth': rand_nth
 };
