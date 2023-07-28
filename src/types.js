@@ -32,6 +32,7 @@ export function _equal_Q(a, b) {
         case 'symbol': return a.value === b.value;
         case 'list':
         case 'vector':
+        case 'set':
             if (a.length !== b.length) { return false; }
             for (var i = 0; i < a.length; i++) {
                 if (!_equal_Q(a[i], b[i])) { return false; }
@@ -248,8 +249,7 @@ export function _hash_map_Q(hm) {
 
 // Sets
 export function _set() {
-    console.log(arguments)
-    return new Set(arguments[0])
+    return new Set(arguments)
 }
 
 export function _set_Q(set) {

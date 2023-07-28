@@ -330,6 +330,10 @@ function char(int) {
     return String.fromCharCode(int)
 }
 
+function toSet() {
+    return new Set(arguments[0])
+}
+
 export const ns = {
     'type': types._obj_type,
     '=': types._equal_Q,
@@ -373,7 +377,7 @@ export const ns = {
     'list': types._list,
     'list?': types._list_Q,
     'vector': types._vector,
-    'set': types._set,
+    'set': toSet,
     'vector?': types._vector_Q,
     'hash-map': types._hash_map,
     'map?': types._hash_map_Q,
