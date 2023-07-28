@@ -2,7 +2,7 @@
   (:require [clojure.string :refer [split]]))
 
 ;; The letter values as shown in the README
-(def ^:private letter-values
+(def  letter-values
   {"AEIOULNRST" 1
    "DG"         2
    "BCMP"       3
@@ -12,7 +12,7 @@
    "QZ"        10})
 
 ;; A map from letter (as string) to score
-(def ^:private letter->score
+(def  letter->score
   (reduce-kv (fn [acc letters score]
                (-> (map str letters)
                    (zipmap (repeat score))

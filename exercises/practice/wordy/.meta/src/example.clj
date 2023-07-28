@@ -1,12 +1,12 @@
 (ns wordy
   (:require [clojure.string :refer [join]]))
 
-(def ^:private ops {"plus" +
+(def  ops {"plus" +
                     "minus" -
                     "multiplied by" *
                     "divided by" /})
 
-(def ^:private tokens-pattern (re-pattern
+(def  tokens-pattern (re-pattern
                                (str (join "|" (keys ops)) "|-?\\d+|\\S+")))
 
 (defn- parse-op [op-str]

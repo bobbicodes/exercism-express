@@ -131,7 +131,7 @@ function _EVAL(ast, env) {
         let isMultiArity
 
         if (types._string_Q(a2) && types._vector_Q(a3)) {
-          console.log("fn has a docstring and is single-arity")
+          //console.log("fn has a docstring and is single-arity")
           arglist = a3
           fnBody = a4
           isMultiArity = false

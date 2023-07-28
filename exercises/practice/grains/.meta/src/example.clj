@@ -10,7 +10,7 @@
 (defn square [number]
   (pow 2 (dec number)))
 
-(def ^:private square-numbers (rest (range 65)))
+(def  square-numbers (rest (range 65)))
 
 (defn total []
   (apply + (map square square-numbers)))

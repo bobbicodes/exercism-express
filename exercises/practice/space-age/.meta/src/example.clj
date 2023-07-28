@@ -1,8 +1,8 @@
 (ns space-age)
 
-(def ^:private seconds-in-year (* 365.25 24 60 60))
+(def  seconds-in-year (* 365.25 24 60 60))
 
-(def ^:private factors {:mercury 0.2408467
+(def  factors {:mercury 0.2408467
                         :venus   0.61519726
                         :earth   1.0
                         :mars    1.8808158

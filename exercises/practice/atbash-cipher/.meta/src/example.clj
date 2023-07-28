@@ -1,11 +1,11 @@
 (ns atbash-cipher
   (:require [clojure.string :as str]))
 
-(def ^:private letters
+(def  letters
   (map char
        (range (int \a) (inc (int \z)))))
 
-(def ^:private to-cipher
+(def  to-cipher
   (apply hash-map
          (interleave letters (reverse letters))))
 

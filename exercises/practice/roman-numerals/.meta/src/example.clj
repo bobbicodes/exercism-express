@@ -1,6 +1,6 @@
 (ns roman-numerals)
 
-(def ^:private numeral-mapping [[1000 "M"]
+(def  numeral-mapping [[1000 "M"]
                                 [900 "CM"]
                                 [500 "D"]
                                 [400 "CD"]

@@ -1,7 +1,7 @@
 (ns raindrops
   (:require [clojure.string :refer [blank?]]))
 
-(def ^:private sound-map
+(def  sound-map
   {3 "Pling"
    5 "Plang"
    7 "Plong"})

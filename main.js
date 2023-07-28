@@ -143,7 +143,13 @@ function testSolution(slug) {
   clearTests()
   doc = view.state.doc.toString()
   const testSuite = testSuites[k + "_test"].trim()
-  evalString("(do " + doc + ")")
+  try {
+    evalString("(do " + doc + ")")
+  } catch (error) {
+    results.innerHTML = error
+    results.style.color = 'red';
+    return null
+  }
   try {
     evalString("(do " + testSuite + ")")
   } catch (error) {
@@ -172,21 +178,25 @@ function testSolution(slug) {
   }
 }
 
-const exercisesToTest = ["hello-world", "two-fer", "reverse-string", "accumulate", 
-                         "series"]
+//const exercisesToTest = ["hello-world", "two-fer", "reverse-string", "accumulate", "series"]
+const exercisesToTest = Object.keys(exercises)
 
 function testExercises() {
   let passes = []
+  let fails = []
   for (let exercise = 0; exercise < exercisesToTest.length; exercise++) {
+    console.log("Testing ", exercisesToTest[exercise])
     testSolution(exercisesToTest[exercise])
     if (results.innerHTML === "Passed 😍") {
       passes.push(exercisesToTest[exercise])
       results.innerHTML = passes.length + " solutions passed 😍"
     } else {
       results.innerHTML = passes.length + " solutions passed, " + exercisesToTest[exercise] + " failed"
-      return null
+      fails.push(exercisesToTest[exercise])
     }
   }
+  console.log("Passes:", passes)
+  console.log("Fails:", fails)
 }
 
 loadExercise("hello-world")
