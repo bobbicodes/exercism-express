@@ -188,6 +188,6 @@ function testExercises() {
   }
 }
 
-loadExercise("two-fer")
+loadExercise("hello-world")
 
 //testExercises()
