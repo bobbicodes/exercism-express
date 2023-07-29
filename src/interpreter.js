@@ -129,7 +129,6 @@ function _EVAL(ast, env) {
         let arglist
         let fnBody
         let isMultiArity
-
         if (types._string_Q(a2) && types._vector_Q(a3)) {
           //console.log("fn has a docstring and is single-arity")
           arglist = a3

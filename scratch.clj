@@ -57,3 +57,16 @@
 (defn reverse-string
   ([word] (apply str (reverse word))))
 
+(defn hex
+  "Convert an integer to a hexadecimal string"
+  [n]
+  (if (pos? n)
+    (.toString n 16)
+    (let [pn (+ 9007199254740991 n 1)
+          s (.toString pn 16)]
+      (if (> pn 0x0FFFFFFFFFFFFF)
+        (str "3" (subs s 1))
+        (let [lead (- 14 (count s))]
+          (str (subs "20000000000000" 0 lead) s))))))
+
+(Long/toOctalString -1)
