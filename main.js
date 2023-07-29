@@ -230,7 +230,7 @@ function randExercise() {
   return exercisesToTest[Math.floor(Math.random() * exercisesToTest.length)]
 }
 
-loadExercise(randExercise())
-//loadExercise("robot_name")
+//loadExercise(randExercise())
+loadExercise("word_count")
 
 //testExercises()

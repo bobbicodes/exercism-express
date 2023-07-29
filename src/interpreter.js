@@ -224,7 +224,8 @@ function _EVAL(ast, env) {
       case "dispatch":
         // Regex
         if (types._string_Q(a1)) {
-          const re = new RegExp(a1, 'g')
+          console.log("\\" + a1)
+          const re = new RegExp("\\" + a1, 'g')
           return re
         }
         // Anonymous function shorthand
