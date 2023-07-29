@@ -279,8 +279,19 @@ function _join(sep, coll) {
     return a.join(sep)
 }
 
+// https://github.com/clojure/clojurescript/blob/e7cdc70d0371a26e07e394ea9cd72d5c43e5e363/src/main/cljs/cljs/core.cljs#L10250
 function reSeq(re, s) {
-    return s.match(re)
+    const matches = re.exec(s)
+    const matchStr = matches[0]
+    let matchVals = matchStr
+    if (matches.length != 1) {
+        matchVals = [matchStr]
+    }
+    let postIdx = matches.index + Math.max(matchStr.length, 1)
+    if (postIdx < s.length) {
+        reSeq(re, s.substring(postIdx))
+    }
+    return re.exec(s)
 }
 
 function upperCase(s) {
@@ -343,6 +354,41 @@ function rand_nth() {
     return arguments[0][n]
 }
 
+// https://stackoverflow.com/a/31042089
+function format() {
+    var args = Array.prototype.slice.call(arguments)
+    // parameters for string
+  , n = args.slice(1, -1)
+    // string
+  , text = args[0]
+    // check for `Number`
+  , _res = isNaN(parseInt(args[args.length - 1])) 
+             ? args[args.length - 1] 
+               // alternatively, if string passed
+               // as last argument to `sprintf`,
+               // `eval(args[args.length - 1])`
+             : Number(args[args.length - 1]) 
+    // array of replacement values
+  , arr = n.concat(_res)
+    // `res`: `text`
+  , res = text;
+  // loop `arr` items
+  for (var i = 0; i < arr.length; i++) {
+    // replace formatted characters within `res` with `arr` at index `i`
+    res = res.replace(/%d|%s/, arr[i])
+  }
+  // return string `res`
+  return res
+}
+
+function repeatedly(n, f) {
+    let calls = []
+    for (let i = 0; i < n; i++) {
+        calls.push(f())
+    }
+    return calls
+}
+
 export const ns = {
     'type': types._obj_type,
     '=': types._equal_Q,
@@ -399,6 +445,7 @@ export const ns = {
     'vals': vals,
     'sequential?': types._sequential_Q,
     'take': take,
+    'repeatedly': repeatedly,
     'drop': drop,
     'cons': cons,
     'concat': concat,
@@ -430,5 +477,6 @@ export const ns = {
     'js-eval': js_eval,
     '.': js_method_call,
     'rand-int': rand_int,
-    'rand-nth': rand_nth
+    'rand-nth': rand_nth,
+    'format': format
 };

@@ -12,12 +12,25 @@ import testSuites from './tests.json';
 import {testCodeBeforeEval} from './src/eval-region'
 
 let editorState = EditorState.create({
-  doc: `(ns two-fer)
+  doc: `(ns robot-name)
 
-  (defn two-fer
-    ([] (str "One for you, one for me."))
-    ([name] (str "One for " name ", one for me.")))`,
-  extensions: [basicSetup, clojure()]
+(def  letters (map char (range 65 91)))
+
+(defn generate-name [] 
+   (apply str (concat (repeatedly 2 (fn [] (rand-nth letters)))  
+      (repeatedly 3 (fn [] (rand-int 10))))))
+
+(re-seq #"[A-Z]{2}\\\\d{3}" (generate-name))
+
+(defn robot []
+    (atom {:name (generate-name)}))
+  
+(defn robot-name [robot]
+    (:name @robot))
+  
+(defn reset-name [robot]
+    (swap! robot assoc :name (generate-name)))`,
+    extensions: [basicSetup, clojure()]
 })
 
 let view = new EditorView({
@@ -199,6 +212,10 @@ function testExercises() {
   console.log("Fails:", fails)
 }
 
-loadExercise("hello-world")
+function randExercise() {
+  return exercisesToTest[Math.floor(Math.random() * exercisesToTest.length)]
+}
+
+loadExercise(randExercise())
 
 //testExercises()

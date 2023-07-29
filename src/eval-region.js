@@ -84,7 +84,7 @@ export function tryEval(s) {
 export const clearEval = (view) => {
     posBeforeEval = view.state.selection.main.head
     testPosBeforeEval = view.state.selection.main.head
-    console.log("Clearing previous evaluation result")
+    //console.log("Clearing previous evaluation result")
     const parent = view.dom.parentElement.id
     let previousDoc = codeBeforeEval
     let previousPos = posBeforeEval
@@ -105,7 +105,7 @@ export const evalAtCursor = (view) => {
     codeBeforeEval = doc
     posBeforeEval = view.state.selection.main.head
     testPosBeforeEval = view.state.selection.main.head
-    console.log("posBeforeEval set to", posBeforeEval)
+    //console.log("posBeforeEval set to", posBeforeEval)
     const codeBeforeCursor = codeBeforeEval.slice(0, posBeforeEval)
     const codeAfterCursor = codeBeforeEval.slice(posBeforeEval, codeBeforeEval.length)
     evalResult = tryEval(cursorNodeString(view.state))
