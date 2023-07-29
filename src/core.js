@@ -404,6 +404,18 @@ function repeatedly(n, f) {
     return calls
 }
 
+function frequencies(seq) {
+    let freqs = {}
+    for (let i = 0; i < seq.length; i++) {
+        if (freqs[seq[i]]) {
+            freqs[seq[i]] = freqs[seq[i]] + 1
+        } else {
+            freqs[seq[i]] = 1
+        }
+    }
+    return freqs
+}
+
 export const ns = {
     'type': types._obj_type,
     '=': types._equal_Q,
@@ -424,6 +436,7 @@ export const ns = {
     'macro?': types._macro_Q,
     'pr-str': pr_str,
     'print': print,
+    'frequencies': frequencies,
     're-seq': reSeq,
     're-matches': re_matches,
     'str': str,
