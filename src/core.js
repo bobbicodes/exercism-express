@@ -341,6 +341,18 @@ function char(int) {
     return String.fromCharCode(int)
 }
 
+function int(x) {
+    if (types._number_Q(x)) {
+        return Math.floor(x)
+    }
+    if (x.match(/\d+/)) {
+        return parseInt(x[1])
+    } else {
+        return x.charCodeAt(1)
+    }
+    
+}
+
 function toSet() {
     return new Set(arguments[0])
 }
@@ -476,6 +488,7 @@ export const ns = {
     "swap!": swap_BANG,
     'js-eval': js_eval,
     '.': js_method_call,
+    'int': int,
     'rand-int': rand_int,
     'rand-nth': rand_nth,
     'format': format
