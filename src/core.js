@@ -66,10 +66,10 @@ function time_ms() { return new Date().getTime(); }
 
 // Hash Map functions
 function assoc(src) {
-    if (_vector_Q(src)) {
+    if (types._vector_Q(src)) {
         const index = arguments[1]
         const newVal = arguments[2]
-        let vec = _clone(src);
+        let vec = types._clone(src);
         const head = vec.slice(0, index)
         const tail = vec.slice(index + 1)
         head.push(newVal)
@@ -77,14 +77,14 @@ function assoc(src) {
         vec.__isvector__ = true;
         return vec
     }
-    var hm = _clone(src);
+    var hm = types._clone(src);
     var args = [hm].concat(Array.prototype.slice.call(arguments, 1));
-    return _assoc.apply(null, args);
+    return types._assoc.apply(null, args);
 }
 
 function dissoc(src) {
-    if (_vector_Q(src)) {
-        let vec = _clone(src);
+    if (types._vector_Q(src)) {
+        let vec = types._clone(src);
         const index = arguments[1]
         const head = vec.slice(0, index)
         const tail = vec.slice(index + 1)
@@ -92,7 +92,7 @@ function dissoc(src) {
         vec.__isvector__ = true;
         return vec
     }
-    var hm = _clone(src);
+    var hm = types._clone(src);
     var args = [hm].concat(Array.prototype.slice.call(arguments, 1));
     return _dissoc.apply(null, args);
 }
@@ -232,7 +232,7 @@ function filter(f, lst) {
 
 // Metadata functions
 function with_meta(obj, m) {
-    var new_obj = _clone(obj);
+    var new_obj = types._clone(obj);
     new_obj.__meta__ = m;
     return new_obj;
 }
@@ -347,7 +347,6 @@ function int(x) {
     } else {
         return x.charCodeAt(1)
     }
-    
 }
 
 function toSet() {
