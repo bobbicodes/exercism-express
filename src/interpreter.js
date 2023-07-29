@@ -390,4 +390,5 @@ evalString(`(def every?
 evalString("(defn reverse [coll] (reduce conj () coll))")
 evalString("(defmacro when (fn [x & xs] (list 'if x (cons 'do xs))))")
 evalString("(defn and [& forms] (every? true? forms))")
+evalString("(def some (fn (pred xs) (if (empty? xs) nil (or (pred (first xs)) (some pred (rest xs))))))")
 //console.log(repl_env)
