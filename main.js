@@ -219,3 +219,5 @@ function randExercise() {
 loadExercise(randExercise())
 
 //testExercises()
+testSolution(exercisesToTest[0])
+console.log()

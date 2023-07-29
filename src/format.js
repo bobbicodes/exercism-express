@@ -50,4 +50,26 @@ function oct(n) {
     }
 }
 
-console.log(oct(-1))
+function setWidth(s, w, decr, l, c) {
+  /* "Sets the minimum width of a string, padding with a provided character if needed.
+     s: The string to set the minimum width for.
+     w: The minimum width, as a character count.
+     decr: a decrement to use on the width, if not nil
+     l: If true, the the output should be left-justified
+     c: The character to pad the width, or space if not provided." */
+     const wdth = w - decr
+     const size = s.length
+     const block = Array(wdth - size).fill(c)
+     let result
+     if (l) {
+        result = s + block.join('')
+     } else {
+        result = block.join('') + s
+     }
+     if (w && (wdth > size)) {
+        return result
+     }
+     return s
+}
+
+//console.log(oct(-1))

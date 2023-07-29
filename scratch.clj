@@ -70,3 +70,13 @@
           (str (subs "20000000000000" 0 lead) s))))))
 
 (Long/toOctalString -1)
+
+(or
+  (and w (let [wdth (- w decr)
+               size (count s)]
+           (and (< size wdth)
+                (let [block (repeat (- wdth size) c)]
+                  (if l
+                    (apply str s block)
+                    (str (apply str block) s))))))
+  s)
