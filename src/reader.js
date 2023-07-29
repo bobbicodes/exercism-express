@@ -1,4 +1,4 @@
-import { _keyword, _symbol, _vector, _hash_map, _set } from './types.js'
+import { _keyword, _symbol, _vector, _hash_map, _set, _char } from './types.js'
 
 class Reader {
     constructor(tokens) {
@@ -35,6 +35,8 @@ function read_atom(reader) {
         throw new Error("expected '\"', got EOF");
     } else if (token[0] === ":") {
         return _keyword(token.slice(1));
+    } else if (token[0] === "\\") {
+        return _char(token[1]);
     } else if (token === "nil") {
         return null;
     } else if (token === "true") {

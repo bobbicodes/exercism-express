@@ -7,6 +7,7 @@ export function _obj_type(obj) {
     else if (_vector_Q(obj)) { return 'vector'; }
     else if (_hash_map_Q(obj)) { return 'hash-map'; }
     else if (_set_Q(obj)) { return 'set'; }
+    else if (_char_Q(obj)) { return 'char'; }
     else if (_nil_Q(obj)) { return 'nil'; }
     else if (_true_Q(obj)) { return 'true'; }
     else if (_false_Q(obj)) { return 'false'; }
@@ -97,6 +98,18 @@ Symbol.prototype.toString = function () { return this.value; }
 export function _symbol(name) { return new Symbol(name); }
 export function _symbol_Q(obj) { return obj instanceof Symbol; }
 
+// Chars
+export function _char(obj) {
+    if (typeof obj === 'string' && obj[0] === '\\') {
+        return obj;
+    } else {
+        return "\\" + obj
+    }
+}
+
+export function _char_Q(obj) {
+    return typeof obj === 'string' && obj[0] === '\\';
+}
 
 // Keywords
 export function _keyword(obj) {
