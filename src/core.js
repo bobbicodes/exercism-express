@@ -344,9 +344,6 @@ function char(int) {
 function int(x) {
     if (types._number_Q(x)) {
         return Math.floor(x)
-    }
-    if (x.match(/\d+/)) {
-        return parseInt(x[1])
     } else {
         return x.charCodeAt(1)
     }
