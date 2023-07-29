@@ -389,5 +389,5 @@ evalString(`(def every?
           true              false)))`)
 evalString("(defn reverse [coll] (reduce conj () coll))")
 evalString("(defmacro when (fn [x & xs] (list 'if x (cons 'do xs))))")
-
+evalString("(defn and [& forms] (every? true? forms))")
 //console.log(repl_env)

@@ -1,6 +1,7 @@
 (require '[babashka.fs :as fs]
          '[clojure.string :as str]
-         '[cheshire.core :as json])
+         '[cheshire.core :as json]
+         '[clojure.test :refer [is]])
 
 (def practice-exercises
   (map #(subs (str %) 19)
@@ -51,9 +52,3 @@
                  solutions-all)
          {:pretty true}))
   )
-
-(ns reverse-string)
-
-(defn reverse-string
-  ([word] (apply str (reverse word))))
-

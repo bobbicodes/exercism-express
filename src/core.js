@@ -179,11 +179,14 @@ function pop(lst) {
     }
 }
 
-function sort(lst) {
-    if (types._list_Q(lst)) {
-        return lst.sort()
+function sort(x) {
+    if (types._string_Q(x)) {
+        return x.split('').sort().join('');
+    }
+    if (types._list_Q(x)) {
+        return x.sort()
     } else {
-        var v = lst.sort()
+        var v = x.sort()
         v.__isvector__ = true;
         return v;
     }
@@ -269,7 +272,11 @@ function js_method_call(object_method_str) {
 }
 
 function _is(a) {
-    return types._true_Q(a)
+    if (a) {
+        return true
+    } else {
+        return false
+    }
 }
 
 function _join(sep, coll) {
@@ -291,7 +298,7 @@ function reSeq(re, s) {
     if (postIdx < s.length) {
         reSeq(re, s.substring(postIdx))
     }
-    return re.exec(s)
+    return matches
 }
 
 function upperCase(s) {

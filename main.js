@@ -12,24 +12,20 @@ import testSuites from './tests.json';
 import {testCodeBeforeEval} from './src/eval-region'
 
 let editorState = EditorState.create({
-  doc: `(ns robot-name)
-
-(def  letters (map char (range 65 91)))
+  doc: `(def letters (map char (range 65 91)))
 
 (defn generate-name [] 
    (apply str (concat (repeatedly 2 (fn [] (rand-nth letters)))  
       (repeatedly 3 (fn [] (rand-int 10))))))
 
-(re-seq #"[A-Z]{2}\\\\d{3}" (generate-name))
-
 (defn robot []
-    (atom {:name (generate-name)}))
-  
+  (atom {:name (generate-name)}))
+
 (defn robot-name [robot]
-    (:name @robot))
-  
-(defn reset-name [robot]
-    (swap! robot assoc :name (generate-name)))`,
+  (get (deref robot) :name))
+
+(deftest robot-name-test
+  (is (re-seq #"[A-Z]{2}\\d{3}" (robot-name (robot)))))`,
     extensions: [basicSetup, clojure()]
 })
 
@@ -191,8 +187,26 @@ function testSolution(slug) {
   }
 }
 
+function shuffle(array) {
+  let currentIndex = array.length,  randomIndex;
+
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+}
+
 //const exercisesToTest = ["hello-world", "two-fer", "reverse-string", "accumulate", "series"]
-const exercisesToTest = Object.keys(exercises)
+const exercisesToTest = shuffle(Object.keys(exercises))
 
 function testExercises() {
   let passes = []
@@ -217,5 +231,6 @@ function randExercise() {
 }
 
 loadExercise(randExercise())
+//loadExercise("robot_name")
 
 //testExercises()

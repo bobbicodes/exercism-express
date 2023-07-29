@@ -2,7 +2,7 @@
   (:require [clojure.test :refer [deftest is testing]]
             robot-name))
 
-(deftest robot-name
+(deftest robot-name-test
   (let [a-robot (robot-name/robot)
         its-name (robot-name/robot-name a-robot)]
       (is (re-seq #"[A-Z]{2}\d{3}" its-name))))
