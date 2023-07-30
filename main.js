@@ -10,7 +10,7 @@ import solutions from './solutions.json';
 import instructions from './instructions.json';
 import testSuites from './tests.json';
 import {testCodeBeforeEval} from './src/eval-region'
-import core from './src/core.clj?raw'
+import core from './core.clj?raw'
 
 let editorState = EditorState.create({
   doc: `(def letters (map char (range 65 91)))
@@ -237,6 +237,6 @@ loadExercise(randExercise())
 
 //testExercises()
 
-evalString("(load-file \"src/core.clj\")")
+evalString(core)
 
 //console.log(myvar)
