@@ -2,7 +2,7 @@ import './style.css'
 import { EditorView, basicSetup } from 'codemirror'
 import { EditorState } from '@codemirror/state'
 import { clojure } from "./src/clojure"
-import { evalString, EVAL, deftests, clearTests } from "./src/interpreter"
+import { evalString, EVAL, deftests, clearTests, loadLib } from "./src/interpreter"
 import { Env } from "./src/env"
 import config from './config.json';
 import exercises from './exercises.json';
@@ -11,7 +11,6 @@ import instructions from './instructions.json';
 import testSuites from './tests.json';
 import {testCodeBeforeEval} from './src/eval-region'
 import core from './src/clj/core.clj?raw'
-import zip from './src/clj/zip.clj?raw'
 
 let editorState = EditorState.create({
   doc: `(def letters (map char (range 65 91)))
@@ -234,9 +233,9 @@ function randExercise() {
 
 evalString("(do " + core + ")")
 
-//loadExercise(randExercise())
-//loadExercise("triangle")
-testSolution("zipper")
+loadExercise(randExercise())
+//loadExercise("zipper")
+//testSolution("zipper")
 
 //testExercises()
 

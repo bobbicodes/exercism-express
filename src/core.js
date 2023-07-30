@@ -2,6 +2,18 @@ import { read_str } from './reader.js';
 import { js_to_mal, resolve_js } from './interop.js';
 import { _pr_str, _println } from './printer.js'
 import * as types from './types.js'
+import { evalString } from "./interpreter.js";
+import zip from './clj/zip.clj?raw'
+
+function require(lib) {
+    switch (lib) {
+        case 'zip':
+            evalString("(do " + zip + ")")
+            break;
+        default:
+            break;
+    }
+}
 
 // Atoms
 export class Atom {
@@ -445,6 +457,7 @@ function distinct_Q() {
 }
 
 export const ns = {
+    'require': require,
     'type': types._obj_type,
     '=': types._equal_Q,
     'not=': notEquals,

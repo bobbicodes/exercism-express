@@ -356,3 +356,7 @@ export const evalString = function (str) { return PRINT(EVAL(READ(str), repl_env
 for (var n in core.ns) { repl_env.set(types._symbol(n), core.ns[n]); }
 repl_env.set(types._symbol('eval'), function(ast) {
   return EVAL(ast, repl_env); });
+
+export function loadLib(lib) {
+  evalString("(do " + lib + ")")
+}
