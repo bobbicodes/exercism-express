@@ -288,6 +288,11 @@ function _join(sep, coll) {
     return a.join(sep)
 }
 
+function reFind(re, s) {
+    const array = [...s.match(re)];
+    return array
+}
+
 function reSeq(re, s) {
     const array = [...s.matchAll(re)];
     return array
@@ -459,6 +464,7 @@ export const ns = {
     'pr-str': pr_str,
     'print': print,
     'frequencies': frequencies,
+    're-find': reFind,
     're-seq': reSeq,
     're-matches': re_matches,
     'str': str,

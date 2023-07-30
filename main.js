@@ -237,8 +237,7 @@ loadExercise(randExercise())
 //loadExercise("triangle")
 //testSolution("difference_of_squares")
 
-//testExercises()
-
+testExercises()
 
 
 //console.log(myvar)
