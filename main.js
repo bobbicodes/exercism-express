@@ -10,7 +10,8 @@ import solutions from './solutions.json';
 import instructions from './instructions.json';
 import testSuites from './tests.json';
 import {testCodeBeforeEval} from './src/eval-region'
-import core from './core.clj?raw'
+import core from './src/clj/core.clj?raw'
+import zip from './src/clj/zip.clj?raw'
 
 let editorState = EditorState.create({
   doc: `(def letters (map char (range 65 91)))
