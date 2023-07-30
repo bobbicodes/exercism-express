@@ -71,6 +71,14 @@
 
 (defmacro when (fn [x & xs] (list 'if x (cons 'do xs))))
 
+(defmacro if-not 
+  (fn [test then else]
+    `(if (not ~test) ~then ~else)))
+
+(defmacro when-not 
+  (fn [test & body]
+    (list 'if test nil (cons 'do body))))
+
 (defn and [& forms] (every? true? forms))
 
 (defn some [pred xs] 
