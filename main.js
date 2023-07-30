@@ -235,9 +235,9 @@ evalString("(do " + core + ")")
 
 loadExercise(randExercise())
 //loadExercise("triangle")
-//testSolution("difference_of_squares")
+//testSolution("zipper")
 
-testExercises()
+//testExercises()
 
 
 //console.log(myvar)
