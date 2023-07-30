@@ -4,11 +4,11 @@ import { EditorState } from '@codemirror/state'
 import { clojure } from "./src/clojure"
 import { evalString, EVAL, deftests, clearTests, loadLib } from "./src/interpreter"
 import { Env } from "./src/env"
-import config from './config.json';
-import exercises from './exercises.json';
-import solutions from './solutions.json';
-import instructions from './instructions.json';
-import testSuites from './tests.json';
+import config from './test/config.json';
+import exercises from './test/exercises.json';
+import solutions from './test/solutions.json';
+import instructions from './test/instructions.json';
+import testSuites from './test/tests.json';
 import {testCodeBeforeEval} from './src/eval-region'
 import core from './src/clj/core.clj?raw'
 
