@@ -235,7 +235,7 @@ evalString("(do " + core + ")")
 
 loadExercise(randExercise())
 //loadExercise("triangle")
-//testSolution("armstrong_numbers")
+//testSolution("difference_of_squares")
 
 //testExercises()
 

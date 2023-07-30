@@ -79,3 +79,6 @@
 
 (defn load-file [f] 
   (eval (read-string (str \\"(do \\" (slurp f) \\"\nnil)\\"))))
+
+(defn pow [base pow]
+  (reduce * 1 (repeat pow base)))
