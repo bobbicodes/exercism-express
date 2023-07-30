@@ -79,6 +79,8 @@
   (fn [test & body]
     (list 'if test nil (cons 'do body))))
 
+(defn fnext [x] (first (next x)))
+
 (defn and [& forms] (every? true? forms))
 
 (defn some [pred xs] 

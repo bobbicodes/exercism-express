@@ -233,9 +233,9 @@ function randExercise() {
 
 evalString("(do " + core + ")")
 
-loadExercise(randExercise())
+//loadExercise(randExercise())
 //loadExercise("triangle")
-//testSolution("zipper")
+testSolution("zipper")
 
 //testExercises()
 
