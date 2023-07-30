@@ -10,6 +10,7 @@ import solutions from './solutions.json';
 import instructions from './instructions.json';
 import testSuites from './tests.json';
 import {testCodeBeforeEval} from './src/eval-region'
+import core from './src/core.clj?raw'
 
 let editorState = EditorState.create({
   doc: `(def letters (map char (range 65 91)))
@@ -230,11 +231,11 @@ function randExercise() {
   return exercisesToTest[Math.floor(Math.random() * exercisesToTest.length)]
 }
 
-//loadExercise(randExercise())
-loadExercise("triangle")
+loadExercise(randExercise())
+//loadExercise("triangle")
 //testSolution("word_count")
 
-testExercises()
+//testExercises()
 
 evalString("(load-file \"src/core.clj\")")
 
