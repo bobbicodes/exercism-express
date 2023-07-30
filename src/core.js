@@ -407,6 +407,11 @@ function frequencies(seq) {
     return freqs
 }
 
+function distinct_Q() {
+    const set = new Set(arguments)
+    return arguments.length === set.size
+}
+
 export const ns = {
     'type': types._obj_type,
     '=': types._equal_Q,
@@ -451,6 +456,7 @@ export const ns = {
     'list': types._list,
     'list?': types._list_Q,
     'vector': types._vector,
+    'distinct?': distinct_Q,
     'set': toSet,
     'vector?': types._vector_Q,
     'hash-map': types._hash_map,
