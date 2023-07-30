@@ -237,6 +237,6 @@ loadExercise(randExercise())
 
 //testExercises()
 
-evalString(core)
+evalString("(do " + core + ")")
 
 //console.log(myvar)
