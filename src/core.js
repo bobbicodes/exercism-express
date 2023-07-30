@@ -42,9 +42,11 @@ function prn() {
 
 
 function println() {
-    return Array.prototype.map.call(arguments, function (exp) {
+    const res = Array.prototype.map.call(arguments, function (exp) {
         return _pr_str(exp, false);
-    }).join("");
+    }).join("")
+    console.log(res)
+    return res
 }
 
 
@@ -288,7 +290,6 @@ function _join(sep, coll) {
 
 function reSeq(re, s) {
     const array = [...s.matchAll(re)];
-    console.log(array[0]);
     return array
 }
 
@@ -407,6 +408,30 @@ function frequencies(seq) {
     return freqs
 }
 
+function hasValue(x, coll) {
+    let res = []
+    for (let i = 0; i < coll.length; i++) {
+        if (types._equal_Q(x, coll[i])) {
+            res.push[coll[i]]
+        }
+        if (res.count === 0) {
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
+function distinct(coll) {
+    let unique = [];
+    coll.forEach((e) => {
+        if (!(hasValue(e, unique))) {
+            unique.push(e);
+        }
+    });
+    return unique
+}
+
 function distinct_Q() {
     const set = new Set(arguments)
     return arguments.length === set.size
@@ -456,6 +481,7 @@ export const ns = {
     'list': types._list,
     'list?': types._list_Q,
     'vector': types._vector,
+    //'distinct': distinct,
     'distinct?': distinct_Q,
     'set': toSet,
     'vector?': types._vector_Q,

@@ -1,0 +1,1 @@
+(def myvar "this is my var")

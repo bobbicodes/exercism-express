@@ -224,11 +224,8 @@ function _EVAL(ast, env) {
       case "dispatch":
         // Regex
         if (types._string_Q(a1)) {
-          console.log(a1)
           const escaped = a1.replace("\\", "\\\\")
-          console.log(escaped)
           const re = new RegExp(a1, 'g')
-          console.log(re)
           return re
         }
         // Anonymous function shorthand
@@ -352,6 +349,9 @@ export const evalString = function (str) { return PRINT(EVAL(READ(str), repl_env
 
 // core.js: defined using javascript
 for (var n in core.ns) { repl_env.set(types._symbol(n), core.ns[n]); }
+repl_env.set(types._symbol('eval'), function(ast) {
+  return EVAL(ast, repl_env); });
+
 
 evalString("(def not (fn (a) (if a false true)))");
 evalString("(defmacro cond (fn (& xs) (if (> (count xs) 0) (list 'if (first xs) (if (> (count xs) 1) (nth xs 1) (throw \"odd number of forms to cond\")) (cons 'cond (rest (rest xs)))))))");
@@ -395,4 +395,14 @@ evalString("(defn reverse [coll] (reduce conj () coll))")
 evalString("(defmacro when (fn [x & xs] (list 'if x (cons 'do xs))))")
 evalString("(defn and [& forms] (every? true? forms))")
 evalString("(def some (fn (pred xs) (if (empty? xs) nil (or (pred (first xs)) (some pred (rest xs))))))")
+evalString(`(defmacro time
+  (fn (exp)
+    (let [start (gensym)
+           ret   (gensym)]
+      \`(let (~start (time-ms)
+              ~ret   ~exp)
+        (str
+          "(Elapsed time: " (- (time-ms) ~start) "msecs) " ~ret)))))`)
+
+evalString("(def load-file (fn (f) (eval (read-string (str \"(do \" (slurp f) \"\nnil)\")))))")
 //console.log(repl_env)

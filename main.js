@@ -231,7 +231,11 @@ function randExercise() {
 }
 
 //loadExercise(randExercise())
-loadExercise("word_count")
+loadExercise("triangle")
 //testSolution("word_count")
 
-//testExercises()
+testExercises()
+
+evalString("(load-file \"src/core.clj\")")
+
+//console.log(myvar)
