@@ -4,7 +4,7 @@
 
 (defmacro cond 
   (fn [& xs] 
-    (if (> (count xs) 0) 
+    (if (> (count xs) 0)
       (list 'if (first xs) 
             (if (> (count xs) 1)
               (nth xs 1) (throw \\"odd number of forms to cond \\")) 
@@ -13,11 +13,11 @@
 (def dec (fn (a) (- a 1)))
 (def zero? (fn (n) (= 0 n)))
 (def identity (fn (x) x))
-(def reduce
-  (fn (f init xs)
-    (if (empty? xs)
-      init
-      (reduce f (f init (first xs)) (rest xs)))))
+
+(defn reduce [f init xs]
+  (if (empty? xs)
+    init
+    (reduce f (f init (first xs)) (rest xs))))
 
 (def _iter-> 
   (fn [acc form] 
@@ -36,8 +36,7 @@
 
 (defmacro or (fn (& xs) (if (empty? xs) nil (if (= 1 (count xs)) (first xs) (let (condvar (gensym)) `(let (~condvar ~(first xs)) (if ~condvar ~condvar (or ~@(rest xs)))))))))
 
-(def memoize
-  (fn [f]
+(defn memoize [f]
     (let [mem (atom {})]
       (fn [& args]
         (let [key (str args)]
@@ -46,17 +45,16 @@
             (let [ret (apply f args)]
               (do
                 (swap! mem assoc key ret)
-                ret))))))))
+                ret)))))))
 
-(def partial (fn [pfn & args]
-               (fn [& args-inner]
-                 (apply pfn (concat args args-inner)))))
+(defn partial [pfn & args]
+  (fn [& args-inner]
+    (apply pfn (concat args args-inner))))
 
-(def every?
-  (fn (pred xs)
-    (cond (empty? xs)       true
-          (pred (first xs)) (every? pred (rest xs))
-          true              false)))
+(defn every? [pred xs]
+  (cond (empty? xs)       true
+        (pred (first xs)) (every? pred (rest xs))
+        true              false))
 
 (defn reverse [coll] (reduce conj () coll))
 
@@ -64,7 +62,11 @@
 
 (defn and [& forms] (every? true? forms))
 
-(def some (fn (pred xs) (if (empty? xs) nil (or (pred (first xs)) (some pred (rest xs))))))
+(defn some [pred xs] 
+  (if (empty? xs) 
+    nil 
+    (or (pred (first xs)) 
+        (some pred (rest xs)))))
 
 (defmacro time
   (fn (exp)
@@ -75,4 +77,5 @@
            (str
             \\"(Elapsed time: \\" (- (time-ms) ~start) \\"msecs) \\" ~ret)))))
 
-(def load-file (fn (f) (eval (read-string (str \\"(do \\" (slurp f) \\"\nnil)\\")))))
+(defn load-file [f] 
+  (eval (read-string (str \\"(do \\" (slurp f) \\"\nnil)\\"))))

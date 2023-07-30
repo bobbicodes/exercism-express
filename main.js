@@ -231,12 +231,14 @@ function randExercise() {
   return exercisesToTest[Math.floor(Math.random() * exercisesToTest.length)]
 }
 
+evalString("(do " + core + ")")
+
 loadExercise(randExercise())
 //loadExercise("triangle")
-//testSolution("word_count")
+//testSolution("armstrong_numbers")
 
 //testExercises()
 
-evalString("(do " + core + ")")
+
 
 //console.log(myvar)

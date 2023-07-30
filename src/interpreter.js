@@ -186,7 +186,6 @@ function _EVAL(ast, env) {
               fnName = types._symbol(a1 + "-arity-" + args.length)
             }
             //console.log(fnName)
-            //console.log(typeof a1)
             env.set(fnName, fn)
           }
           //console.log("env", env)
@@ -224,7 +223,6 @@ function _EVAL(ast, env) {
       case "dispatch":
         // Regex
         if (types._string_Q(a1)) {
-          const escaped = a1.replace("\\", "\\\\")
           const re = new RegExp(a1, 'g')
           return re
         }
