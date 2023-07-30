@@ -224,8 +224,11 @@ function _EVAL(ast, env) {
       case "dispatch":
         // Regex
         if (types._string_Q(a1)) {
-          console.log("\\" + a1)
-          const re = new RegExp("\\" + a1, 'g')
+          console.log(a1)
+          const escaped = a1.replace("\\", "\\\\")
+          console.log(escaped)
+          const re = new RegExp(a1, 'g')
+          console.log(re)
           return re
         }
         // Anonymous function shorthand

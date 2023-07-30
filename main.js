@@ -232,5 +232,6 @@ function randExercise() {
 
 //loadExercise(randExercise())
 loadExercise("word_count")
+//testSolution("word_count")
 
 //testExercises()
