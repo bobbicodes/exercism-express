@@ -19,13 +19,16 @@
     init
     (reduce f (f init (first xs)) (rest xs))))
 
-(def _iter-> 
-  (fn [acc form] 
-    (if (list? form) `(~(first form) ~acc ~@(rest form)) (list form acc))))
+(defn _iter-> [acc form] 
+    (if (list? form) 
+      `(~(first form) ~acc ~@(rest form)) 
+      (list form acc)))
 
 (defmacro -> (fn (x & xs) (reduce _iter-> x xs)))
 
-(def _iter->> (fn [acc form] (if (list? form) `(~(first form) ~@(rest form) ~acc) (list form acc))))
+(defn _iter->> [acc form] 
+  (if (list? form) 
+    `(~(first form) ~@(rest form) ~acc) (list form acc)))
 
 (defmacro ->> (fn (x & xs) (reduce _iter->> x xs)))
 
@@ -34,7 +37,15 @@
     (fn []
       (symbol (str \\"G__\\" (swap! counter inc))))))
 
-(defmacro or (fn (& xs) (if (empty? xs) nil (if (= 1 (count xs)) (first xs) (let (condvar (gensym)) `(let (~condvar ~(first xs)) (if ~condvar ~condvar (or ~@(rest xs)))))))))
+(defmacro or 
+  (fn [& xs] 
+    (if (empty? xs)
+      nil 
+      (if (= 1 (count xs)) 
+        (first xs) 
+        (let [condvar (gensym)] 
+          `(let [~condvar ~(first xs)] 
+             (if ~condvar ~condvar (or ~@(rest xs)))))))))
 
 (defn memoize [f]
     (let [mem (atom {})]
@@ -82,3 +93,11 @@
 
 (defn pow [base pow]
   (reduce * 1 (repeat pow base)))
+
+(defmacro when-let
+  (fn [bindings & body]
+    (let [form (first bindings) tst (last bindings)]
+      `(let [temp# ~tst]
+         (when temp#
+           (let [~form temp#]
+             ~@body))))))
