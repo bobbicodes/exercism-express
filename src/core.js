@@ -328,11 +328,12 @@ function drop(n, coll) {
     return coll.slice(-n)
 }
 
-function partition(n, step, pad, coll) {
-    if (arguments.length === 2) {
-        const s = seq(step)
-        return take(n, s)
+function partition(n, coll) {
+    let parts = []
+    while (coll.length > 0) {
+        parts.push(coll.splice(0, n));
     }
+    return parts
 }
 
 
