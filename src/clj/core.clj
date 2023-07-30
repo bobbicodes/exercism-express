@@ -111,3 +111,6 @@
          (when temp#
            (let [~form temp#]
              ~@body))))))
+
+(defn butlast [s]
+  (take (dec (count s)) s))

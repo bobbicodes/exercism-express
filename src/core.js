@@ -164,7 +164,11 @@ function first(lst) { return (lst === null) ? null : lst[0]; }
 function last(lst) { return (lst === null) ? null : lst.slice(-1)[0]; }
 
 function rest(lst) { return (lst == null) ? [] : lst.slice(1); }
-function next(lst) { return (lst == null) ? [] : lst.slice(1); }
+function next(lst) { 
+    if (lst.length === 0) {
+        return null
+    }
+    return (lst == null) ? [] : lst.slice(1); }
 
 function empty_Q(lst) { return lst.length === 0; }
 
