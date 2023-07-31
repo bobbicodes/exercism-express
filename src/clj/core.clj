@@ -120,3 +120,30 @@
 
 (defn butlast [s]
   (take (dec (count s)) s))
+
+(defn lazy-seq 
+  "Not real. Just a passthrough for compatibility."
+  [seq]
+  seq)
+
+(defn interleave [c1 c2]
+  (loop [s1  (seq c1)
+         s2  (seq c2)
+         res []]
+    (if (or (empty? s1) (empty? s2))
+      res
+      (recur (rest s1) 
+             (rest s2) 
+             (cons (first s1) (cons (first s2) res))))))
+
+(defn take-nth
+  "Returns a seq of every nth item in coll."
+  [n coll]
+  (loop [c coll res []]
+    (if (empty? c)
+      (seq res)
+      (recur (drop n (seq c))
+             (conj res (first (seq c)))))))
+
+(defn into [to from]
+  (reduce conj to from))

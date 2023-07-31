@@ -365,7 +365,7 @@ function take(n, coll) {
 }
 
 function drop(n, coll) {
-    return coll.slice(-n)
+    return coll.slice(n)
 }
 
 function partition(n, coll) {

@@ -172,3 +172,37 @@
 (destructure '[{name :name
                 location :location
                 description :description} client])
+
+(defn update-ranges
+  "Applies `f` to each range in `state` (see `changeByRange`)"
+  ([state f]
+   (update-ranges state nil f))
+  ([^js state tr-specs f]
+   (->> (fn [range]
+          (or (when-some [result (f range)]
+                (map-cursor range state result))
+              #js{:range range}))
+        (.changeByRange state)
+        (#(j/extend! % tr-specs))
+        (.update state))))
+
+(defn slurp [direction]
+  (fn [^js state]
+    (update-ranges 
+     state
+     (j/fn [^:js {:as   range
+                  :keys [from to empty]}]
+       (when empty
+         (when-let [parent 
+                    (n/closest (n/tree state from)
+                               (every-pred n/coll?
+                                           #(not
+                                             (some-> % n/with-prefix n/right n/end-edge?))))]
+           (when-let [target (first (remove n/line-comment? (n/rights (n/with-prefix parent))))]
+             {:cursor/mapped from
+              :changes       (let [edge (n/down-last parent)]
+                               [{:from   (-> target n/end)
+                                 :insert (n/name edge)}
+                                (-> edge
+                                    n/from-to
+                                    (j/assoc! :insert " "))])})))))))
