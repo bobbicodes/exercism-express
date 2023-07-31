@@ -233,11 +233,8 @@ function randExercise() {
 
 evalString("(do " + core + ")")
 
-loadExercise(randExercise())
+//loadExercise(randExercise())
 //loadExercise("zipper")
-//testSolution("gigasecond")
+testSolution("flatten_array")
 
 //testExercises()
-
-
-//console.log(myvar)

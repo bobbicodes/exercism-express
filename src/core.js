@@ -4,7 +4,18 @@ import { _pr_str, _println } from './printer.js'
 import * as types from './types.js'
 import { evalString } from "./interpreter.js";
 import zip from './clj/zip.clj?raw'
-import { Seq } from 'lazy-sequences';
+
+function* infinite() {
+    let index = 0;
+
+    while (true) {
+        yield index++;
+    }
+}
+
+const generator = infinite(); // "Generator { }"
+
+console.log(generator.next().value);
 
 function require(lib) {
     switch (lib) {
@@ -165,11 +176,12 @@ function first(lst) { return (lst === null) ? null : lst[0]; }
 function last(lst) { return (lst === null) ? null : lst.slice(-1)[0]; }
 
 function rest(lst) { return (lst == null) ? [] : lst.slice(1); }
-function next(lst) { 
+function next(lst) {
     if (lst.length === 0) {
         return null
     }
-    return (lst == null) ? [] : lst.slice(1); }
+    return (lst == null) ? [] : lst.slice(1);
+}
 
 function empty_Q(lst) { return lst.length === 0; }
 
