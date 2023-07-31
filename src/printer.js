@@ -21,12 +21,8 @@ export function _pr_str(obj, print_readably) {
             var ret = obj.toArray().map(function (e) { return _pr_str(e, _r); });
             return "(" + ret.join(' ') + ")";
         case 'hash-map':
-            return obj
-            /* var ret = [];
-            for (var k in obj) {
-                ret.push(_pr_str(k, _r), _pr_str(obj[k], _r));
-            }
-            return "{" + ret.join(' ') + "}"; */
+            var ret = obj.keySeq().interleave(obj.valueSeq()).join(' ')
+            return "{" + ret + "}"
         case 'set':
             var arr = Array.from(obj)
             var ret = arr.map(function (e) { return _pr_str(e, _r); });
