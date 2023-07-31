@@ -234,8 +234,7 @@ function randExercise() {
 evalString("(do " + core + ")")
 
 loadExercise(randExercise())
-//loadExercise(("armstrong_numbers"))
-//testSolution("reverse_string")
 //loadExercise("zipper")
+//testSolution("flatten_array")
 
 //testExercises()
