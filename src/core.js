@@ -4,18 +4,15 @@ import { _pr_str, _println } from './printer.js'
 import * as types from './types.js'
 import { evalString } from "./interpreter.js";
 import zip from './clj/zip.clj?raw'
+import {Range, Seq} from 'immutable'
 
-function* infinite() {
-    let index = 0;
+const oddSquares = Seq([1, 2, 3, 4, 5, 6, 7, 8])
+  .filter(x => x % 2 !== 0)
+  .map(x => x * x);
 
-    while (true) {
-        yield index++;
-    }
-}
+const coll = [1, 2, 3]
 
-const generator = infinite(); // "Generator { }"
-
-console.log(generator.next().value);
+console.log(Seq(coll))
 
 function require(lib) {
     switch (lib) {
