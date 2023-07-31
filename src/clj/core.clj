@@ -144,3 +144,6 @@
       (seq res)
       (recur (drop n (seq c))
              (conj res (first (seq c)))))))
+
+(defn into [to from]
+  (reduce conj to from))
