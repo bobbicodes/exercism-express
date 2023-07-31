@@ -22,29 +22,18 @@ export function Env(outer, binds, exprs) {
     return this;
 }
 Env.prototype.find = function (key) {
-    /* if (!key.constructor || key.constructor.name !== 'Symbol') {
-        return "env.find key must be a symbol"
-    } */
-    // ignore namespaces
-    const k = key.value.split("/")[1] || key.value
+    // look for namespaced var, ignore if not found
+    const k = key.value || key.value.split("/")[1]
     if (k in this.data) { return this; }
     else if (this.outer) {  return this.outer.find(key); }
     else { return null; }
 };
 Env.prototype.set = function(key, value) {
-   /*  if (!key.constructor || key.constructor.name !== 'Symbol') {
-        console.log("key:", key)
-        return "env.set key must be a symbol"
-    } */
     this.data[key.value] = value;
     return value;
 };
 Env.prototype.get = function(key) {
-    /* if (!key.constructor || key.constructor.name !== 'Symbol') {
-        return "env.get key must be a symbol"
-    } */
-    // Ignore namespace prefixes
-    const k = key.value.split("/")[1] || key.value
+    const k = key.value || key.value.split("/")[1]
     var env = this.find(key);
     if (!env) { throw new Error("'" + k + "' not found"); }
     return env.data[k];

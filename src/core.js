@@ -14,9 +14,7 @@ function reverse(coll) {
 }
 
 function _reduce(f, init, coll) {
-    const ret = coll.reduce(f, init)
-    console.log(ret)
-    return ret
+    return coll.reduce(f, init)
 }
 
 function require(lib) {
@@ -71,7 +69,7 @@ function println() {
     const res = Array.prototype.map.call(arguments, function (exp) {
         return _pr_str(exp, false);
     }).join("")
-    console.log(res)
+    //console.log(res)
     return res
 }
 
