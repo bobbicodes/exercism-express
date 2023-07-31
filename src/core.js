@@ -6,13 +6,11 @@ import { evalString } from "./interpreter.js";
 import zip from './clj/zip.clj?raw'
 import {Range, Seq} from 'immutable'
 
-const oddSquares = Seq([1, 2, 3, 4, 5, 6, 7, 8])
-  .filter(x => x % 2 !== 0)
-  .map(x => x * x);
-
-const coll = [1, 2, 3]
-
-console.log(Seq(coll))
+function _reduce(f, init, coll) {
+    const ret = coll.reduce(f, init)
+    console.log(ret)
+    return ret
+}
 
 function require(lib) {
     switch (lib) {
@@ -183,6 +181,9 @@ function next(lst) {
 function empty_Q(lst) { return lst.length === 0; }
 
 function count(s) {
+    if (types._seq_Q) {
+        return s.size
+    }
     if (Array.isArray(s)) { return s.length; }
     else if (s === null) { return 0; }
     else { return Object.keys(s).length; }
@@ -223,11 +224,11 @@ function sort(x) {
 
 export function seq(obj) {
     if (types._list_Q(obj)) {
-        return obj.length > 0 ? obj : null;
+        return obj.length > 0 ? Seq(obj) : null;
     } else if (types._vector_Q(obj)) {
-        return obj.length > 0 ? Array.prototype.slice.call(obj, 0) : null;
+        return obj.length > 0 ? Seq(obj) : null;
     } else if (types._string_Q(obj)) {
-        return obj.length > 0 ? obj.split('') : null;
+        return obj.length > 0 ? Seq(obj.split('')) : null;
     } else if (types._hash_map_Q(obj)) {
         let kvs = []
         Object.entries(obj).forEach(kv => {
@@ -251,11 +252,11 @@ function apply(f) {
     return f.apply(f, args.slice(0, args.length - 1).concat(args[args.length - 1]));
 }
 
-function map(f, lst) {
-    if (types._string_Q(lst)) {
-        lst = seq(lst)
+function map(f, s) {
+    if (types._string_Q(s)) {
+        s = seq(s)
     }
-    return lst.map(function (el) { return f(el); });
+    return s.map(function (el) { return f(el); });
 }
 
 function filter(f, lst) {
@@ -497,6 +498,7 @@ export const ns = {
     're-matches': re_matches,
     'str': str,
     'upper-case': upperCase,
+    'reduce': _reduce,
     'lower-case': lowerCase,
     'prn': prn,
     'println': println,

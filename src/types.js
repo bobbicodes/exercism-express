@@ -24,7 +24,7 @@ export function _obj_type(obj) {
     }
 }
 
-function _seq_Q(x) {
+export function _seq_Q(x) {
     return isSeq(x)
 }
 

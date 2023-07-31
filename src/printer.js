@@ -8,8 +8,8 @@ export function _pr_str(obj, print_readably) {
     if (typeof print_readably === 'undefined') { print_readably = true; }
     var _r = print_readably;
     var ot = _obj_type(obj);
-    console.log("obj:", obj)
-    console.log("ot:", ot)
+    //console.log("obj:", obj)
+    //console.log("ot:", ot)
     switch (ot) {
         case 'list':
             var ret = obj.map(function (e) { return _pr_str(e, _r); });
