@@ -1,13 +1,16 @@
 import { Env } from './env.js'
 import { seq } from './core.js'
-import {isSeq} from 'immutable'
+import {isSeq, List, Map, Set} from 'immutable'
 
 export function _obj_type(obj) {
+    console.log("set?:", _set_Q(obj))
     if (_symbol_Q(obj)) { return 'symbol'; }
+    else if (_lazyList_Q(obj)) { return 'lazy-list'; }
+    else if (_lazyMap_Q(obj)) { return 'lazy-map'; }
     else if (_list_Q(obj)) { return 'list'; }
     else if (_vector_Q(obj)) { return 'vector'; }
     else if (_seq_Q(obj)) { return 'seq'; }
-    else if (_hash_map_Q(obj)) { return 'hash-map'; }
+    //else if (_hash_map_Q(obj)) { return 'hash-map'; }
     else if (_set_Q(obj)) { return 'set'; }
     else if (_char_Q(obj)) { return 'char'; }
     else if (_nil_Q(obj)) { return 'nil'; }
@@ -26,6 +29,14 @@ export function _obj_type(obj) {
 
 export function _seq_Q(x) {
     return isSeq(x)
+}
+
+export function _lazyList_Q(x) {
+    return List.isList(x)
+}
+
+export function _lazyMap_Q(x) {
+    return Map.isMap(x)
 }
 
 export function _sequential_Q(lst) { return _list_Q(lst) || _vector_Q(lst); }
@@ -268,12 +279,11 @@ export function _hash_map_Q(hm) {
 
 // Sets
 export function _set() {
-    return new Set(arguments)
+    return Set(arguments)
 }
 
-export function _set_Q(set) {
-    return typeof set === "object" &&
-    (set instanceof Set)
+export function _set_Q(x) {
+    return Set.isSet()
 }
 
 export function _assoc(hm) {

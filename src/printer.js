@@ -9,8 +9,14 @@ export function _pr_str(obj, print_readably) {
     var _r = print_readably;
     var ot = _obj_type(obj);
     //console.log("obj:", obj)
-    //console.log("ot:", ot)
+    console.log("ot:", ot)
     switch (ot) {
+        case 'lazy-list':
+            var ret = obj.map(function (e) { return _pr_str(e, _r); });
+            return "(" + ret.join(' ') + ")";
+        case 'lazy-map':
+            var ret = obj.map(function (e) { return _pr_str(e, _r); });
+            return "{" + ret.join(' ') + "}";
         case 'list':
             var ret = obj.map(function (e) { return _pr_str(e, _r); });
             return "(" + ret.join(' ') + ")";

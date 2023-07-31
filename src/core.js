@@ -4,7 +4,8 @@ import { _pr_str, _println } from './printer.js'
 import * as types from './types.js'
 import { evalString } from "./interpreter.js";
 import zip from './clj/zip.clj?raw'
-import {Range, Seq} from 'immutable'
+import {Range, Seq, List} from 'immutable'
+import * as lazy from './lazy.js'
 
 function reverse(coll) {
     if (types._string_Q(coll)) {
@@ -387,10 +388,6 @@ function int(x) {
     }
 }
 
-function toSet() {
-    return new Set(arguments[0])
-}
-
 function rand_int() {
     return Math.floor(Math.random() * arguments[0]);
 }
@@ -478,6 +475,9 @@ function distinct_Q() {
 
 export const ns = {
     'require': require,
+    'empty-list': lazy._emptyList,
+    'empty-map': lazy._emptyMap,
+    'set': lazy._set,
     'type': types._obj_type,
     '=': types._equal_Q,
     'not=': notEquals,
@@ -526,7 +526,6 @@ export const ns = {
     'vector': types._vector,
     //'distinct': distinct,
     'distinct?': distinct_Q,
-    'set': toSet,
     'vector?': types._vector_Q,
     'hash-map': types._hash_map,
     'map?': types._hash_map_Q,

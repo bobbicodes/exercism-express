@@ -321,7 +321,7 @@ function _EVAL(ast, env) {
           //console.log("Calling single-arity function:", f)
           //console.log("ast:", ast)
           //console.log("args:", args)
-          //console.log("env:", env)
+          console.log("env:", env)
         }
         if (f.__ast__) {
           ast = f.__ast__;
