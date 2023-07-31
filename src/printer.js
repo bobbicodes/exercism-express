@@ -17,6 +17,9 @@ export function _pr_str(obj, print_readably) {
         case 'vector':
             var ret = obj.map(function (e) { return _pr_str(e, _r); });
             return "[" + ret.join(' ') + "]";
+        case 'seq':
+            var ret = obj.toArray().map(function (e) { return _pr_str(e, _r); });
+            return "(" + ret.join(' ') + ")";
         case 'hash-map':
             var ret = [];
             for (var k in obj) {

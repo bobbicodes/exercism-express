@@ -14,6 +14,7 @@
   "dependencies": {
     "@lezer/common": "^1.0.3",
     "@nextjournal/lezer-clojure": "^1.0.0",
-    "codemirror": "^6.0.1"
+    "codemirror": "^6.0.1",
+    "immutable": "^4.3.1"
   }
 }

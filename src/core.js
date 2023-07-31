@@ -4,18 +4,20 @@ import { _pr_str, _println } from './printer.js'
 import * as types from './types.js'
 import { evalString } from "./interpreter.js";
 import zip from './clj/zip.clj?raw'
+import {Range, Seq} from 'immutable'
 
-function* infinite() {
-    let index = 0;
-
-    while (true) {
-        yield index++;
+function reverse(coll) {
+    if (types._string_Q(coll)) {
+        coll = coll.split('')
     }
+    return Seq(coll).reverse().toJS()
 }
 
-const generator = infinite(); // "Generator { }"
-
-console.log(generator.next().value);
+function _reduce(f, init, coll) {
+    const ret = coll.reduce(f, init)
+    console.log(ret)
+    return ret
+}
 
 function require(lib) {
     switch (lib) {
@@ -161,15 +163,15 @@ function nth(lst, idx) {
     else { throw new Error("nth: index out of range"); }
 }
 
-function range(start, end) {
-    if (!end) {
-        return range(0, start)
+function range(start, end, step) {
+    if (step) {
+        return Range(start, end, step)
     }
-    var ans = [];
-    for (let i = start; i < end; i++) {
-        ans.push(i);
+    if (end) {
+        return Range(start, end)
+    } else {
+        return Range()
     }
-    return ans;
 }
 
 function first(lst) { return (lst === null) ? null : lst[0]; }
@@ -186,6 +188,9 @@ function next(lst) {
 function empty_Q(lst) { return lst.length === 0; }
 
 function count(s) {
+    if (types._seq_Q) {
+        return s.size
+    }
     if (Array.isArray(s)) { return s.length; }
     else if (s === null) { return 0; }
     else { return Object.keys(s).length; }
@@ -226,11 +231,11 @@ function sort(x) {
 
 export function seq(obj) {
     if (types._list_Q(obj)) {
-        return obj.length > 0 ? obj : null;
+        return obj.length > 0 ? Seq(obj) : null;
     } else if (types._vector_Q(obj)) {
-        return obj.length > 0 ? Array.prototype.slice.call(obj, 0) : null;
+        return obj.length > 0 ? Seq(obj) : null;
     } else if (types._string_Q(obj)) {
-        return obj.length > 0 ? obj.split('') : null;
+        return obj.length > 0 ? Seq(obj.split('')) : null;
     } else if (types._hash_map_Q(obj)) {
         let kvs = []
         Object.entries(obj).forEach(kv => {
@@ -254,11 +259,11 @@ function apply(f) {
     return f.apply(f, args.slice(0, args.length - 1).concat(args[args.length - 1]));
 }
 
-function map(f, lst) {
-    if (types._string_Q(lst)) {
-        lst = seq(lst)
+function map(f, s) {
+    if (types._string_Q(s)) {
+        s = seq(s)
     }
-    return lst.map(function (el) { return f(el); });
+    return s.map(function (el) { return f(el); });
 }
 
 function filter(f, lst) {
@@ -494,12 +499,14 @@ export const ns = {
     'macro?': types._macro_Q,
     'pr-str': pr_str,
     'print': print,
+    'reverse': reverse,
     'frequencies': frequencies,
     're-find': reFind,
     're-seq': reSeq,
     're-matches': re_matches,
     'str': str,
     'upper-case': upperCase,
+    'reduce': _reduce,
     'lower-case': lowerCase,
     'prn': prn,
     'println': println,
