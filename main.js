@@ -233,8 +233,8 @@ function randExercise() {
 
 evalString("(do " + core + ")")
 
-//loadExercise(randExercise())
+loadExercise(randExercise())
 //loadExercise(("armstrong_numbers"))
-//testSolution("armstrong_numbers")
+//testSolution("reverse_string")
 
-testExercises()
+//testExercises()

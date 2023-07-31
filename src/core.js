@@ -6,6 +6,13 @@ import { evalString } from "./interpreter.js";
 import zip from './clj/zip.clj?raw'
 import {Range, Seq} from 'immutable'
 
+function reverse(coll) {
+    if (types._string_Q(coll)) {
+        coll = coll.split('')
+    }
+    return Seq(coll).reverse().toJS()
+}
+
 function _reduce(f, init, coll) {
     const ret = coll.reduce(f, init)
     console.log(ret)
@@ -492,6 +499,7 @@ export const ns = {
     'macro?': types._macro_Q,
     'pr-str': pr_str,
     'print': print,
+    'reverse': reverse,
     'frequencies': frequencies,
     're-find': reFind,
     're-seq': reSeq,

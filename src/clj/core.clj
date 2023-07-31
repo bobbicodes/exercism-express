@@ -67,7 +67,7 @@
         (pred (first xs)) (every? pred (rest xs))
         true              false))
 
-(defn reverse [coll] (reduce conj () coll))
+;(defn reverse [coll] (reduce conj () (seq coll)))
 
 (defmacro when (fn [x & xs] (list 'if x (cons 'do xs))))
 
