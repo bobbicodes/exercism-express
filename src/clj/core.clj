@@ -120,3 +120,34 @@
 
 (defn butlast [s]
   (take (dec (count s)) s))
+
+(defn lazy-seq 
+  "Not real. Just a passthrough for compatibility."
+  [seq]
+  seq)
+
+#_(defn interleave
+  ([] ())
+  ([c1] (lazy-seq c1))
+  ([c1 c2]
+   (lazy-seq
+    (let [s1 (seq c1) s2 (seq c2)]
+      (if-not (and s1 s2) )
+      (when (and s1 s2)
+        (cons (first s1) (cons (first s2)
+                               (interleave (rest s1) (rest s2))))))))
+  ([c1 c2 & colls]
+   (lazy-seq
+    (let [ss (map seq (conj colls c2 c1))]
+      (when (every? identity ss)
+        (concat (map first ss) (apply interleave (map rest ss))))))))
+
+(defn interleave [c1 c2]
+  (loop [s1  (seq c1)
+         s2  (seq c2)
+         res []]
+    (if (or (empty? s1) (empty? s2))
+      res
+      (recur (rest s1) 
+             (rest s2) 
+             (cons (first s1) (cons (first s2) res))))))
