@@ -235,7 +235,7 @@ evalString("(do " + core + ")")
 
 loadExercise(randExercise())
 //loadExercise("zipper")
-//testSolution("zipper")
+//testSolution("gigasecond")
 
 //testExercises()
 

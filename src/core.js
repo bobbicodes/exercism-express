@@ -4,6 +4,7 @@ import { _pr_str, _println } from './printer.js'
 import * as types from './types.js'
 import { evalString } from "./interpreter.js";
 import zip from './clj/zip.clj?raw'
+import { Seq } from 'lazy-sequences';
 
 function require(lib) {
     switch (lib) {

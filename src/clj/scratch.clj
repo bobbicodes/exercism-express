@@ -172,4 +172,3 @@
 (destructure '[{name :name
                 location :location
                 description :description} client])
-
