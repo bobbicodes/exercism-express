@@ -158,15 +158,15 @@ function nth(lst, idx) {
     else { throw new Error("nth: index out of range"); }
 }
 
-function range(start, end) {
-    if (!end) {
-        return range(0, start)
+function range(start, end, step) {
+    if (step) {
+        return Range(start, end, step)
     }
-    var ans = [];
-    for (let i = start; i < end; i++) {
-        ans.push(i);
+    if (end) {
+        return Range(start, end)
+    } else {
+        return Range()
     }
-    return ans;
 }
 
 function first(lst) { return (lst === null) ? null : lst[0]; }

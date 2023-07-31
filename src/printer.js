@@ -8,8 +8,8 @@ export function _pr_str(obj, print_readably) {
     if (typeof print_readably === 'undefined') { print_readably = true; }
     var _r = print_readably;
     var ot = _obj_type(obj);
-    //console.log("obj:", obj)
-    //console.log("ot:", ot)
+    console.log("obj:", obj)
+    console.log("ot:", ot)
     switch (ot) {
         case 'list':
             var ret = obj.map(function (e) { return _pr_str(e, _r); });
@@ -17,6 +17,9 @@ export function _pr_str(obj, print_readably) {
         case 'vector':
             var ret = obj.map(function (e) { return _pr_str(e, _r); });
             return "[" + ret.join(' ') + "]";
+        case 'seq':
+            var ret = obj.toArray().map(function (e) { return _pr_str(e, _r); });
+            return "(" + ret.join(' ') + ")";
         case 'hash-map':
             var ret = [];
             for (var k in obj) {

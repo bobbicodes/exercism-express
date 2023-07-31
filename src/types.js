@@ -1,10 +1,12 @@
 import { Env } from './env.js'
 import { seq } from './core.js'
+import {isSeq} from 'immutable'
 
 export function _obj_type(obj) {
     if (_symbol_Q(obj)) { return 'symbol'; }
     else if (_list_Q(obj)) { return 'list'; }
     else if (_vector_Q(obj)) { return 'vector'; }
+    else if (_seq_Q(obj)) { return 'seq'; }
     else if (_hash_map_Q(obj)) { return 'hash-map'; }
     else if (_set_Q(obj)) { return 'set'; }
     else if (_char_Q(obj)) { return 'char'; }
@@ -20,6 +22,10 @@ export function _obj_type(obj) {
             default: throw new Error("Unknown type '" + typeof (obj) + "'");
         }
     }
+}
+
+function _seq_Q(x) {
+    return isSeq(x)
 }
 
 export function _sequential_Q(lst) { return _list_Q(lst) || _vector_Q(lst); }
