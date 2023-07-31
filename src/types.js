@@ -1,8 +1,9 @@
 import { Env } from './env.js'
 import { seq } from './core.js'
-import {isSeq} from 'immutable'
+import {isSeq, Map} from 'immutable'
 
 export function _obj_type(obj) {
+    console.log("obj:", obj)
     if (_symbol_Q(obj)) { return 'symbol'; }
     else if (_list_Q(obj)) { return 'list'; }
     else if (_vector_Q(obj)) { return 'vector'; }
@@ -250,20 +251,11 @@ export function _vector_Q(obj) { return Array.isArray(obj) && !!obj.__isvector__
 
 // Hash Maps
 export function _hash_map() {
-    if (arguments.length % 2 === 1) {
-        throw new Error("Odd number of hash map arguments");
-    }
-    var args = [{}].concat(Array.prototype.slice.call(arguments, 0));
-    return _assoc.apply(null, args);
+    return Map(arguments)
 }
 
 export function _hash_map_Q(hm) {
-    return typeof hm === "object" &&
-        !Array.isArray(hm) &&
-        !(hm === null) &&
-        !(hm instanceof Symbol) &&
-        !(hm instanceof Set) &&
-        !(hm instanceof Atom);
+    return Map.isMap(hm)
 }
 
 // Sets
