@@ -81,7 +81,13 @@
 
 (defn fnext [x] (first (next x)))
 
-(defn and [& forms] (every? true? forms))
+(defmacro and
+  (fn [& xs]
+       (cond (empty? xs)      true
+             (= 1 (count xs)) (first xs)
+             true             (let (condvar (gensym))
+                                    `(let (~condvar ~(first xs))
+                                           (if ~condvar (and ~@(rest xs)) ~condvar))))))
 
 (defn some [pred xs] 
   (if (empty? xs) 
