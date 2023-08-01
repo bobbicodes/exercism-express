@@ -35,7 +35,6 @@ export function _pr_str(obj, print_readably) {
                     hmstring = hmstring + kvs[i] + ', '
                 }
             }
-            var ret = obj.keySeq().interleave(obj.valueSeq()).join(' ')
             return "{" + hmstring + "}"
         case 'set':
             var arr = Array.from(obj)

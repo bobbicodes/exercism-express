@@ -125,7 +125,7 @@ function _EVAL(ast, env) {
         break;
       case "def":
         var res = EVAL(a2, env);
-        return env.set(a1, res);
+        return env.set(namespace + "/" + a1, res);
       case "fn":
         return types._function(EVAL, Env, a2, env, a1);
       case "defn":
@@ -188,18 +188,20 @@ function _EVAL(ast, env) {
             const fn = types._function(EVAL, Env, body, env, args);
             let fnName
             if (variadic) {
-              fnName = types._symbol(a1 + "-variadic")
+              fnName = types._symbol(namespace + "/" + a1 + "-variadic")
             } else {
-              fnName = types._symbol(a1 + "-arity-" + args.length)
+              fnName = types._symbol(namespace + "/" + a1 + "-arity-" + args.length)
             }
-            //console.log(fnName)
+            console.log(fnName)
             env.set(fnName, fn)
           }
-          //console.log("env", env)
-          return "Defined: #'" + namespace + "/" + a1
+          console.log("env", env)
+          return "Defined: #'" + a1
+          // end - multi-arity functions
         } else {
           const fn = types._function(EVAL, Env, fnBody, env, arglist);
-          env.set(a1, fn)
+          env.set(types._symbol(namespace + "/" + a1), fn)
+          console.log("env", env)
           return "Defined: " + "#'" + namespace + "/" + a1
         }
         var loop_env = new Env(env)
@@ -296,7 +298,7 @@ function _EVAL(ast, env) {
         let fSym
         //console.log("ast[0]:", ast[0])
         //console.log("env:", env)
-        const fnName = ast[0].value.split("/")[1] || ast[0].value
+        const fnName = ast[0].value
         // First check if there is a variadic arity defined
         if (Object.keys(env.data).includes(fnName + "-variadic")) {
           console.log("Fn has variadic arity defined")
@@ -318,7 +320,7 @@ function _EVAL(ast, env) {
         } else {
           var el = eval_ast(ast, env)
           f = el[0];
-          //console.log("Calling single-arity function:", f)
+          console.log("Calling single-arity function:", f)
           //console.log("ast:", ast)
           //console.log("args:", args)
           //console.log("env:", env)
