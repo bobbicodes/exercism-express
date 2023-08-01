@@ -1,6 +1,6 @@
 import { Env } from './env.js'
 import { seq } from './core.js'
-import {isSeq, Map, List} from 'immutable'
+import {isSeq, Map, List, Range} from 'immutable'
 
 export function _obj_type(obj) {
     console.log("obj:", obj)
@@ -259,7 +259,11 @@ export function _vector_Q(obj) { return Array.isArray(obj) && !!obj.__isvector__
 
 // Hash Maps
 export function _hash_map() {
-    return Map(arguments)
+    let args = []
+    for (let i = 0; i < arguments.length; i+=2) {
+        args.push([arguments[i], arguments[i+1]])
+    }
+    return Map(args)
 }
 
 export function _hash_map_Q(hm) {

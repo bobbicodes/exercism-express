@@ -23,7 +23,6 @@ export function _pr_str(obj, print_readably) {
             var ret = obj.toArray().map(function (e) { return _pr_str(e, _r); });
             return "(" + ret.join(' ') + ")";
         case 'hash-map':
-            var l = obj.keySeq().size
             var ret = obj.keySeq().interleave(obj.valueSeq(), ).join(' ')
             return "{" + ret + "}"
         case 'set':
