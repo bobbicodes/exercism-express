@@ -72,13 +72,13 @@ function eval_ast(ast, env) {
 
 export let namespace = "user"
 export var deftests = []
-let testingString = ""
+var testingString = ""
 // loop variables are identified positionally by `recur`,
 // so we keep track of the order they're defined
-let loopVars = []
+var loopVars = []
 // We need to store the ast so we can
 // pass it to recur later
-let loopAST = []
+var loopAST = []
 var loop_env = new Env(repl_env)
 
 function _EVAL(ast, env) {
@@ -361,3 +361,14 @@ repl_env.set(types._symbol('eval'), function(ast) {
 export function loadLib(lib) {
   evalString("(do " + lib + ")")
 }
+
+function resolve(varName, env) {
+  const vars = Object.keys(env.data)
+  console.log("vars in env:", vars)
+  // Check if defined in current namespace
+  if (vars.includes(namespace + "/" + varName)) {
+    console.log("var found in ", namespace)
+  }
+}
+
+console.log("resolving", resolve("two-fer-arity-0", repl_env))
