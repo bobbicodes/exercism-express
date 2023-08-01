@@ -13,20 +13,7 @@ import {testCodeBeforeEval} from './src/eval-region'
 import core from './src/clj/core.clj?raw'
 
 let editorState = EditorState.create({
-  doc: `(def letters (map char (range 65 91)))
-
-(defn generate-name [] 
-   (apply str (concat (repeatedly 2 (fn [] (rand-nth letters)))  
-      (repeatedly 3 (fn [] (rand-int 10))))))
-
-(defn robot []
-  (atom {:name (generate-name)}))
-
-(defn robot-name [robot]
-  (get (deref robot) :name))
-
-(deftest robot-name-test
-  (is (re-seq #"[A-Z]{2}\\d{3}" (robot-name (robot)))))`,
+  doc: `(-> "kitty" (str "hello "))`,
     extensions: [basicSetup, clojure()]
 })
 
@@ -235,6 +222,6 @@ evalString("(do " + core + ")")
 
 //loadExercise(randExercise())
 //loadExercise("reverse_string")
-//testSolution("reverse_string")
+//testSolution("word_count")
 
 testExercises()

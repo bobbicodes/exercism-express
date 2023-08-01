@@ -3,7 +3,7 @@ import { seq } from './core.js'
 import {isSeq, Map, List, Range} from 'immutable'
 
 export function _obj_type(obj) {
-    console.log("obj:", obj)
+    //console.log("obj:", obj)
     if (_symbol_Q(obj)) { return 'symbol'; }
     else if (_lazyList_Q(obj)) { return 'lazy-list'; }
     else if (_list_Q(obj)) { return 'list'; }

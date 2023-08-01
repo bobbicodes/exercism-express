@@ -70,7 +70,8 @@ function eval_ast(ast, env) {
   }
 }
 
-export let namespace = "user"
+export var namespace = "user"
+export var namespaces = []
 export var deftests = []
 let testingString = ""
 // loop variables are identified positionally by `recur`,
@@ -113,7 +114,9 @@ function _EVAL(ast, env) {
       case "discard":
         return null
       case "ns":
-        namespace = a1
+        namespace = a1.value
+        namespaces.push(namespace)
+        console.log("set namespace to",  namespace)
         return null
       case "let":
         var let_env = new Env(env);
@@ -125,7 +128,8 @@ function _EVAL(ast, env) {
         break;
       case "def":
         var res = EVAL(a2, env);
-        return env.set(namespace + "/" + a1, res);
+        console.log("defined var", a1.value, "to", res)
+        return env.set(types._symbol(namespace + "/" + a1.value), res);
       case "fn":
         return types._function(EVAL, Env, a2, env, a1);
       case "defn":
@@ -298,28 +302,53 @@ function _EVAL(ast, env) {
         let fSym
         //console.log("ast[0]:", ast[0])
         //console.log("env:", env)
-        const fnName = ast[0].value
+        var fnName = ast[0].value
+        console.log("fnName", fnName)
+        console.log("names in env:", Object.keys(env.data))
+        // First check if var is in current namespace
+        if (Object.keys(env.data).includes(namespace + "/" + fnName)) {
+          console.log("found in current namespace")
+          console.log("setting fnName to", namespace + "/" + fnName)
+          fnName = namespace + "/" + fnName
+        }
         // First check if there is a variadic arity defined
         if (Object.keys(env.data).includes(fnName + "-variadic")) {
           console.log("Fn has variadic arity defined")
           // if there is, then check if there's a fixed arity that matches
           if (Object.keys(env.data).includes(fnName + "-arity-" + arity)) {
-            fSym = types._symbol(ast[0] + "-arity-" + arity)
+            fSym = types._symbol(fnName + "-arity-" + arity)
             //console.log("Calling multi-arity function:", f)
           } else {
-            fSym = types._symbol(ast[0] + "-variadic")
+            fSym = types._symbol(fnName + "-variadic")
             console.log("Calling variadic function:", f)
           }
           f = EVAL(fSym, env)
           //console.log("env:", env)
           // check again if there's a (fixed) multi-arity that matches
         } else if (Object.keys(env.data).includes(fnName + "-arity-" + arity)) {
-          fSym = types._symbol(ast[0] + "-arity-" + arity)
+          fSym = types._symbol(fnName + "-arity-" + arity)
           f = EVAL(fSym, env)
           //console.log("Calling multi-arity function:", f)
         } else {
-          var el = eval_ast(ast, env)
-          f = el[0];
+          // Select namespace
+          console.log("namespaces", namespaces)
+          // First check if var is in current namespace
+        if (Object.keys(env.data).includes(namespace + "/" + fnName)) {
+          console.log("found in current namespace")
+          console.log("setting fnName to", namespace + "/" + fnName)
+          fnName = namespace + "/" + fnName
+        } else {
+          // Check in each namespace defined
+          for (let i = 0; i < namespaces.length; i++) {
+            console.log("looking for", fnName, "in ns:", namespaces[i])
+            if (Object.keys(env.data).includes(namespaces[i] + "/" + fnName)) {
+              console.log("setting fnName to", namespaces[i] + "/" + fnName)
+              fnName = namespaces[i] + "/" + fnName
+            }
+          }
+        }
+          fSym = types._symbol(fnName)
+          f = EVAL(fSym, env)
           console.log("Calling single-arity function:", f)
           //console.log("ast:", ast)
           //console.log("args:", args)
