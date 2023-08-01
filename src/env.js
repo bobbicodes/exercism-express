@@ -22,9 +22,7 @@ export function Env(outer, binds, exprs) {
     return this;
 }
 Env.prototype.find = function (key) {
-    // look for namespaced var, ignore if not found
-    const k = key.value || key.value.split("/")[1]
-    if (k in this.data) { return this; }
+    if (key.value in this.data) { return this; }
     else if (this.outer) {  return this.outer.find(key); }
     else { return null; }
 };
@@ -33,8 +31,7 @@ Env.prototype.set = function(key, value) {
     return value;
 };
 Env.prototype.get = function(key) {
-    const k = key.value || key.value.split("/")[1]
-    var env = this.find(key);
+    var env = this.find(key.valuey);
     if (!env) { throw new Error("'" + k + "' not found"); }
     return env.data[k];
 };

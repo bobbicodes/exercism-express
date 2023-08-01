@@ -113,7 +113,8 @@ function _EVAL(ast, env) {
       case "discard":
         return null
       case "ns":
-        namespace = a1
+        namespace = a1.value
+        console.log("namespace changed to", namespace)
         return null
       case "let":
         var let_env = new Env(env);
@@ -199,7 +200,9 @@ function _EVAL(ast, env) {
           return "Defined: #'" + namespace + "/" + a1
         } else {
           const fn = types._function(EVAL, Env, fnBody, env, arglist);
-          env.set(a1, fn)
+          env.set(namespace + "/" + a1, fn)
+          console.log("function defined:", namespace + "/" + a1)
+          console.log("env:", env)
           return "Defined: " + "#'" + namespace + "/" + a1
         }
         var loop_env = new Env(env)
