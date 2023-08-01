@@ -50,9 +50,10 @@ function macroexpand(ast, env) {
 }
 
 function eval_ast(ast, env) {
-  //  console.log("AST:", ast)
+    console.log("AST:", ast)
   if (types._symbol_Q(ast)) {
-    return env.get(ast);
+    console.log(ast.value, "resolved to", resolve(ast.value, env))
+    return env.get(types._symbol(resolve(ast.value, env)));
   } else if (types._list_Q(ast)) {
     return ast.map(function (a) { return EVAL(a, env); });
   } else if (types._vector_Q(ast)) {
@@ -70,7 +71,8 @@ function eval_ast(ast, env) {
   }
 }
 
-export let namespace = "user"
+export var namespace = "user"
+export var namespaces = ["user"]
 export var deftests = []
 var testingString = ""
 // loop variables are identified positionally by `recur`,
@@ -80,6 +82,32 @@ var loopVars = []
 // pass it to recur later
 var loopAST = []
 var loop_env = new Env(repl_env)
+
+function fnConfig(ast, env) {
+  var a2 = ast[2], a3 = ast[3], a4 = ast[4]
+  if (types._string_Q(a2) && types._vector_Q(a3)) {
+    //console.log("fn has a docstring and is single-arity")
+    arglist = a3
+    fnBody = a4
+    isMultiArity = false
+  }
+  if (types._vector_Q(a2)) {
+    //console.log("fn has no docstring and is single-arity")
+    arglist = a2
+    fnBody = a3
+    isMultiArity = false
+  }
+  if (types._string_Q(a2) && types._list_Q(a3)) {
+    console.log("fn has a docstring and is multi-arity")
+    fnBody = ast.slice(3)
+    isMultiArity = true
+  }
+  if (types._list_Q(a2)) {
+    //console.log("fn has no docstring and is multi-arity")
+    fnBody = ast.slice(2)
+    isMultiArity = true
+  }
+}
 
 function _EVAL(ast, env) {
   //console.log("Calling _EVAL", ast)
@@ -114,6 +142,7 @@ function _EVAL(ast, env) {
         return null
       case "ns":
         namespace = a1.value
+        namespaces.push(namespace)
         console.log("namespace changed to", namespace)
         return null
       case "let":
@@ -126,7 +155,9 @@ function _EVAL(ast, env) {
         break;
       case "def":
         var res = EVAL(a2, env);
-        return env.set(a1, res);
+        env.set(types._symbol(namespace + "/" + a1), res);
+        console.log("env:", env)
+        return "#'" + namespace + "/" + a1 + " defined"
       case "fn":
         return types._function(EVAL, Env, a2, env, a1);
       case "defn":
@@ -134,10 +165,12 @@ function _EVAL(ast, env) {
         // Multi-arity functions
         // We need to tell whether the function is multi-arity,
         // and have it work with docstrings as well.
-        let arglist
-        let fnBody
-        let isMultiArity
+        var arglist
+        var fnBody
+        var isMultiArity
 
+        // TODO: move this logic to its own function
+        // it should be called fnConfig
         if (types._string_Q(a2) && types._vector_Q(a3)) {
           //console.log("fn has a docstring and is single-arity")
           arglist = a3
@@ -151,7 +184,7 @@ function _EVAL(ast, env) {
           isMultiArity = false
         }
         if (types._string_Q(a2) && types._list_Q(a3)) {
-          console.log("fn has a docstring and is multi-arity")
+          //console.log("fn has a docstring and is multi-arity")
           fnBody = ast.slice(3)
           isMultiArity = true
         }
@@ -197,13 +230,13 @@ function _EVAL(ast, env) {
             env.set(fnName, fn)
           }
           //console.log("env", env)
-          return "Defined: #'" + namespace + "/" + a1
+          return "#'" + namespace + "/" + a1 + "defined"
         } else {
           const fn = types._function(EVAL, Env, fnBody, env, arglist);
-          env.set(namespace + "/" + a1, fn)
+          env.set(types._symbol(namespace + "/" + a1), fn)
           console.log("function defined:", namespace + "/" + a1)
           console.log("env:", env)
-          return "Defined: " + "#'" + namespace + "/" + a1
+          return "#'" + namespace + "/" + a1 + " defined"
         }
         var loop_env = new Env(env)
         loopVars = arglist
@@ -299,28 +332,29 @@ function _EVAL(ast, env) {
         let fSym
         //console.log("ast[0]:", ast[0])
         //console.log("env:", env)
-        const fnName = ast[0].value.split("/")[1] || ast[0].value
+        const fnName = ast[0].value
         // First check if there is a variadic arity defined
         if (Object.keys(env.data).includes(fnName + "-variadic")) {
           console.log("Fn has variadic arity defined")
           // if there is, then check if there's a fixed arity that matches
           if (Object.keys(env.data).includes(fnName + "-arity-" + arity)) {
-            fSym = types._symbol(ast[0] + "-arity-" + arity)
+            fSym = types._symbol(fnName + "-arity-" + arity)
             //console.log("Calling multi-arity function:", f)
           } else {
-            fSym = types._symbol(ast[0] + "-variadic")
+            fSym = types._symbol(fnName + "-variadic")
             console.log("Calling variadic function:", f)
           }
           f = EVAL(fSym, env)
           //console.log("env:", env)
           // check again if there's a (fixed) multi-arity that matches
         } else if (Object.keys(env.data).includes(fnName + "-arity-" + arity)) {
-          fSym = types._symbol(ast[0] + "-arity-" + arity)
+          fSym = types._symbol(fnName + "-arity-" + arity)
           f = EVAL(fSym, env)
           //console.log("Calling multi-arity function:", f)
         } else {
+          fnName = resolve(fnName, env)
           var el = eval_ast(ast, env)
-          f = el[0];
+          f = types._symbol(fnName)
           //console.log("Calling single-arity function:", f)
           //console.log("ast:", ast)
           //console.log("args:", args)
@@ -367,11 +401,27 @@ export function loadLib(lib) {
 
 function resolve(varName, env) {
   const vars = Object.keys(env.data)
-  console.log("vars in env:", vars)
+  //console.log("vars in env:", vars)
   // Check if defined in current namespace
   if (vars.includes(namespace + "/" + varName)) {
-    console.log("var found in ", namespace)
+    console.log("var " + varName + " found in namespace ", namespace)
+    return namespace + "/" + varName
   }
+  console.log("checking namespaces:", namespaces)
+  for (let i = 0; i < namespaces.length; i++) {
+    if (vars.includes(namespaces[i] + "/" + varName)) {
+      console.log("var " + varName + " found in namespace ", namespaces[i])
+      varName = namespaces[i] + "/" + varName
+    } else {
+      console.log("var not found in ", namespaces[i])
+    }
+  }
+  if (vars.includes(varName)) {
+    return varName
+  }
+  return varName + " is undefined"
 }
 
-console.log("resolving", resolve("two-fer-arity-0", repl_env))
+//evalString("(def a \"hi\")")
+//console.log("env:", repl_env)
+//console.log("resolving", resolve("a", repl_env))

@@ -31,7 +31,8 @@ Env.prototype.set = function(key, value) {
     return value;
 };
 Env.prototype.get = function(key) {
-    var env = this.find(key.valuey);
-    if (!env) { throw new Error("'" + k + "' not found"); }
-    return env.data[k];
+    var env = this.find(key);
+    if (!env) { 
+        throw new Error("'" + key.value + "' not found"); }
+    return env.data[key.value];
 };
