@@ -477,8 +477,8 @@ function distinct_Q() {
 }
 
 function interleave() {
-    var ret = arguments[0].interleave(Array.prototype.slice.call(arguments, 1))
-    console.log("interleaving", ret)
+    var args = Array.prototype.slice.call(arguments, 1)
+    var ret = arguments[0].interleave.apply(arguments[0], args)
     return ret
 }
 
