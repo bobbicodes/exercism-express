@@ -1,10 +1,11 @@
 import { Env } from './env.js'
 import { seq } from './core.js'
-import {isSeq, Map} from 'immutable'
+import {isSeq, Map, List} from 'immutable'
 
 export function _obj_type(obj) {
     console.log("obj:", obj)
     if (_symbol_Q(obj)) { return 'symbol'; }
+    else if (_lazyList_Q(obj)) { return 'lazy-list'; }
     else if (_list_Q(obj)) { return 'list'; }
     else if (_vector_Q(obj)) { return 'vector'; }
     else if (_seq_Q(obj)) { return 'seq'; }
@@ -238,8 +239,15 @@ export function _macro_Q(obj) { return _function_Q(obj) && !!obj._ismacro_; }
 
 
 // Lists
-export function _list() { return Array.prototype.slice.call(arguments, 0); }
+export function _list() {
+     return List(arguments[0])
+}
+
 export function _list_Q(obj) { return Array.isArray(obj) && !obj.__isvector__; }
+
+export function _lazyList_Q(obj) {
+    return List.isList(obj)
+}
 
 // Vectors
 export function _vector() {

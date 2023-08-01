@@ -11,6 +11,8 @@ export function _pr_str(obj, print_readably) {
     //console.log("obj:", obj)
     //console.log("ot:", ot)
     switch (ot) {
+        case 'lazy-list':
+            return obj
         case 'list':
             var ret = obj.map(function (e) { return _pr_str(e, _r); });
             return "(" + ret.join(' ') + ")";
@@ -21,7 +23,8 @@ export function _pr_str(obj, print_readably) {
             var ret = obj.toArray().map(function (e) { return _pr_str(e, _r); });
             return "(" + ret.join(' ') + ")";
         case 'hash-map':
-            var ret = obj.keySeq().interleave(obj.valueSeq()).join(' ')
+            var l = obj.keySeq().size
+            var ret = obj.keySeq().interleave(obj.valueSeq(), ).join(' ')
             return "{" + ret + "}"
         case 'set':
             var arr = Array.from(obj)

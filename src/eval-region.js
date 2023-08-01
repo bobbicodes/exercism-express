@@ -94,7 +94,7 @@ export const clearEval = (view) => {
     }
     if (evalResult.length != 0) {
         evalResult = ""
-        updateEditor(view, previousDoc, previousPos)
+        updateEditor(view, previousDoc, Math.min(previousPos, view.state.doc.length))
     }
 }
 

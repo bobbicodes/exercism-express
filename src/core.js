@@ -476,6 +476,12 @@ function distinct_Q() {
     return arguments.length === set.size
 }
 
+function interleave() {
+    var ret = arguments[0].interleave(Array.prototype.slice.call(arguments, 1))
+    console.log("interleaving", ret)
+    return ret
+}
+
 export const ns = {
     'require': require,
     'type': types._obj_type,
@@ -526,6 +532,7 @@ export const ns = {
     'vector': types._vector,
     //'distinct': distinct,
     'distinct?': distinct_Q,
+    'interleave': interleave,
     'set': toSet,
     'vector?': types._vector_Q,
     'hash-map': types._hash_map,
