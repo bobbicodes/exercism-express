@@ -23,8 +23,20 @@ export function _pr_str(obj, print_readably) {
             var ret = obj.toArray().map(function (e) { return _pr_str(e, _r); });
             return "(" + ret.join(' ') + ")";
         case 'hash-map':
-            var ret = obj.keySeq().interleave(obj.valueSeq(), ).join(' ')
-            return "{" + ret + "}"
+            let kvstring = obj.keySeq().interleave(obj.valueSeq()).join(' ')
+            let kvs = kvstring.split(' ')
+            let hmstring = ""
+            for (let i = 0; i < kvs.length; i++) {
+                if (i % 2 === 0) {
+                    hmstring = hmstring + kvs[i] + ' '
+                } else if (i === kvs.length-1) {
+                    hmstring = hmstring + kvs[i]
+                } else {
+                    hmstring = hmstring + kvs[i] + ', '
+                }
+            }
+            var ret = obj.keySeq().interleave(obj.valueSeq()).join(' ')
+            return "{" + hmstring + "}"
         case 'set':
             var arr = Array.from(obj)
             var ret = arr.map(function (e) { return _pr_str(e, _r); });
