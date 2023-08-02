@@ -219,13 +219,13 @@ function randExercise() {
   return exercisesToTest[Math.floor(Math.random() * exercisesToTest.length)]
 }
 
-//evalString("(do " + core + ")")
+evalString("(do " + core + ")")
 
 //loadExercise(randExercise())
-//loadExercise("zipper")
+//loadExercise("prime_factors")
 
-//testSolution("reverse_string")
+//testSolution("armstrong_numbers")
 
-//testSolution("hello_world")
+//testSolution("prime_factors")
 
 testExercises()
