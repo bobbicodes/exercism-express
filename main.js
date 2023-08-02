@@ -223,6 +223,9 @@ function randExercise() {
 
 //loadExercise(randExercise())
 //loadExercise("zipper")
+
 //testSolution("reverse_string")
 
-testExercises()
+//testSolution("hello_world")
+
+//testExercises()

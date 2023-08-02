@@ -164,13 +164,8 @@ function _EVAL(ast, env) {
         return types._function(EVAL, Env, a2, env, a1);
       case "defn":
       case "defn-":
-
-        // Analyze function configuration
+        // analyze fn signature for docstring/arity 
         fnConfig(ast, env)
-        // Multi-arity functions
-        // We need to tell whether the function is multi-arity,
-        // and have it work with docstrings as well.
-        
         if (isMultiArity) {
           // Create list of fn bodies, one for each arity
           let arities = []
