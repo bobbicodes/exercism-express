@@ -221,8 +221,8 @@ function randExercise() {
 
 //evalString("(do " + core + ")")
 
-//loadExercise(randExercise())
+loadExercise(randExercise())
 //loadExercise("zipper")
-testSolution("two_fer")
+//testSolution("reverse_string")
 
 //testExercises()
