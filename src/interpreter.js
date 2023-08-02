@@ -37,8 +37,8 @@ function is_macro_call(ast, env) {
   //console.log("checking function", ast[0].value)
   return types._list_Q(ast) &&
     types._symbol_Q(ast[0]) &&
-    env.find(resolve(ast[0].value, env)) &&
-    env.get(resolve(ast[0].value), env)._ismacro_;
+    env.find(resolve(ast, env)) &&
+    env.get(resolve(ast, env))._ismacro_;
 }
 
 function macroexpand(ast, env) {
@@ -50,10 +50,10 @@ function macroexpand(ast, env) {
 }
 
 function eval_ast(ast, env) {
-  console.log("AST:", ast)
+  console.log("eval_ast:", ast)
   if (types._symbol_Q(ast)) {
-    console.log(ast.value, "resolved to", resolve(ast.value, env))
-    return env.get(resolve(ast.value, env));
+    console.log(ast, "resolved to", resolve(ast, env))
+    return env.get(resolve(ast, env));
   } else if (types._list_Q(ast)) {
     return ast.map(function (a) { return EVAL(a, env); });
   } else if (types._vector_Q(ast)) {
@@ -327,19 +327,7 @@ function _EVAL(ast, env) {
       default:
         console.log("Calling `" + ast[0].value + "`")
         const args = eval_ast(ast.slice(1), env)
-        const arity = args.length
-        let f
-        var fnName = ast[0].value
-        // check if the function has a fixed arity that matches the arg length
-        if (Object.keys(env.data).includes(namespace + "/" + fnName + "-arity-" + arity)) {
-          f = resolve(fnName + "-arity-" + arity, env)
-        } else if (Object.keys(env.data).includes(namespace + "/" + fnName + "-variadic")) {
-          f = resolve(fnName + "-variadic", env)
-          console.log("Calling variadic function:", f)
-        } else {
-          f = EVAL(resolve(fnName.value, env), env)
-          console.log("Calling single-arity function:", f)
-        }
+        var f = EVAL(resolve(ast, env), env)
         if (f.__ast__) {
           ast = f.__ast__;
           env = f.__gen_env__(args);
@@ -350,60 +338,65 @@ function _EVAL(ast, env) {
   }
 }
 
-function _resolve(varName, vars, namespace) {
+function _resolve(ast, env, namespace) {
+  var varName = ast[0].value
+  var vars = Object.keys(env.data)
   if (namespace) {
     console.log("Looking for `" + varName + "` in " + namespace)
-    //console.log("vars:", vars)
     for (let i = 0; i < vars.length; i++) {
-      if (vars[i] === namespace + "/" + varName ||
-        vars[i].startsWith(namespace + "/" + varName + '-arity-') ||
-        vars[i] === namespace + "/" + varName + '-variadic') {
-        return types._symbol(namespace + "/" + varName)
+      if (vars[i] === namespace + "/" + varName + '-arity-' + ast.length-1) {
+        return types._symbol(vars[i])
+      }
+      if (vars[i] === namespace + "/" + varName + '-variadic') {
+        return types._symbol(vars[i])
+      }
+      if (vars[i] === namespace + "/" + varName) {
+        return types._symbol(vars[i])
       }
     }
   } else {
     for (let i = 0; i < vars.length; i++) {
-      if (vars[i] === varName ||
-        vars[i].startsWith(varName + '-arity-') ||
-        vars[i] === varName + '-variadic') {
-        return types._symbol(varName)
+      if (vars[i] === varName + '-arity-' + ast.length-1) {
+        return types._symbol(vars[i])
+      }
+      if (vars[i] === varName + '-variadic') {
+        return types._symbol(vars[i])
+      }
+      if (vars[i] === varName) {
+        return types._symbol(vars[i])
       }
     }
   }
   return null
 }
 
-function resolve(varName, env) {
-  // This function needs to also look for the varName with
-  // each possible suffix: <varName>-arity-<arity>,
-  // and <varName>-variadic.
-  // Checking if it starts with "-arity-" should be fine
-  const vars = Object.keys(env.data)
+function resolve(ast, env) {
   console.log("env:", env)
-  //console.log("vars in env:", vars)
-  // Check if defined in current namespace
-  // Loop through all the var names
-  var res = _resolve(varName, vars, namespace)
+  // Check current namespace
+  var res = _resolve(ast, env, namespace)
   if (res) {
+    console.log("found in current namespace")
     return res
   }
-  console.log("checking for", varName, "in namespaces:", namespaces)
+  // Check other namespaces
+  console.log("checking for", ast[0].value, "in namespaces:", namespaces)
   for (let i = 0; i < namespaces.length; i++) {
-    res = _resolve(varName, vars, namespaces[i])
+    res = _resolve(ast, env, namespaces[i])
     if (res) {
       return res
     }
   }
-  // check if defined as itself
-  res = _resolve(varName, vars)
+  // check if defined in env root (no prefix)
+  res = _resolve(ast, env)
   if (res) {
     return res
   }
   // if still not found, check in outer env if there is one
   if (env.outer) {
     console.log("looking in outer scope")
-    resolve(varName, env.outer)
+    resolve(ast, env.outer)
   }
+  console.log(ast[0].value, "is undefined")
   return null
 }
 

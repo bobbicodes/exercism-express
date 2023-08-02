@@ -18,8 +18,11 @@ let editorState = EditorState.create({
 (defn two-fer
     ([] (str "One for you, one for me."))
     ([name] (str "One for " name ", one for me.")))
-  
-(two-fer)`,
+
+(two-fer)
+
+(defn a [n] (str "hello " n))
+(a "kitty")`,
     extensions: [basicSetup, clojure()]
 })
 
