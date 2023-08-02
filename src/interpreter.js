@@ -81,6 +81,36 @@ let loopVars = []
 let loopAST = []
 var loop_env = new Env(repl_env)
 
+var arglist
+var fnBody
+var isMultiArity
+
+function fnConfig(ast, env) {
+  var a0 = ast[0], a1 = ast[1], a2 = ast[2], a3 = ast[3], a4 = ast[4]
+  if (types._string_Q(a2) && types._vector_Q(a3)) {
+    //console.log("fn has a docstring and is single-arity")
+    arglist = a3
+    fnBody = a4
+    isMultiArity = false
+  }
+  if (types._vector_Q(a2)) {
+    //console.log("fn has no docstring and is single-arity")
+    arglist = a2
+    fnBody = a3
+    isMultiArity = false
+  }
+  if (types._string_Q(a2) && types._list_Q(a3)) {
+    console.log("fn has a docstring and is multi-arity")
+    fnBody = ast.slice(3)
+    isMultiArity = true
+  }
+  if (types._list_Q(a2)) {
+    //console.log("fn has no docstring and is multi-arity")
+    fnBody = ast.slice(2)
+    isMultiArity = true
+  }
+}
+
 function _EVAL(ast, env) {
   //console.log("Calling _EVAL", ast)
 
@@ -133,32 +163,9 @@ function _EVAL(ast, env) {
         // Multi-arity functions
         // We need to tell whether the function is multi-arity,
         // and have it work with docstrings as well.
-        let arglist
-        let fnBody
-        let isMultiArity
-
-        if (types._string_Q(a2) && types._vector_Q(a3)) {
-          //console.log("fn has a docstring and is single-arity")
-          arglist = a3
-          fnBody = a4
-          isMultiArity = false
-        }
-        if (types._vector_Q(a2)) {
-          //console.log("fn has no docstring and is single-arity")
-          arglist = a2
-          fnBody = a3
-          isMultiArity = false
-        }
-        if (types._string_Q(a2) && types._list_Q(a3)) {
-          console.log("fn has a docstring and is multi-arity")
-          fnBody = ast.slice(3)
-          isMultiArity = true
-        }
-        if (types._list_Q(a2)) {
-          //console.log("fn has no docstring and is multi-arity")
-          fnBody = ast.slice(2)
-          isMultiArity = true
-        }
+        
+        // analyze fn signature for docstring/arity 
+        fnConfig(ast, env)
         //console.log("fnBody", fnBody)
 
         if (isMultiArity) {
