@@ -217,6 +217,7 @@ export function _function(Eval, Env, ast, env, params) {
     //console.log("fn AST (after):", ast)
     //downloadObjectAsJson(ast, "ast.json")
     fn.__meta__ = null;
+    console.log("setting fn __ast__ to", ast)
     fn.__ast__ = ast;
     fn.__gen_env__ = function (args) { return new Env(env, params, args); };
     fn._ismacro_ = false;
