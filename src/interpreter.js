@@ -50,10 +50,10 @@ function macroexpand(ast, env) {
 }
 
 function eval_ast(ast, env) {
-  console.log("evaluating ast:", ast, "in", env)
-  console.log("symbol?", types._symbol_Q(ast))
+  //console.log("evaluating ast:", ast, "in", env)
+  //console.log("symbol?", types._symbol_Q(ast))
   if (types._symbol_Q(ast)) {
-    console.log(ast.value, "resolved to", resolve(ast, env))
+    //console.log(ast.value, "resolved to", resolve(ast, env))
     return env.get(resolve(ast, env));
   } else if (types._list_Q(ast)) {
     return ast.map(function (a) { return EVAL(a, env); });
@@ -68,7 +68,7 @@ function eval_ast(ast, env) {
     }
     return new_hm;
   } else {
-    console.log(ast, "is not a symbol, list, vector or map")
+    //console.log(ast, "is not a symbol, list, vector or map")
     return ast;
   }
 }
@@ -100,7 +100,7 @@ function fnConfig(ast, env) {
     isMultiArity = false
   }
   if (types._string_Q(a2) && types._list_Q(a3)) {
-    console.log("fn has a docstring and is multi-arity")
+    //console.log("fn has a docstring and is multi-arity")
     fnBody = ast.slice(3)
     isMultiArity = true
   }
@@ -116,7 +116,7 @@ function _EVAL(ast, env) {
 
   while (true) {
     if (!types._list_Q(ast)) {
-      console.log("not a list, passing", ast, "to eval_ast")
+      //console.log("not a list, passing", ast, "to eval_ast")
       return eval_ast(ast, env);
     }
 
@@ -141,7 +141,7 @@ function _EVAL(ast, env) {
       case "ns":
         namespace = a1.value
         namespaces.push(namespace)
-        console.log("namespace changed to", namespace)
+        //console.log("namespace changed to", namespace)
         return null
       case "let":
         var let_env = new Env(env);
@@ -154,7 +154,7 @@ function _EVAL(ast, env) {
       case "def":
         var res = EVAL(a2, env);
         env.set(types._symbol(namespace + "/" + a1), res);
-        console.log("defined", a1.value, "in env:", env)
+        //console.log("defined", a1.value, "in env:", env)
         return "#'" + namespace + "/" + a1 + " defined"
       case "fn":
         return types._function(EVAL, Env, a2, env, a1);
@@ -232,8 +232,8 @@ function _EVAL(ast, env) {
         } else {
           const fn = types._function(EVAL, Env, fnBody, env, arglist);
           env.set(types._symbol(namespace + "/" + a1), fn)
-          console.log("function defined:", namespace + "/" + a1)
-          console.log("env:", env)
+          //console.log("function defined:", namespace + "/" + a1)
+          //console.log("env:", env)
           return "#'" + namespace + "/" + a1 + " defined"
         }
         var loop_env = new Env(env)
@@ -323,14 +323,14 @@ function _EVAL(ast, env) {
         }
         break;
       default:
-        console.log("Calling `" + ast[0].value + "`")
-        console.log("env:", env)
+        //console.log("Calling `" + ast[0].value + "`")
+        //console.log("env:", env)
         var args = eval_ast(ast.slice(1), env)
-        console.log("Calling", ast, ", attempting to resolve")
-        var f = EVAL(resolve(ast, env), env)
-        console.log(ast, "resolved to", f)
+        //console.log("Calling", ast, ", attempting to resolve")
+        var f = EVAL(resolve(ast, env, ast.length-1), env)
+        //console.log(ast, "resolved to", f)
         if (f.__ast__) {
-          console.log("setting env to function scope")
+          //console.log("setting env to function scope")
           ast = f.__ast__;
           env = f.__gen_env__(args);
         } else {
@@ -340,11 +340,11 @@ function _EVAL(ast, env) {
   }
 }
 
-function _resolve(ast, env, namespace) {
-  console.log("Calling `_resolve` on", ast, "in", env)
+function _resolve(ast, env, namespace, arity) {
+  //console.log("Calling `_resolve` on", ast, "in", env)
   var varName
   if (types._symbol_Q(ast)) {
-    console.log(ast, "is a symbol")
+    //console.log(ast, "is a symbol")
     varName = ast.value
   }
   if (ast.length > 1) {
@@ -355,9 +355,10 @@ function _resolve(ast, env, namespace) {
   //console.log("env:", env)
   var vars = Object.keys(env.data)
   if (namespace) {
-    console.log("Looking for `" + varName + "` in " + namespace)
+    //console.log("Looking for `" + varName + "` in " + namespace)
     for (let i = 0; i < vars.length; i++) {
-      if (vars[i] === namespace + "/" + varName + '-arity-' + ast.length-1) {
+      //console.log("checking for arity", arity)
+      if (vars[i] === namespace + "/" + varName + '-arity-' + arity) {
         return types._symbol(vars[i])
       }
       if (vars[i] === namespace + "/" + varName + '-variadic') {
@@ -368,10 +369,10 @@ function _resolve(ast, env, namespace) {
       }
     }
   } else {
-    console.log("looking for", varName, "in env root")
+    //console.log("looking for", varName, "in env root")
     //console.log("vars in env root:", vars)
     for (let i = 0; i < vars.length; i++) {
-      if (vars[i] === varName + '-arity-' + ast.length-1) {
+      if (vars[i] === varName + '-arity-' + arity) {
         return types._symbol(vars[i])
       }
       if (vars[i] === varName + '-variadic') {
@@ -385,7 +386,7 @@ function _resolve(ast, env, namespace) {
   return null
 }
 
-function resolve(ast, env) {
+function resolve(ast, env, arity) {
   // Since `ast` can either be a list or an atom,
   // we need to handle each one.
   // If it is a list, we can probably set `ast` to `ast[0]`.
@@ -393,37 +394,37 @@ function resolve(ast, env) {
     ast = ast[0]
   }
   // Check current namespace
-  console.log("Calling `resolve` on", ast)
-  var res = _resolve(ast, env, namespace)
+  //console.log("Calling `resolve` on", ast)
+  var res = _resolve(ast, env, namespace, arity)
   if (res) {
-    console.log("found in current namespace")
+    //console.log("found in current namespace")
     return res
   }
   // Check other namespaces
-  console.log("checking for", ast, "in namespaces:", namespaces)
+  //console.log("checking for", ast, "in namespaces:", namespaces)
   for (let i = 0; i < namespaces.length; i++) {
-    res = _resolve(ast, env, namespaces[i])
+    res = _resolve(ast, env, namespaces[i], arity)
     if (res) {
       return res
     }
   }
   // check if defined in env root (no prefix)
-  console.log("checking if", ast, "is defined in env root")
-  res = _resolve(ast, env)
-  console.log(ast, "resolved to", res)
+  //console.log("checking if", ast, "is defined in env root")
+  res = _resolve(ast, env, null, arity)
+  //console.log(ast, "resolved to", res)
   if (res) {
-    console.log("returning", res)
+    //console.log("returning", res)
     return res
   }
   // if still not found, check in outer env if there is one
   if (env.outer) {
-    console.log("looking in outer scope")
-    res = resolve(ast, env.outer)
+    //console.log("looking in outer scope")
+    res = resolve(ast, env.outer, arity)
     if (res) {
       return res
     }
   }
-  console.log(ast.value, "is undefined")
+  //console.log(ast.value, "is undefined")
   return null
 }
 

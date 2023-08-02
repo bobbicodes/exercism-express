@@ -223,6 +223,6 @@ function randExercise() {
 
 //loadExercise(randExercise())
 //loadExercise("zipper")
-//testSolution("two_fer")
+testSolution("two_fer")
 
 //testExercises()
