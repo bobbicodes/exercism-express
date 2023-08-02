@@ -37,8 +37,8 @@ function is_macro_call(ast, env) {
   //console.log("checking function", ast[0].value)
   return types._list_Q(ast) &&
     types._symbol_Q(ast[0]) &&
-    env.find(ast[0]) &&
-    env.get(ast[0])._ismacro_;
+    env.find(resolve(ast, env)) &&
+    env.get(resolve(ast, env))._ismacro_;
 }
 
 function macroexpand(ast, env) {
@@ -50,9 +50,11 @@ function macroexpand(ast, env) {
 }
 
 function eval_ast(ast, env) {
-  //  console.log("AST:", ast)
+  //console.log("evaluating ast:", ast, "in", env)
+  //console.log("symbol?", types._symbol_Q(ast))
   if (types._symbol_Q(ast)) {
-    return env.get(ast);
+    //console.log(ast.value, "resolved to", resolve(ast, env))
+    return env.get(resolve(ast, env));
   } else if (types._list_Q(ast)) {
     return ast.map(function (a) { return EVAL(a, env); });
   } else if (types._vector_Q(ast)) {
@@ -66,19 +68,21 @@ function eval_ast(ast, env) {
     }
     return new_hm;
   } else {
+    //console.log(ast, "is not a symbol, list, vector or map")
     return ast;
   }
 }
 
-export let namespace = "user"
+export var namespace = "user"
+export var namespaces = ["user"]
 export var deftests = []
-let testingString = ""
+var testingString = ""
 // loop variables are identified positionally by `recur`,
 // so we keep track of the order they're defined
-let loopVars = []
+var loopVars = []
 // We need to store the ast so we can
 // pass it to recur later
-let loopAST = []
+var loopAST = []
 var loop_env = new Env(repl_env)
 
 var arglist
@@ -115,17 +119,13 @@ function _EVAL(ast, env) {
   //console.log("Calling _EVAL", ast)
 
   while (true) {
-    //console.log(JSON.parse(JSON.stringify(env)))
-    //printer.println("EVAL:", printer._pr_str(ast, true));
     if (!types._list_Q(ast)) {
+      //console.log("not a list, passing", ast, "to eval_ast")
       return eval_ast(ast, env);
     }
 
     // apply list
-    ast = macroexpand(ast, env);
-    if (!types._list_Q(ast)) {
-      return eval_ast(ast, env);
-    }
+    //ast = macroexpand(ast, env);
     if (ast.length === 0) {
       return ast;
     }
@@ -143,7 +143,9 @@ function _EVAL(ast, env) {
       case "discard":
         return null
       case "ns":
-        namespace = a1
+        namespace = a1.value
+        namespaces.push(namespace)
+        //console.log("namespace changed to", namespace)
         return null
       case "let":
         var let_env = new Env(env);
@@ -155,19 +157,15 @@ function _EVAL(ast, env) {
         break;
       case "def":
         var res = EVAL(a2, env);
-        return env.set(a1, res);
+        env.set(types._symbol(namespace + "/" + a1), res);
+        //console.log("defined", a1.value, "in env:", env)
+        return "#'" + namespace + "/" + a1 + " defined"
       case "fn":
         return types._function(EVAL, Env, a2, env, a1);
       case "defn":
       case "defn-":
-        // Multi-arity functions
-        // We need to tell whether the function is multi-arity,
-        // and have it work with docstrings as well.
-        
         // analyze fn signature for docstring/arity 
         fnConfig(ast, env)
-        //console.log("fnBody", fnBody)
-
         if (isMultiArity) {
           // Create list of fn bodies, one for each arity
           let arities = []
@@ -193,21 +191,23 @@ function _EVAL(ast, env) {
               }
             }
             const fn = types._function(EVAL, Env, body, env, args);
-            let fnName
+            var fnName
             if (variadic) {
-              fnName = types._symbol(a1 + "-variadic")
+              fnName = a1 + "-variadic"
             } else {
-              fnName = types._symbol(a1 + "-arity-" + args.length)
+              fnName = a1 + "-arity-" + args.length
             }
             //console.log(fnName)
-            env.set(fnName, fn)
+            env.set(types._symbol(namespace + "/" + fnName), fn)
           }
           //console.log("env", env)
-          return "Defined: #'" + namespace + "/" + a1
+          return "#'" + namespace + "/" + a1 + " defined"
         } else {
           const fn = types._function(EVAL, Env, fnBody, env, arglist);
-          env.set(a1, fn)
-          return "Defined: " + "#'" + namespace + "/" + a1
+          env.set(types._symbol(namespace + "/" + a1), fn)
+          //console.log("function defined:", namespace + "/" + a1)
+          //console.log("env:", env)
+          return "#'" + namespace + "/" + a1 + " defined"
         }
         var loop_env = new Env(env)
         loopVars = arglist
@@ -296,41 +296,14 @@ function _EVAL(ast, env) {
         }
         break;
       default:
-        const args = eval_ast(ast.slice(1), env)
-        const arity = args.length
-        // Check if fn is defined by arity
-        let f
-        let fSym
-        //console.log("ast[0]:", ast[0])
+        //console.log("Calling `" + ast[0].value + "`")
         //console.log("env:", env)
-        const fnName = ast[0].value.split("/")[1] || ast[0].value
-        // First check if there is a variadic arity defined
-        if (Object.keys(env.data).includes(fnName + "-variadic")) {
-          console.log("Fn has variadic arity defined")
-          // if there is, then check if there's a fixed arity that matches
-          if (Object.keys(env.data).includes(fnName + "-arity-" + arity)) {
-            fSym = types._symbol(ast[0] + "-arity-" + arity)
-            //console.log("Calling multi-arity function:", f)
-          } else {
-            fSym = types._symbol(ast[0] + "-variadic")
-            console.log("Calling variadic function:", f)
-          }
-          f = EVAL(fSym, env)
-          //console.log("env:", env)
-          // check again if there's a (fixed) multi-arity that matches
-        } else if (Object.keys(env.data).includes(fnName + "-arity-" + arity)) {
-          fSym = types._symbol(ast[0] + "-arity-" + arity)
-          f = EVAL(fSym, env)
-          //console.log("Calling multi-arity function:", f)
-        } else {
-          var el = eval_ast(ast, env)
-          f = el[0];
-          //console.log("Calling single-arity function:", f)
-          //console.log("ast:", ast)
-          //console.log("args:", args)
-          //console.log("env:", env)
-        }
+        var args = eval_ast(ast.slice(1), env)
+        //console.log("Calling", ast, ", attempting to resolve")
+        var f = EVAL(resolve(ast, env, ast.length-1), env)
+        //console.log(ast, "resolved to", f)
         if (f.__ast__) {
+          //console.log("setting env to function scope")
           ast = f.__ast__;
           env = f.__gen_env__(args);
         } else {
@@ -338,6 +311,94 @@ function _EVAL(ast, env) {
         }
     }
   }
+}
+
+function _resolve(ast, env, namespace, arity) {
+  //console.log("Calling `_resolve` on", ast, "in", env)
+  var varName
+  if (types._symbol_Q(ast)) {
+    //console.log(ast, "is a symbol")
+    varName = ast.value
+  }
+  if (ast.length > 1) {
+    if (types._symbol_Q(ast[0])) {
+      varName = ast[0].value
+    }
+  }
+  //console.log("env:", env)
+  var vars = Object.keys(env.data)
+  if (namespace) {
+    //console.log("Looking for `" + varName + "` in " + namespace)
+    for (let i = 0; i < vars.length; i++) {
+      //console.log("checking for arity", arity)
+      if (vars[i] === namespace + "/" + varName + '-arity-' + arity) {
+        return types._symbol(vars[i])
+      }
+      if (vars[i] === namespace + "/" + varName + '-variadic') {
+        return types._symbol(vars[i])
+      }
+      if (vars[i] === namespace + "/" + varName) {
+        return types._symbol(vars[i])
+      }
+    }
+  } else {
+    //console.log("looking for", varName, "in env root")
+    //console.log("vars in env root:", vars)
+    for (let i = 0; i < vars.length; i++) {
+      if (vars[i] === varName + '-arity-' + arity) {
+        return types._symbol(vars[i])
+      }
+      if (vars[i] === varName + '-variadic') {
+        return types._symbol(vars[i])
+      }
+      if (vars[i] == varName) {
+        return types._symbol(vars[i])
+      }
+    }
+  }
+  return null
+}
+
+function resolve(ast, env, arity) {
+  // Since `ast` can either be a list or an atom,
+  // we need to handle each one.
+  // If it is a list, we can probably set `ast` to `ast[0]`.
+  if (types._list_Q(ast)) {
+    ast = ast[0]
+  }
+  // Check current namespace
+  //console.log("Calling `resolve` on", ast)
+  var res = _resolve(ast, env, namespace, arity)
+  if (res) {
+    //console.log("found in current namespace")
+    return res
+  }
+  // Check other namespaces
+  //console.log("checking for", ast, "in namespaces:", namespaces)
+  for (let i = 0; i < namespaces.length; i++) {
+    res = _resolve(ast, env, namespaces[i], arity)
+    if (res) {
+      return res
+    }
+  }
+  // check if defined in env root (no prefix)
+  //console.log("checking if", ast, "is defined in env root")
+  res = _resolve(ast, env, null, arity)
+  //console.log(ast, "resolved to", res)
+  if (res) {
+    //console.log("returning", res)
+    return res
+  }
+  // if still not found, check in outer env if there is one
+  if (env.outer) {
+    //console.log("looking in outer scope")
+    res = resolve(ast, env.outer, arity)
+    if (res) {
+      return res
+    }
+  }
+  //console.log(ast.value, "is undefined")
+  return null
 }
 
 export function clearTests() {
@@ -362,9 +423,14 @@ export const evalString = function (str) { return PRINT(EVAL(READ(str), repl_env
 
 // core.js: defined using javascript
 for (var n in core.ns) { repl_env.set(types._symbol(n), core.ns[n]); }
-repl_env.set(types._symbol('eval'), function(ast) {
-  return EVAL(ast, repl_env); });
+repl_env.set(types._symbol('eval'), function (ast) {
+  return EVAL(ast, repl_env);
+});
 
 export function loadLib(lib) {
   evalString("(do " + lib + ")")
 }
+
+//evalString("(def a \"hi\")")
+//console.log("env:", repl_env)
+//console.log("resolving", resolve("a", repl_env))

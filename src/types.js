@@ -217,6 +217,7 @@ export function _function(Eval, Env, ast, env, params) {
     //console.log("fn AST (after):", ast)
     //downloadObjectAsJson(ast, "ast.json")
     fn.__meta__ = null;
+    console.log("setting fn __ast__ to", ast)
     fn.__ast__ = ast;
     fn.__gen_env__ = function (args) { return new Env(env, params, args); };
     fn._ismacro_ = false;
@@ -299,8 +300,6 @@ export function _dissoc(hm) {
 }
 
 // Atoms
-export class Atom {
-    constructor(val) { this.val = val; }
-}
+function Atom(val) { this.val = val; }
 export function _atom(val) { return new Atom(val); }
 export function _atom_Q(atm) { return atm instanceof Atom; }
