@@ -228,4 +228,4 @@ function randExercise() {
 
 //testSolution("hello_world")
 
-//testExercises()
+testExercises()

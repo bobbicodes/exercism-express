@@ -299,8 +299,12 @@ function _EVAL(ast, env) {
         //console.log("Calling `" + ast[0].value + "`")
         //console.log("env:", env)
         var args = eval_ast(ast.slice(1), env)
-        //console.log("Calling", ast, ", attempting to resolve")
-        var f = EVAL(resolve(ast, env, ast.length-1), env)
+        // If function is namespaced, don't resolve it
+        if (ast[0].value.includes('/')) {
+          var f = EVAL(ast[0], env)
+        } else {
+          var f = EVAL(resolve(ast, env, ast.length-1), env)
+        }
         //console.log(ast, "resolved to", f)
         if (f.__ast__) {
           //console.log("setting env to function scope")
