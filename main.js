@@ -235,6 +235,6 @@ evalString("(do " + core + ")")
 
 loadExercise(randExercise())
 //loadExercise("zipper")
-//testSolution("flatten_array")
+//testSolution("hello_world")
 
 //testExercises()
