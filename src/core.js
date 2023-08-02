@@ -27,14 +27,6 @@ function require(lib) {
     }
 }
 
-// Atoms
-export class Atom {
-    constructor(val) { this.val = val; }
-}
-export function _atom(val) { return new Atom(val); }
-export function _atom_Q(atm) { return atm instanceof Atom; }
-
-
 // Errors/Exceptions
 function mal_throw(exc) { throw exc; }
 
@@ -564,8 +556,8 @@ export const ns = {
     'pop': pop,
     'with-meta': with_meta,
     'meta': meta,
-    'atom': _atom,
-    'atom?': _atom_Q,
+    'atom': types._atom,
+    'atom?': types._atom_Q,
     "deref": deref,
     "reset!": reset_BANG,
     "swap!": swap_BANG,

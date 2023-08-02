@@ -37,8 +37,8 @@ function is_macro_call(ast, env) {
   //console.log("checking function", ast[0].value)
   return types._list_Q(ast) &&
     types._symbol_Q(ast[0]) &&
-    env.find(ast[0]) &&
-    env.get(ast[0])._ismacro_;
+    env.find(resolve(ast[0].value, env)) &&
+    env.get(resolve(ast[0].value), env)._ismacro_;
 }
 
 function macroexpand(ast, env) {
@@ -53,7 +53,7 @@ function eval_ast(ast, env) {
     console.log("AST:", ast)
   if (types._symbol_Q(ast)) {
     console.log(ast.value, "resolved to", resolve(ast.value, env))
-    return env.get(types._symbol(resolve(ast.value, env)));
+    return env.get(resolve(ast.value, env));
   } else if (types._list_Q(ast)) {
     return ast.map(function (a) { return EVAL(a, env); });
   } else if (types._vector_Q(ast)) {
@@ -120,7 +120,7 @@ function _EVAL(ast, env) {
     }
 
     // apply list
-    ast = macroexpand(ast, env);
+    //ast = macroexpand(ast, env);
     if (!types._list_Q(ast)) {
       return eval_ast(ast, env);
     }
@@ -220,7 +220,7 @@ function _EVAL(ast, env) {
               }
             }
             const fn = types._function(EVAL, Env, body, env, args);
-            let fnName
+            var fnName
             if (variadic) {
               fnName = types._symbol(a1 + "-variadic")
             } else {
@@ -230,7 +230,7 @@ function _EVAL(ast, env) {
             env.set(fnName, fn)
           }
           //console.log("env", env)
-          return "#'" + namespace + "/" + a1 + "defined"
+          return "#'" + namespace + "/" + a1 + " defined"
         } else {
           const fn = types._function(EVAL, Env, fnBody, env, arglist);
           env.set(types._symbol(namespace + "/" + a1), fn)
@@ -332,7 +332,7 @@ function _EVAL(ast, env) {
         let fSym
         //console.log("ast[0]:", ast[0])
         //console.log("env:", env)
-        const fnName = ast[0].value
+        var fnName = ast[0].value
         // First check if there is a variadic arity defined
         if (Object.keys(env.data).includes(fnName + "-variadic")) {
           console.log("Fn has variadic arity defined")
@@ -352,10 +352,8 @@ function _EVAL(ast, env) {
           f = EVAL(fSym, env)
           //console.log("Calling multi-arity function:", f)
         } else {
-          fnName = resolve(fnName, env)
-          var el = eval_ast(ast, env)
-          f = types._symbol(fnName)
-          //console.log("Calling single-arity function:", f)
+          f = EVAL(resolve(ast[0].value, env), env)
+          console.log("Calling single-arity function:", f)
           //console.log("ast:", ast)
           //console.log("args:", args)
           //console.log("env:", env)
@@ -401,25 +399,28 @@ export function loadLib(lib) {
 
 function resolve(varName, env) {
   const vars = Object.keys(env.data)
+  console.log("env:", env)
   //console.log("vars in env:", vars)
   // Check if defined in current namespace
   if (vars.includes(namespace + "/" + varName)) {
-    console.log("var " + varName + " found in namespace ", namespace)
-    return namespace + "/" + varName
+    console.log("var `" + varName + "` found in namespace", namespace)
+    return types._symbol(namespace + "/" + varName)
   }
-  console.log("checking namespaces:", namespaces)
+  console.log("checking for", varName, "in namespaces:", namespaces)
   for (let i = 0; i < namespaces.length; i++) {
     if (vars.includes(namespaces[i] + "/" + varName)) {
-      console.log("var " + varName + " found in namespace ", namespaces[i])
-      varName = namespaces[i] + "/" + varName
+      console.log("var `" + varName + "` found in namespace", namespaces[i])
+      return types._symbol(namespaces[i] + "/" + varName)
     } else {
-      console.log("var not found in ", namespaces[i])
+      //console.log("var `" + varName + "` not found in " + namespaces[i])
     }
   }
+  console.log("varName:", varName)
+  console.log("found?", vars.includes(varName))
   if (vars.includes(varName)) {
-    return varName
+    return types._symbol(varName)
   }
-  return varName + " is undefined"
+  return types._symbol(varName) + " is undefined"
 }
 
 //evalString("(def a \"hi\")")

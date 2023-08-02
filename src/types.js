@@ -299,8 +299,6 @@ export function _dissoc(hm) {
 }
 
 // Atoms
-export class Atom {
-    constructor(val) { this.val = val; }
-}
+function Atom(val) { this.val = val; }
 export function _atom(val) { return new Atom(val); }
 export function _atom_Q(atm) { return atm instanceof Atom; }

@@ -16,7 +16,11 @@ let editorState = EditorState.create({
   doc: `(defn two-fer
     ([] (str "One for you, one for me."))
     ([name] (str "One for " name ", one for me.")))
-  
+
+(defn aa [] "meow")
+
+(aa)
+
 (def a "hi")
 
 a`,
