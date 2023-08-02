@@ -50,7 +50,7 @@ function macroexpand(ast, env) {
 }
 
 function eval_ast(ast, env) {
-    console.log("AST:", ast)
+  console.log("AST:", ast)
   if (types._symbol_Q(ast)) {
     console.log(ast.value, "resolved to", resolve(ast.value, env))
     return env.get(resolve(ast.value, env));
@@ -222,12 +222,12 @@ function _EVAL(ast, env) {
             const fn = types._function(EVAL, Env, body, env, args);
             var fnName
             if (variadic) {
-              fnName = types._symbol(a1 + "-variadic")
+              fnName = a1 + "-variadic"
             } else {
-              fnName = types._symbol(a1 + "-arity-" + args.length)
+              fnName = a1 + "-arity-" + args.length
             }
             //console.log(fnName)
-            env.set(fnName, fn)
+            env.set(types._symbol(namespace + "/" + fnName), fn)
           }
           //console.log("env", env)
           return "#'" + namespace + "/" + a1 + " defined"
@@ -325,38 +325,20 @@ function _EVAL(ast, env) {
         }
         break;
       default:
+        console.log("Calling `" + ast[0].value + "`")
         const args = eval_ast(ast.slice(1), env)
         const arity = args.length
-        // Check if fn is defined by arity
         let f
-        let fSym
-        //console.log("ast[0]:", ast[0])
-        //console.log("env:", env)
         var fnName = ast[0].value
-        // First check if there is a variadic arity defined
-        if (Object.keys(env.data).includes(fnName + "-variadic")) {
-          console.log("Fn has variadic arity defined")
-          // if there is, then check if there's a fixed arity that matches
-          if (Object.keys(env.data).includes(fnName + "-arity-" + arity)) {
-            fSym = types._symbol(fnName + "-arity-" + arity)
-            //console.log("Calling multi-arity function:", f)
-          } else {
-            fSym = types._symbol(fnName + "-variadic")
-            console.log("Calling variadic function:", f)
-          }
-          f = EVAL(fSym, env)
-          //console.log("env:", env)
-          // check again if there's a (fixed) multi-arity that matches
-        } else if (Object.keys(env.data).includes(fnName + "-arity-" + arity)) {
-          fSym = types._symbol(fnName + "-arity-" + arity)
-          f = EVAL(fSym, env)
-          //console.log("Calling multi-arity function:", f)
+        // check if the function has a fixed arity that matches the arg length
+        if (Object.keys(env.data).includes(namespace + "/" + fnName + "-arity-" + arity)) {
+          f = resolve(fnName + "-arity-" + arity, env)
+        } else if (Object.keys(env.data).includes(namespace + "/" + fnName + "-variadic")) {
+          f = resolve(fnName + "-variadic", env)
+          console.log("Calling variadic function:", f)
         } else {
-          f = EVAL(resolve(ast[0].value, env), env)
+          f = EVAL(resolve(fnName.value, env), env)
           console.log("Calling single-arity function:", f)
-          //console.log("ast:", ast)
-          //console.log("args:", args)
-          //console.log("env:", env)
         }
         if (f.__ast__) {
           ast = f.__ast__;
@@ -366,6 +348,63 @@ function _EVAL(ast, env) {
         }
     }
   }
+}
+
+function _resolve(varName, vars, namespace) {
+  if (namespace) {
+    console.log("Looking for `" + varName + "` in " + namespace)
+    //console.log("vars:", vars)
+    for (let i = 0; i < vars.length; i++) {
+      if (vars[i] === namespace + "/" + varName ||
+        vars[i].startsWith(namespace + "/" + varName + '-arity-') ||
+        vars[i] === namespace + "/" + varName + '-variadic') {
+        return types._symbol(namespace + "/" + varName)
+      }
+    }
+  } else {
+    for (let i = 0; i < vars.length; i++) {
+      if (vars[i] === varName ||
+        vars[i].startsWith(varName + '-arity-') ||
+        vars[i] === varName + '-variadic') {
+        return types._symbol(varName)
+      }
+    }
+  }
+  return null
+}
+
+function resolve(varName, env) {
+  // This function needs to also look for the varName with
+  // each possible suffix: <varName>-arity-<arity>,
+  // and <varName>-variadic.
+  // Checking if it starts with "-arity-" should be fine
+  const vars = Object.keys(env.data)
+  console.log("env:", env)
+  //console.log("vars in env:", vars)
+  // Check if defined in current namespace
+  // Loop through all the var names
+  var res = _resolve(varName, vars, namespace)
+  if (res) {
+    return res
+  }
+  console.log("checking for", varName, "in namespaces:", namespaces)
+  for (let i = 0; i < namespaces.length; i++) {
+    res = _resolve(varName, vars, namespaces[i])
+    if (res) {
+      return res
+    }
+  }
+  // check if defined as itself
+  res = _resolve(varName, vars)
+  if (res) {
+    return res
+  }
+  // if still not found, check in outer env if there is one
+  if (env.outer) {
+    console.log("looking in outer scope")
+    resolve(varName, env.outer)
+  }
+  return null
 }
 
 export function clearTests() {
@@ -390,37 +429,12 @@ export const evalString = function (str) { return PRINT(EVAL(READ(str), repl_env
 
 // core.js: defined using javascript
 for (var n in core.ns) { repl_env.set(types._symbol(n), core.ns[n]); }
-repl_env.set(types._symbol('eval'), function(ast) {
-  return EVAL(ast, repl_env); });
+repl_env.set(types._symbol('eval'), function (ast) {
+  return EVAL(ast, repl_env);
+});
 
 export function loadLib(lib) {
   evalString("(do " + lib + ")")
-}
-
-function resolve(varName, env) {
-  const vars = Object.keys(env.data)
-  console.log("env:", env)
-  //console.log("vars in env:", vars)
-  // Check if defined in current namespace
-  if (vars.includes(namespace + "/" + varName)) {
-    console.log("var `" + varName + "` found in namespace", namespace)
-    return types._symbol(namespace + "/" + varName)
-  }
-  console.log("checking for", varName, "in namespaces:", namespaces)
-  for (let i = 0; i < namespaces.length; i++) {
-    if (vars.includes(namespaces[i] + "/" + varName)) {
-      console.log("var `" + varName + "` found in namespace", namespaces[i])
-      return types._symbol(namespaces[i] + "/" + varName)
-    } else {
-      //console.log("var `" + varName + "` not found in " + namespaces[i])
-    }
-  }
-  console.log("varName:", varName)
-  console.log("found?", vars.includes(varName))
-  if (vars.includes(varName)) {
-    return types._symbol(varName)
-  }
-  return types._symbol(varName) + " is undefined"
 }
 
 //evalString("(def a \"hi\")")

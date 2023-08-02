@@ -13,17 +13,13 @@ import {testCodeBeforeEval} from './src/eval-region'
 import core from './src/clj/core.clj?raw'
 
 let editorState = EditorState.create({
-  doc: `(defn two-fer
+  doc: `(ns two-fer)
+
+(defn two-fer
     ([] (str "One for you, one for me."))
     ([name] (str "One for " name ", one for me.")))
-
-(defn aa [] "meow")
-
-(aa)
-
-(def a "hi")
-
-a`,
+  
+(two-fer)`,
     extensions: [basicSetup, clojure()]
 })
 
