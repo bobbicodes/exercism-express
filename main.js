@@ -13,8 +13,7 @@ import {testCodeBeforeEval} from './src/eval-region'
 import core from './src/clj/core.clj?raw'
 
 let editorState = EditorState.create({
-  doc: `(defn a [n] (str "hello " n))
-(a "kitty")`,
+  doc: `(-> "hello" (str " kitty"))`,
     extensions: [basicSetup, clojure()]
 })
 
@@ -138,9 +137,6 @@ function loadSolution(slug) {
     changes: { from: 0, to: end, insert: src},
     selection: { anchor: 0, head: 0 }
   })
-  clearTests()
-  doc = view.state.doc.toString()
-  const testSuite = testSuites[k + "_test"].trim()
 }
 
 function testSolution(slug) {
