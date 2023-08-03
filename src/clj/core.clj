@@ -14,7 +14,7 @@
 (def zero? (fn (n) (= 0 n)))
 (def identity (fn (x) x))
 
-(defn reduce [f init xs]
+#_(defn reduce [f init xs]
   (if (empty? xs)
     init
     (reduce f (f init (first xs)) (rest xs))))

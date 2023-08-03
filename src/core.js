@@ -496,7 +496,7 @@ export const ns = {
     're-matches': re_matches,
     'str': str,
     'upper-case': upperCase,
-    //'reduce': _reduce,
+    'reduce': _reduce,
     'lower-case': lowerCase,
     'prn': prn,
     'println': println,

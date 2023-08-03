@@ -49,7 +49,7 @@ function macroexpand(ast, env) {
 }
 
 function eval_ast(ast, env) {
-  console.log("evaluating ast:", ast, "in", env)
+  //console.log("evaluating ast:", ast, "in", env)
   //console.log("symbol?", types._symbol_Q(ast))
   if (types._symbol_Q(ast)) {
     //console.log(ast.value, "resolved to", resolve(ast, env))
