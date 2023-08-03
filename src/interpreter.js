@@ -88,7 +88,7 @@ var arglist
 var fnBody
 var isMultiArity
 
-function fnConfig(ast, env) {
+function fnConfig(ast) {
   var a0 = ast[0], a1 = ast[1], a2 = ast[2], a3 = ast[3], a4 = ast[4]
   if (types._string_Q(a2) && types._vector_Q(a3)) {
     //console.log("fn has a docstring and is single-arity")
@@ -296,11 +296,36 @@ function _EVAL(ast, env) {
         }
         break;
       default:
-        //console.log("Calling `" + ast[0].value + "`")
-        //console.log("env:", env)
-        var args = eval_ast(ast.slice(1), env)
-        var f = EVAL(ast[0], env)
-        //console.log(ast, "resolved to", f)
+        const args = eval_ast(ast.slice(1), env)
+        const arity = args.length
+        var f
+        var fSym
+        fnName = ast[0].value.split("/")[1] || ast[0].value
+        // First check if there is a variadic arity defined
+        if (Object.keys(env.data).includes(fnName + "-variadic")) {
+          console.log("Fn has variadic arity defined")
+          // if there is, then check if there's a fixed arity that matches
+          if (Object.keys(env.data).includes(fnName + "-arity-" + arity)) {
+            fSym = types._symbol(ast[0] + "-arity-" + arity)
+            //console.log("Calling multi-arity function:", f)
+          } else {
+            fSym = types._symbol(ast[0] + "-variadic")
+            console.log("Calling variadic function:", f)
+          }
+          f = EVAL(fSym, env)
+          //console.log("env:", env)
+          // check again if there's a (fixed) multi-arity that matches
+        } else if (Object.keys(env.data).includes(fnName + "-arity-" + arity)) {
+          fSym = types._symbol(fnName + "-arity-" + arity)
+          f = EVAL(fSym, env)
+          //console.log("Calling multi-arity function:", f)
+        } else {
+          fSym = types._symbol(fnName)
+          f = EVAL(fSym, env)
+          //console.log("Calling single-arity function:", f)
+          //console.log("ast:", ast)
+          //console.log("args:", args)
+        }
         if (f.__ast__) {
           //console.log("setting env to function scope")
           ast = f.__ast__;

@@ -234,7 +234,7 @@ evalString("(do " + core + ")")
 
 loadExercise(randExercise())
 //loadExercise("armstrong_numbers")
-//loadSolution("armstrong_numbers")
+//loadSolution("reverse_string")
 //testSolution("armstrong_numbers")
 
 //testSolution("accumulate")
