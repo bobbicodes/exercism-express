@@ -33,8 +33,96 @@ function quasiquote(ast) {
   }
 }
 
+function _resolve(ast, env, namespace, arity) {
+  console.log("Calling `_resolve` on", ast, "in", env)
+  var varName
+  if (types._symbol_Q(ast)) {
+    //console.log(ast, "is a symbol")
+    varName = ast.value
+  }
+  if (ast.length > 1) {
+    if (types._symbol_Q(ast[0])) {
+      varName = ast[0].value
+    }
+  }
+  //console.log("env:", env)
+  var vars = Object.keys(env.data)
+  if (namespace) {
+    //console.log("Looking for `" + varName + "` in " + namespace)
+    for (let i = 0; i < vars.length; i++) {
+      //console.log("checking for arity", arity)
+      if (vars[i] === namespace + "/" + varName + '-arity-' + arity) {
+        return types._symbol(vars[i])
+      }
+      if (vars[i] === namespace + "/" + varName + '-variadic') {
+        return types._symbol(vars[i])
+      }
+      if (vars[i] === namespace + "/" + varName) {
+        return types._symbol(vars[i])
+      }
+    }
+  } else {
+    //console.log("looking for", varName, "in env root")
+    //console.log("vars in env root:", vars)
+    for (let i = 0; i < vars.length; i++) {
+      if (vars[i] === varName + '-arity-' + arity) {
+        return types._symbol(vars[i])
+      }
+      if (vars[i] === varName + '-variadic') {
+        return types._symbol(vars[i])
+      }
+      if (vars[i] == varName) {
+        return types._symbol(vars[i])
+      }
+    }
+  }
+  return null
+}
+
+function resolve(ast, env, arity) {
+  // Since `ast` can either be a list or a single value,
+  // we need to handle each one.
+  // If it is a list, we set `ast` to `ast[0]`.
+  if (types._list_Q(ast)) {
+    ast = ast[0]
+  }
+  // Check current namespace
+  console.log("Calling `resolve` on", ast)
+  var res = _resolve(ast, env, namespace, arity)
+  if (res) {
+    console.log("found in current namespace", namespace)
+    return res
+  }
+  // Check other namespaces
+  //console.log("checking for", ast, "in namespaces:", namespaces)
+  for (let i = 0; i < namespaces.length; i++) {
+    res = _resolve(ast, env, namespaces[i], arity)
+    if (res) {
+      return res
+    }
+  }
+  // check if defined in env root (no prefix)
+  console.log("checking if", ast, "is defined in env root")
+  res = _resolve(ast, env, null, arity)
+  console.log(ast, "resolved to", res)
+  if (res) {
+    //console.log("returning", res)
+    return res
+  }
+  // if still not found, check in outer env if there is one
+  if (env.outer) {
+    //console.log("looking in outer scope")
+    res = resolve(ast, env.outer, arity)
+    if (res) {
+      return res
+    }
+  }
+  //console.log(ast.value, "is undefined")
+  return null
+}
+
 function is_macro_call(ast, env) {
-  //console.log("checking function", ast[0].value)
+  console.log("checking function", ast[0])
   return types._list_Q(ast) &&
     types._symbol_Q(ast[0]) &&
     env.find(resolve(ast, env)) &&
@@ -104,7 +192,7 @@ function fnConfig(ast, env) {
     isMultiArity = false
   }
   if (types._string_Q(a2) && types._list_Q(a3)) {
-    console.log("fn has a docstring and is multi-arity")
+    //console.log("fn has a docstring and is multi-arity")
     fnBody = ast.slice(3)
     isMultiArity = true
   }
@@ -125,6 +213,7 @@ function _EVAL(ast, env) {
     }
 
     // apply list
+    //console.log("macroexpanding", ast)
     //ast = macroexpand(ast, env);
     if (ast.length === 0) {
       return ast;
@@ -315,94 +404,6 @@ function _EVAL(ast, env) {
         }
     }
   }
-}
-
-function _resolve(ast, env, namespace, arity) {
-  //console.log("Calling `_resolve` on", ast, "in", env)
-  var varName
-  if (types._symbol_Q(ast)) {
-    //console.log(ast, "is a symbol")
-    varName = ast.value
-  }
-  if (ast.length > 1) {
-    if (types._symbol_Q(ast[0])) {
-      varName = ast[0].value
-    }
-  }
-  //console.log("env:", env)
-  var vars = Object.keys(env.data)
-  if (namespace) {
-    //console.log("Looking for `" + varName + "` in " + namespace)
-    for (let i = 0; i < vars.length; i++) {
-      //console.log("checking for arity", arity)
-      if (vars[i] === namespace + "/" + varName + '-arity-' + arity) {
-        return types._symbol(vars[i])
-      }
-      if (vars[i] === namespace + "/" + varName + '-variadic') {
-        return types._symbol(vars[i])
-      }
-      if (vars[i] === namespace + "/" + varName) {
-        return types._symbol(vars[i])
-      }
-    }
-  } else {
-    //console.log("looking for", varName, "in env root")
-    //console.log("vars in env root:", vars)
-    for (let i = 0; i < vars.length; i++) {
-      if (vars[i] === varName + '-arity-' + arity) {
-        return types._symbol(vars[i])
-      }
-      if (vars[i] === varName + '-variadic') {
-        return types._symbol(vars[i])
-      }
-      if (vars[i] == varName) {
-        return types._symbol(vars[i])
-      }
-    }
-  }
-  return null
-}
-
-function resolve(ast, env, arity) {
-  // Since `ast` can either be a list or an atom,
-  // we need to handle each one.
-  // If it is a list, we can probably set `ast` to `ast[0]`.
-  if (types._list_Q(ast)) {
-    ast = ast[0]
-  }
-  // Check current namespace
-  //console.log("Calling `resolve` on", ast)
-  var res = _resolve(ast, env, namespace, arity)
-  if (res) {
-    //console.log("found in current namespace")
-    return res
-  }
-  // Check other namespaces
-  //console.log("checking for", ast, "in namespaces:", namespaces)
-  for (let i = 0; i < namespaces.length; i++) {
-    res = _resolve(ast, env, namespaces[i], arity)
-    if (res) {
-      return res
-    }
-  }
-  // check if defined in env root (no prefix)
-  //console.log("checking if", ast, "is defined in env root")
-  res = _resolve(ast, env, null, arity)
-  //console.log(ast, "resolved to", res)
-  if (res) {
-    //console.log("returning", res)
-    return res
-  }
-  // if still not found, check in outer env if there is one
-  if (env.outer) {
-    //console.log("looking in outer scope")
-    res = resolve(ast, env.outer, arity)
-    if (res) {
-      return res
-    }
-  }
-  //console.log(ast.value, "is undefined")
-  return null
 }
 
 export function clearTests() {
