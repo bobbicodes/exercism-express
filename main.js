@@ -128,6 +128,21 @@ button.addEventListener('click', function () {
   }
 })
 
+function loadSolution(slug) {
+  loadExercise(slug)
+  const k = slug.replaceAll("-", "_")
+  const src = solutions[k].trim()
+  let doc = view.state.doc.toString()
+  const end = doc.length
+  view.dispatch({
+    changes: { from: 0, to: end, insert: src},
+    selection: { anchor: 0, head: 0 }
+  })
+  clearTests()
+  doc = view.state.doc.toString()
+  const testSuite = testSuites[k + "_test"].trim()
+}
+
 function testSolution(slug) {
   loadExercise(slug)
   const k = slug.replaceAll("-", "_")
@@ -221,11 +236,11 @@ function randExercise() {
 
 evalString("(do " + core + ")")
 
-//loadExercise(randExercise())
-//loadExercise("prime_factors")
-
+loadExercise(randExercise())
+//loadExercise("armstrong_numbers")
+//loadSolution("armstrong_numbers")
 //testSolution("armstrong_numbers")
 
-//testSolution("prime_factors")
+//testSolution("accumulate")
 
-testExercises()
+//testExercises()
