@@ -234,9 +234,9 @@ evalString("(do " + core + ")")
 
 loadExercise(randExercise())
 //loadExercise("armstrong_numbers")
-//loadSolution("bob")
+//loadSolution(randExercise())
 //testSolution("armstrong_numbers")
-
+//loadSolution("raindrops")
 //testSolution("accumulate")
 
 //testExercises()
