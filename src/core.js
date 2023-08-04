@@ -4,7 +4,7 @@ import { _pr_str, _println } from './printer.js'
 import * as types from './types.js'
 import { evalString } from "./interpreter.js";
 import zip from './clj/zip.clj?raw'
-import {Range, Seq} from 'immutable'
+import { Range, Seq } from 'immutable'
 
 function reverse(coll) {
     if (types._string_Q(coll)) {
@@ -354,12 +354,29 @@ function drop(n, coll) {
     return coll.slice(n)
 }
 
-function partition(n, coll) {
-    let parts = []
-    while (coll.length > 0) {
-        parts.push(coll.splice(0, n));
+function partition() {
+    if (arguments.length === 2) {
+        const n = arguments[0]
+        const coll = arguments[1]
+        return partition(n, n, coll)
+    } else if (arguments.length === 3) {
+        const n = arguments[0]
+        const step = arguments[1]
+        const coll = arguments[2]
+        let index = 0
+        const nParts = Math.floor(coll.size / step)
+        console.log("1st elements", Range(0, coll.size, step).toArray())
+        let ranges = []
+        for (var i = 0; i < n; i++) {
+            ranges.push(Range(i, coll.size, step).toArray())
+        }
+        let parts = []
+        for (let i = 0; i < nParts; i++) {
+            parts.push(ranges.map(x => x[i]))
+            
+        }
+        return parts
     }
-    return parts
 }
 
 
@@ -487,7 +504,7 @@ function minus(a, b) {
     if (!b && b != 0) {
         return -a
     }
-    return a-b
+    return a - b
 }
 
 export const ns = {

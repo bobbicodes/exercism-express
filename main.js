@@ -13,7 +13,8 @@ import {testCodeBeforeEval} from './src/eval-region'
 import core from './src/clj/core.clj?raw'
 
 let editorState = EditorState.create({
-  doc: `(and true true)`,
+  doc: `(partition 4 6 (range 20))
+(partition 4 3 (range 20))`,
     extensions: [basicSetup, clojure()]
 })
 
