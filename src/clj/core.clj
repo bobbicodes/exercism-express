@@ -175,3 +175,6 @@
         (if x
           (not (f x))
           (not (f)))))))
+
+(defn neg? [n]
+  (> 0 n))
