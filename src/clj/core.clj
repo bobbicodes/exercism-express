@@ -152,3 +152,11 @@
 
 (defn into [to from]
   (reduce conj to from))
+
+(defn blank? [s]
+  (= (trim s) ""))
+
+(defn isLetter
+  [x]
+    (not= (upper-case x)
+          (lower-case x)))

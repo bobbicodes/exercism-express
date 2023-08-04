@@ -465,6 +465,14 @@ function distinct_Q() {
     return arguments.length === set.size
 }
 
+function trim(s) {
+    return s.trim()
+}
+
+function int_Q(x) {
+    return Number.isInteger(x)
+}
+
 export const ns = {
     'require': require,
     'type': types._obj_type,
@@ -563,5 +571,7 @@ export const ns = {
     'int': int,
     'rand-int': rand_int,
     'rand-nth': rand_nth,
-    'format': format
+    'format': format,
+    'trim': trim,
+    'int?': int_Q
 };
