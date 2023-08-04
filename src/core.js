@@ -202,6 +202,14 @@ function pop(lst) {
     }
 }
 
+function peek(lst) {
+    if (types._list_Q(lst)) {
+        return lst[0]
+    } else {
+        return lst[lst.length-1]
+    }
+}
+
 function sort(x) {
     if (types._string_Q(x)) {
         return x.split('').sort().join('');
@@ -610,6 +618,7 @@ export const ns = {
     'join': _join,
     'replace': _replace,
     'seq': seq,
+    'peek': peek,
     'pop': pop,
     'with-meta': with_meta,
     'meta': meta,
