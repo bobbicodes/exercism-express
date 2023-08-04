@@ -232,11 +232,11 @@ function randExercise() {
 
 evalString("(do " + core + ")")
 
-loadExercise(randExercise())
+//loadExercise(randExercise())
 //loadExercise("armstrong_numbers")
 //oadSolution(randExercise())
 //testSolution("armstrong_numbers")
 //loadSolution("nth_prime")
 //testSolution("accumulate")
 
-//testExercises()
+testExercises()

@@ -4,10 +4,22 @@ import { _pr_str, _println } from './printer.js'
 import * as types from './types.js'
 import { evalString } from "./interpreter.js";
 import zip from './clj/zip.clj?raw'
-import { Range, Seq, getIn, setIn, updateIn } from 'immutable'
+import { Range, Seq, getIn, setIn, updateIn, update, get, set } from 'immutable'
+
+function _get(coll, key, notSetValue) {
+    return get(coll, key, notSetValue)
+}
+
+function _set(coll, key, notSetValue) {
+    return set(coll, key, notSetValue)
+}
 
 function _getIn(coll, keyPath, notSetValue) {
     return getIn(coll, keyPath, notSetValue)
+}
+
+function _update(coll, key, f) {
+    return update(coll, key, f)
 }
 
 function _updateIn(coll, keyPath, f) {
@@ -127,13 +139,13 @@ function dissoc(src) {
     return _dissoc.apply(null, args);
 }
 
-function get(hm, key) {
+/* function get(hm, key) {
     if (hm != null && key in hm) {
         return hm[key];
     } else {
         return null;
     }
-}
+} */
 
 function contains_Q(hm, key) {
     if (key in hm) { return true; } else { return false; }
@@ -609,7 +621,7 @@ export const ns = {
     'vector?': types._vector_Q,
     'hash-map': types._hash_map,
     'map?': types._hash_map_Q,
-    'assoc': assoc,
+    'assoc': _set,
     'partition': partition,
     'dissoc': dissoc,
     'get': get,
@@ -660,5 +672,6 @@ export const ns = {
     'cycle': cycle,
     'get-in': _getIn,
     'assoc-in': _setIn,
+    'update': _update,
     'update-in': _updateIn
 };
