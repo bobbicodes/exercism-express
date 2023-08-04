@@ -152,6 +152,12 @@
       (recur (drop n (seq c))
              (conj res (first (seq c)))))))
 
+(defn take-while [pred coll]
+  (lazy-seq
+   (when-let [s (seq coll)]
+     (when (pred (first s))
+       (cons (first s) (take-while pred (rest s)))))))
+
 (defn into [to from]
   (reduce conj to from))
 

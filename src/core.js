@@ -4,7 +4,11 @@ import { _pr_str, _println } from './printer.js'
 import * as types from './types.js'
 import { evalString } from "./interpreter.js";
 import zip from './clj/zip.clj?raw'
-import { Range, Seq } from 'immutable'
+import { Range, Seq, getIn } from 'immutable'
+
+function _getIn(coll, path, notSetValue) {
+    return getIn(coll, path, notSetValue)
+}
 
 function reverse(coll) {
     if (types._string_Q(coll)) {
@@ -635,5 +639,6 @@ export const ns = {
     'format': format,
     'trim': trim,
     'int?': int_Q,
-    'cycle': cycle
+    'cycle': cycle,
+    'get-in': _getIn
 };
