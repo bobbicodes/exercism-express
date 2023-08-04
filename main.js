@@ -234,7 +234,7 @@ evalString("(do " + core + ")")
 
 loadExercise(randExercise())
 //loadExercise("armstrong_numbers")
-//loadSolution("zipper")
+//loadSolution("acronym")
 //testSolution("armstrong_numbers")
 
 //testSolution("accumulate")

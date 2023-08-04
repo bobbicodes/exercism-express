@@ -92,6 +92,8 @@
 (defn and [& xs]
   (every? #(identity %) xs))
 
+(defn ffirst [x] (first (first x)))
+
 (defn some [pred xs] 
   (if (empty? xs) 
     nil 
