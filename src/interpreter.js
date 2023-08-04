@@ -126,6 +126,7 @@ function _EVAL(ast, env) {
     // apply list
     //console.log("macroexpanding", ast)
     ast = macroexpand(ast, env);
+
     if (ast.length === 0) {
       return ast;
     }

@@ -178,9 +178,6 @@ function next(lst) {
 function empty_Q(lst) { return lst.length === 0; }
 
 function count(s) {
-    if (types._seq_Q) {
-        return s.size
-    }
     if (Array.isArray(s)) { return s.length; }
     else if (s === null) { return 0; }
     else { return Object.keys(s).length; }

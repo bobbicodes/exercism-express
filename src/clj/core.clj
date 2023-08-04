@@ -24,7 +24,7 @@
       `(~(first form) ~acc ~@(rest form)) 
       (list form acc)))
 
-(defmacro -> (fn (x & xs) (reduce _iter-> x xs)))
+(defmacro -> (fn [x & xs] (reduce _iter-> x xs)))
 
 (defn _iter->> [acc form] 
   (if (list? form) 
@@ -36,16 +36,6 @@
   (let [counter (atom 0)]
     (fn []
       (symbol (str \\"G__\\" (swap! counter inc))))))
-
-(defmacro or 
-  (fn [& xs] 
-    (if (empty? xs)
-      nil 
-      (if (= 1 (count xs)) 
-        (first xs) 
-        (let [condvar (gensym)] 
-          `(let [~condvar ~(first xs)] 
-             (if ~condvar ~condvar (or ~@(rest xs)))))))))
 
 (defn memoize [f]
     (let [mem (atom {})]
@@ -81,13 +71,26 @@
 
 (defn fnext [x] (first (next x)))
 
-(defmacro and
+(defmacro or
+  (fn [& xs]
+    (if (empty? xs) nil
+      (if (= 1 (count xs))
+        (first xs)
+        (let [condvar (gensym)]
+          `(let [~condvar ~(first xs)]
+             (if ~condvar ~condvar (or ~@(rest xs)))))))))
+
+#_(defmacro and
   (fn [& xs]
        (cond (empty? xs)      true
              (= 1 (count xs)) (first xs)
-             true             (let (condvar (gensym))
-                                    `(let (~condvar ~(first xs))
-                                           (if ~condvar (and ~@(rest xs)) ~condvar))))))
+             true             
+             (let [condvar (gensym)]
+               `(let [~condvar ~(first xs)]
+                  (if ~condvar (and ~@(rest xs)) ~condvar))))))
+
+(defn and [& xs]
+  (every? #(identity %) xs))
 
 (defn some [pred xs] 
   (if (empty? xs) 

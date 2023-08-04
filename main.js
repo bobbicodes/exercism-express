@@ -13,7 +13,7 @@ import {testCodeBeforeEval} from './src/eval-region'
 import core from './src/clj/core.clj?raw'
 
 let editorState = EditorState.create({
-  doc: `(-> "hello" (str " kitty"))`,
+  doc: `(and true true)`,
     extensions: [basicSetup, clojure()]
 })
 
@@ -234,7 +234,7 @@ evalString("(do " + core + ")")
 
 loadExercise(randExercise())
 //loadExercise("armstrong_numbers")
-//loadSolution("reverse_string")
+//loadSolution("zipper")
 //testSolution("armstrong_numbers")
 
 //testSolution("accumulate")
