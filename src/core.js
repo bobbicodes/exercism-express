@@ -477,9 +477,21 @@ function mod(x, y) {
     return x % y
 }
 
+function sqrt(n) {
+    return Math.sqrt(n)
+}
+
+function minus(a, b) {
+    if (!b && b != 0) {
+        return -a
+    }
+    return a-b
+}
+
 export const ns = {
     'require': require,
     'type': types._obj_type,
+    'sqrt': sqrt,
     '=': types._equal_Q,
     'not=': notEquals,
     'throw': mal_throw,
@@ -519,7 +531,7 @@ export const ns = {
     '>': function (a, b) { return a > b; },
     '>=': function (a, b) { return a >= b; },
     '+': function (a, b) { return a + b; },
-    '-': function (a, b) { return a - b; },
+    '-': minus,
     '*': function (a, b) { return a * b; },
     '/': function (a, b) { return a / b; },
     'inc': function (a) { return a + 1; },
