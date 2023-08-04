@@ -4,10 +4,14 @@ import { _pr_str, _println } from './printer.js'
 import * as types from './types.js'
 import { evalString } from "./interpreter.js";
 import zip from './clj/zip.clj?raw'
-import { Range, Seq, getIn, setIn } from 'immutable'
+import { Range, Seq, getIn, setIn, updateIn } from 'immutable'
 
 function _getIn(coll, keyPath, notSetValue) {
     return getIn(coll, keyPath, notSetValue)
+}
+
+function _updateIn(coll, keyPath, f) {
+    return updateIn(coll, keyPath, f)
 }
 
 function _setIn(coll, keyPath, value) {
@@ -655,5 +659,6 @@ export const ns = {
     'int?': int_Q,
     'cycle': cycle,
     'get-in': _getIn,
-    'assoc-in': _setIn
+    'assoc-in': _setIn,
+    'update-in': _updateIn
 };
