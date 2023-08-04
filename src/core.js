@@ -473,12 +473,18 @@ function int_Q(x) {
     return Number.isInteger(x)
 }
 
+function mod(x, y) {
+    return x % y
+}
+
 export const ns = {
     'require': require,
     'type': types._obj_type,
     '=': types._equal_Q,
     'not=': notEquals,
     'throw': mal_throw,
+    'mod': mod,
+    'rem': mod,
     'nil?': types._nil_Q,
     'char': char,
     'true?': types._true_Q,
