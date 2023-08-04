@@ -363,18 +363,9 @@ function partition() {
         const n = arguments[0]
         const step = arguments[1]
         const coll = arguments[2]
-        let index = 0
         const nParts = Math.floor(coll.size / step)
-        console.log("1st elements", Range(0, coll.size, step).toArray())
-        let ranges = []
-        for (var i = 0; i < n; i++) {
-            ranges.push(Range(i, coll.size, step).toArray())
-        }
-        let parts = []
-        for (let i = 0; i < nParts; i++) {
-            parts.push(ranges.map(x => x[i]))
-            
-        }
+        const ranges = Range(0, n).map(i => Range(i, coll.size, step).toArray())
+        const parts = Range(0, nParts).map(i => ranges.map(x => x[i]))
         return parts
     }
 }
