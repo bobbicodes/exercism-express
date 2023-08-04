@@ -236,7 +236,7 @@ loadExercise(randExercise())
 //loadExercise("armstrong_numbers")
 //loadSolution(randExercise())
 //testSolution("armstrong_numbers")
-//loadSolution("octal")
+//loadSolution("binary_search")
 //testSolution("accumulate")
 
 //testExercises()

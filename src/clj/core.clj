@@ -178,3 +178,6 @@
 
 (defn neg? [n]
   (> 0 n))
+
+(defn quot [n d]
+  (int (/ n d)))

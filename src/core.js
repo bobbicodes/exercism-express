@@ -149,8 +149,7 @@ function vec(lst) {
 }
 
 function nth(lst, idx) {
-    if (idx < lst.length) { return lst[idx]; }
-    else { throw new Error("nth: index out of range"); }
+    return lst[idx]
 }
 
 function range(start, end, step) {
@@ -160,7 +159,7 @@ function range(start, end, step) {
     if (end) {
         return Range(start, end)
     } else {
-        return Range()
+        return Range(0, start)
     }
 }
 
