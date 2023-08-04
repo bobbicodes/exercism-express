@@ -369,10 +369,15 @@ function char(int) {
 }
 
 function int(x) {
+    console.log("x is a", typeof x)
+    console.log("x[0]:", x[0])
     if (types._number_Q(x)) {
         return Math.floor(x)
-    } else {
+    } else if (x[0] === '\\') {
+        // is a char
         return x.charCodeAt(1)
+    } else {
+        return x.charCodeAt(0)
     }
 }
 
