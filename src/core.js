@@ -532,10 +532,20 @@ function max() {
     return Math.max.apply(null, arguments);
 }
 
+function floor(n) {
+    return Math.floor(n)
+}
+
+function ceil(n) {
+    return Math.ceil(n)
+}
+
 export const ns = {
     'require': require,
     'min': min,
     'max': max,
+    'floor': floor,
+    'ceil': ceil,
     'type': types._obj_type,
     'sqrt': sqrt,
     '=': types._equal_Q,
