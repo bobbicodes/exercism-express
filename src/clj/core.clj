@@ -169,6 +169,35 @@
     (not= (upper-case x)
           (lower-case x)))
 
+(defn fromCharCode [int]
+  (js-eval (str "String.fromCharCode(" int ")")))
+
+(defn isAlphabetic
+  "Takes a Unicode code point."
+  [int]
+  (not= (upper-case (fromCharCode int))
+        (lower-case (fromCharCode int))))
+
+(defn isUpperCase
+  "Takes either a char or a Unicode code point."
+  [x]
+  (if (int? x)
+    (and (isLetter (fromCharCode x))
+         (= (fromCharCode x)
+            (upper-case (fromCharCode x))))
+    (and (isLetter x)
+         (= x (upper-case x)))))
+
+(defn isLowerCase
+  "Takes either a char or a Unicode code point."
+  [x]
+  (if (int? x)
+    (and (isLetter (fromCharCode x))
+         (= (fromCharCode x)
+            (lower-case (fromCharCode x))))
+    (and (isLetter x)
+         (= x (lower-case x)))))
+
 (defn even? [n] (= 0 (mod n 2)))
 (defn odd? [n] (= 1 (mod n 2)))
 
