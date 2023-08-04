@@ -236,7 +236,7 @@ loadExercise(randExercise())
 //loadExercise("armstrong_numbers")
 //loadSolution(randExercise())
 //testSolution("armstrong_numbers")
-//loadSolution("complex_numbers")
+//loadSolution("leap")
 //testSolution("accumulate")
 
 //testExercises()

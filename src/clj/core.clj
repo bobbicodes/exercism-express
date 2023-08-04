@@ -94,6 +94,8 @@
 
 (defn ffirst [x] (first (first x)))
 
+(defn second [l] (nth l 1))
+
 (defn some [pred xs] 
   (if (empty? xs) 
     nil 
