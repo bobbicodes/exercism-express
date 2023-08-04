@@ -13,8 +13,7 @@ import {testCodeBeforeEval} from './src/eval-region'
 import core from './src/clj/core.clj?raw'
 
 let editorState = EditorState.create({
-  doc: `(partition 4 6 (range 20))
-(partition 4 3 (range 20))`,
+  doc: `(partition 3 1 [0 1 2 3 1 2 5 6])`,
     extensions: [basicSetup, clojure()]
 })
 
@@ -237,7 +236,7 @@ loadExercise(randExercise())
 //loadExercise("armstrong_numbers")
 //loadSolution(randExercise())
 //testSolution("armstrong_numbers")
-//loadSolution("binary_search")
+//loadSolution("robot_simulator")
 //testSolution("accumulate")
 
 //testExercises()

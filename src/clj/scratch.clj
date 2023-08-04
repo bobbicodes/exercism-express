@@ -206,3 +206,36 @@
                                 (-> edge
                                     n/from-to
                                     (j/assoc! :insert " "))])})))))))
+
+(partition 3 1 [0 1 2 3 1 2 5 6])
+;; ((0 1 2) (1 2 3) (2 3 1) (3 1 2) (1 2 5) (2 5 6))
+
+(let [n 3
+      step 1
+      seq [0 1 2 3 1 2 5 6]
+      n-parts (int (/ (count seq) step))]
+  (map (fn [index] (nth seq index))
+       (range n-parts)))
+
+(partition 4 (range 22))
+;; ((0 1 2 3) (4 5 6 7) (8 9 10 11) (12 13 14 15) (16 17 18 19))
+
+(let [n 4
+      step 4
+      seq (range 22)
+      n-parts (int (/ (count seq) step))]
+  (map (fn [index] (nth seq index))
+       (range n-parts)))
+
+
+(defn partition
+  ([n coll]
+   (partition n n coll))
+  ([n step coll]
+   (lazy-seq
+    (when-let [s (seq coll)]
+      (let [p (doall (take n s))]
+        (when (= n (count p))
+          (cons p (partition n step (nthrest s step)))))))))
+
+(partition 4 6 (range 20))

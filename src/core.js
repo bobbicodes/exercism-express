@@ -362,11 +362,19 @@ function partition() {
     } else if (arguments.length === 3) {
         const n = arguments[0]
         const step = arguments[1]
-        const coll = arguments[2]
-        const nParts = Math.floor(coll.size / step)
-        const ranges = Range(0, n).map(i => Range(i, coll.size, step).toArray())
-        const parts = Range(0, nParts).map(i => ranges.map(x => x[i]))
-        return parts
+        const seq = Seq(arguments[2])
+        console.log("seq:", seq)
+        const nParts = Math.floor(seq.size / step)
+        console.log("nParts:", nParts)
+        const indices = Range(0, n).map(i => Range(i, seq.size).map(j => seq.get(j)))
+        return indices
+        //const indices = Range(0, nParts).map(i => seq.get(i*step))
+        //return indices
+        //const ranges = Range(0, n).map(i => Range(seq.get(i), seq.size, step).toArray())
+        //console.log("ranges:", ranges.toArray())
+        //return ranges
+        //const parts = Range(0, nParts).map(i => ranges.map(x => x[i])).toArray()
+        //return parts
     }
 }
 
@@ -498,6 +506,12 @@ function minus(a, b) {
     return a - b
 }
 
+function cycle(coll) {
+    var c = seq(coll)
+    c.__iscycle__ = true;
+    return c
+}
+
 export const ns = {
     'require': require,
     'type': types._obj_type,
@@ -601,5 +615,6 @@ export const ns = {
     'rand-nth': rand_nth,
     'format': format,
     'trim': trim,
-    'int?': int_Q
+    'int?': int_Q,
+    'cycle': cycle
 };
