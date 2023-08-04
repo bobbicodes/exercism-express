@@ -512,8 +512,18 @@ function cycle(coll) {
     return c
 }
 
+function min() {
+    return Math.min.apply(null, arguments);
+}
+
+function max() {
+    return Math.max.apply(null, arguments);
+}
+
 export const ns = {
     'require': require,
+    'min': min,
+    'max': max,
     'type': types._obj_type,
     'sqrt': sqrt,
     '=': types._equal_Q,
