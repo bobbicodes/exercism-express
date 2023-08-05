@@ -24,7 +24,6 @@ export function _pr_str(obj, print_readably) {
             var ret = obj.toArray().map(function (e) { return _pr_str(e, _r); });
             return "(" + ret.join(' ') + ")";
         case 'hash-map':
-            console.log("keys:", obj.keySeq().toArray())
             var keys = obj.keySeq().toArray().map(function (e) { return _pr_str(e, _r); });
             var vals = obj.valueSeq().toArray().map(function (e) { return _pr_str(e, _r); });
             let kvstring = Seq(keys).interleave(Seq(vals)).join(' ')

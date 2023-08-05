@@ -47,11 +47,7 @@ export function _equal_Q(a, b) {
             }
             return true;
         case 'hash-map':
-            if (Object.keys(a).length !== Object.keys(b).length) { return false; }
-            for (var k in a) {
-                if (!_equal_Q(a[k], b[k])) { return false; }
-            }
-            return true;
+            return a.equals(b)
         default:
             return a === b;
     }
