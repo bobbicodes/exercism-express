@@ -4,24 +4,7 @@ import { _pr_str, _println } from './printer.js'
 import * as types from './types.js'
 import { evalString } from "./interpreter.js";
 import zip from './clj/zip.clj?raw'
-import { Range, Seq, getIn, setIn, updateIn, update, get, set, List, Map } from 'immutable'
-
-function _hash_map(kvs) {
-    return Map({ a: 1, b: 2, c: 3 })
-}
-
-const map1 = Map({ a: 1, b: 2, c: 3 });
-
-const listOfMaps = List([
-    Map({ v: 0 }),
-    Map({ v: 1 }),
-    Map({ v: 1 }),
-    Map({ v: 0 }),
-    Map({ v: 2 })
-])
-const groupsOfMaps = listOfMaps.groupBy(x => x.get('v'))
-
-console.log(map1)
+import { Range, Seq, getIn, setIn, updateIn, update, get, set, List } from 'immutable'
 
 function _groupBy(f, coll) {
     return List(seq(coll)).groupBy(f)
@@ -644,7 +627,7 @@ export const ns = {
     'distinct?': distinct_Q,
     'set': toSet,
     'vector?': types._vector_Q,
-    'hash-map': _hash_map,
+    'hash-map': types._hash_map,
     'map?': types._hash_map_Q,
     'assoc': _set,
     'partition': partition,
