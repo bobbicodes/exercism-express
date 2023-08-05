@@ -13,7 +13,7 @@ import {testCodeBeforeEval} from './src/eval-region'
 import core from './src/clj/core.clj?raw'
 
 let editorState = EditorState.create({
-  doc: `(hash-map)`,
+  doc: `(frequencies [1 2 3 2 1])`,
     extensions: [basicSetup, clojure()]
 })
 
@@ -236,7 +236,7 @@ evalString("(do " + core + ")")
 //loadExercise("armstrong_numbers")
 //oadSolution(randExercise())
 //testSolution("armstrong_numbers")
-//loadSolution("raindrops")
+//loadSolution("word_count")
 //testSolution("accumulate")
 
 testExercises()
