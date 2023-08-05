@@ -224,4 +224,4 @@ evalString("(do " + core + ")")
 //loadExercise("reverse_string")
 //testSolution("word_count")
 
-testExercises()
+//testExercises()
