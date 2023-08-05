@@ -1,4 +1,5 @@
 import { _obj_type } from './types.js'
+import {Seq} from 'immutable'
 
 export function _println() {
     console.log.apply(console, arguments)
@@ -23,9 +24,12 @@ export function _pr_str(obj, print_readably) {
             var ret = obj.toArray().map(function (e) { return _pr_str(e, _r); });
             return "(" + ret.join(' ') + ")";
         case 'hash-map':
-            //console.log("keys:", obj.keySeq())
-            let kvstring = obj.keySeq().interleave(obj.valueSeq()).join(' ')
+            console.log("keys:", obj.keySeq().toArray())
+            var keys = obj.keySeq().toArray().map(function (e) { return _pr_str(e, _r); });
+            var vals = obj.valueSeq().toArray().map(function (e) { return _pr_str(e, _r); });
+            let kvstring = Seq(keys).interleave(Seq(vals)).join(' ')
             let kvs = kvstring.split(' ')
+            // Put commas between key/value pairs
             let hmstring = ""
             for (let i = 0; i < kvs.length; i++) {
                 if (i % 2 === 0) {
