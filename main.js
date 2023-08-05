@@ -236,7 +236,7 @@ evalString("(do " + core + ")")
 //loadExercise("armstrong_numbers")
 //oadSolution(randExercise())
 //testSolution("armstrong_numbers")
-//loadSolution("pascals_triangle")
+loadSolution("raindrops")
 //testSolution("accumulate")
 
 //testExercises()

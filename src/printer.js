@@ -11,6 +11,8 @@ export function _pr_str(obj, print_readably) {
     //console.log("obj:", obj)
     //console.log("ot:", ot)
     switch (ot) {
+        case 'lazy-list':
+            return obj
         case 'list':
             var ret = obj.map(function (e) { return _pr_str(e, _r); });
             return "(" + ret.join(' ') + ")";
@@ -21,11 +23,20 @@ export function _pr_str(obj, print_readably) {
             var ret = obj.toArray().map(function (e) { return _pr_str(e, _r); });
             return "(" + ret.join(' ') + ")";
         case 'hash-map':
-            var ret = [];
-            for (var k in obj) {
-                ret.push(_pr_str(k, _r), _pr_str(obj[k], _r));
+            console.log("keys:", obj.keySeq())
+            let kvstring = obj.keySeq().interleave(obj.valueSeq()).join(' ')
+            let kvs = kvstring.split(' ')
+            let hmstring = ""
+            for (let i = 0; i < kvs.length; i++) {
+                if (i % 2 === 0) {
+                    hmstring = hmstring + kvs[i] + ' '
+                } else if (i === kvs.length-1) {
+                    hmstring = hmstring + kvs[i]
+                } else {
+                    hmstring = hmstring + kvs[i] + ', '
+                }
             }
-            return "{" + ret.join(' ') + "}";
+            return "{" + hmstring + "}"
         case 'set':
             var arr = Array.from(obj)
             var ret = arr.map(function (e) { return _pr_str(e, _r); });
