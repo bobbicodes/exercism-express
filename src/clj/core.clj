@@ -1,4 +1,5 @@
-(ns core {:clj-kondo/ignore true})
+(ns core {:clj-kondo/ignore true} 
+  (:require [go-counting :as g]))
 
 (def not (fn [a] (if a false true)))
 
@@ -128,11 +129,6 @@
 (defn butlast [s]
   (take (dec (count s)) s))
 
-(defn lazy-seq 
-  "Not real. Just a passthrough for compatibility."
-  [seq]
-  seq)
-
 (defn interleave [c1 c2]
   (loop [s1  (seq c1)
          s2  (seq c2)
@@ -151,12 +147,6 @@
       (seq res)
       (recur (drop n (seq c))
              (conj res (first (seq c)))))))
-
-(defn take-while [pred coll]
-  (lazy-seq
-   (when-let [s (seq coll)]
-     (when (pred (first s))
-       (cons (first s) (take-while pred (rest s)))))))
 
 (defn into [to from]
   (reduce conj to from))

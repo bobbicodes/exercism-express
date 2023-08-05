@@ -1,8 +1,9 @@
 import { Env } from './env.js'
 import { seq } from './core.js'
-import {isSeq} from 'immutable'
+import {isSeq, Map} from 'immutable'
 
 export function _obj_type(obj) {
+    console.log(obj)
     if (_symbol_Q(obj)) { return 'symbol'; }
     else if (_list_Q(obj)) { return 'list'; }
     else if (_vector_Q(obj)) { return 'vector'; }
@@ -259,12 +260,7 @@ export function _hash_map() {
 }
 
 export function _hash_map_Q(hm) {
-    return typeof hm === "object" &&
-        !Array.isArray(hm) &&
-        !(hm === null) &&
-        !(hm instanceof Symbol) &&
-        !(hm instanceof Set) &&
-        !(hm instanceof Atom);
+    return Map.isMap(hm)
 }
 
 // Sets

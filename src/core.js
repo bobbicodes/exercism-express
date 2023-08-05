@@ -4,7 +4,32 @@ import { _pr_str, _println } from './printer.js'
 import * as types from './types.js'
 import { evalString } from "./interpreter.js";
 import zip from './clj/zip.clj?raw'
-import { Range, Seq, getIn, setIn, updateIn, update, get, set } from 'immutable'
+import { Range, Seq, getIn, setIn, updateIn, update, get, set, List, Map } from 'immutable'
+
+function _hash_map(kvs) {
+    return Map({ a: 1, b: 2, c: 3 })
+}
+
+const map1 = Map({ a: 1, b: 2, c: 3 });
+
+const listOfMaps = List([
+    Map({ v: 0 }),
+    Map({ v: 1 }),
+    Map({ v: 1 }),
+    Map({ v: 0 }),
+    Map({ v: 2 })
+])
+const groupsOfMaps = listOfMaps.groupBy(x => x.get('v'))
+
+console.log(map1)
+
+function _groupBy(f, coll) {
+    return List(seq(coll)).groupBy(f)
+}
+
+function lazySeq(coll) {
+    return Seq(coll)
+}
 
 function _get(coll, key, notSetValue) {
     return get(coll, key, notSetValue)
@@ -230,7 +255,7 @@ function peek(lst) {
     if (types._list_Q(lst)) {
         return lst[0]
     } else {
-        return lst[lst.length-1]
+        return lst[lst.length - 1]
     }
 }
 
@@ -619,7 +644,7 @@ export const ns = {
     'distinct?': distinct_Q,
     'set': toSet,
     'vector?': types._vector_Q,
-    'hash-map': types._hash_map,
+    'hash-map': _hash_map,
     'map?': types._hash_map_Q,
     'assoc': _set,
     'partition': partition,
@@ -673,5 +698,7 @@ export const ns = {
     'get-in': _getIn,
     'assoc-in': _setIn,
     'update': _update,
-    'update-in': _updateIn
+    'update-in': _updateIn,
+    'lazy-seq': lazySeq,
+    'group-by': _groupBy
 };
