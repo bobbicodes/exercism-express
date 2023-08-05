@@ -438,8 +438,8 @@ function rand_int() {
 }
 
 function rand_nth() {
-    const n = Math.floor(Math.random() * arguments[0].length)
-    return arguments[0][n]
+    const n = Math.floor(Math.random() * arguments[0].size)
+    return arguments[0].get(n)
 }
 
 // https://stackoverflow.com/a/31042089
