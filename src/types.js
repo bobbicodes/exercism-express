@@ -252,11 +252,11 @@ export function _vector_Q(obj) { return Array.isArray(obj) && !!obj.__isvector__
 
 // Hash Maps
 export function _hash_map() {
-    if (arguments.length % 2 === 1) {
-        throw new Error("Odd number of hash map arguments");
+    let args = []
+    for (let i = 0; i < arguments.length; i+=2) {
+        args.push([arguments[i], arguments[i+1]])
     }
-    var args = [{}].concat(Array.prototype.slice.call(arguments, 0));
-    return _assoc.apply(null, args);
+    return Map(args)
 }
 
 export function _hash_map_Q(hm) {
