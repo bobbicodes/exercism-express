@@ -3,7 +3,7 @@ import { seq } from './core.js'
 import {isSeq, Map} from 'immutable'
 
 export function _obj_type(obj) {
-    console.log(obj)
+    //console.log(obj)
     if (_symbol_Q(obj)) { return 'symbol'; }
     else if (_list_Q(obj)) { return 'list'; }
     else if (_vector_Q(obj)) { return 'vector'; }

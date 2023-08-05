@@ -263,12 +263,7 @@ export function seq(obj) {
     } else if (types._string_Q(obj)) {
         return obj.length > 0 ? Seq(obj.split('')) : null;
     } else if (types._hash_map_Q(obj)) {
-        let kvs = []
-        Object.entries(obj).forEach(kv => {
-            kv.__mapEntry__ = true;
-            kvs.push(kv)
-        })
-        return kvs
+        return Seq(obj).toArray()
     } else if (obj === null) {
         return null;
     } else {
