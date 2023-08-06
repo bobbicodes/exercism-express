@@ -3,6 +3,7 @@ import { _pr_str } from './printer.js';
 import * as core from './core.js';
 import * as types from './types.js'
 import { Env } from './env.js'
+import {Map, Seq} from 'immutable'
 
 // read
 function READ(str) {
@@ -61,11 +62,9 @@ function eval_ast(ast, env) {
     v.__isvector__ = true;
     return v;
   } else if (types._hash_map_Q(ast)) {
-    var new_hm = {};
-    for (const k in ast) {
-      new_hm[k] = EVAL(ast[k], env);
-    }
-    return new_hm;
+    const keys = ast.keySeq()
+    const vals = ast.valueSeq().map(a => EVAL(a, env))
+    return new Map(keys.zip(vals))
   } else {
     //console.log(ast, "is not a symbol, list, vector or map")
     return ast;
@@ -204,6 +203,7 @@ function _EVAL(ast, env) {
           //console.log("env", env)
           return "#'" + namespace + "/" + a1 + " defined"
         } else {
+          //console.log("fnbody:", fnBody)
           const fn = types._function(EVAL, Env, fnBody, env, arglist);
           env.set(types._symbol(a1), fn)
           //console.log("function defined:", namespace + "/" + a1)

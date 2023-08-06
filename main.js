@@ -13,7 +13,8 @@ import {testCodeBeforeEval} from './src/eval-region'
 import core from './src/clj/core.clj?raw'
 
 let editorState = EditorState.create({
-  doc: `(frequencies [1 2 3 2 1])`,
+  doc: `(= {"trail" []}
+   {"trail" []})`,
     extensions: [basicSetup, clojure()]
 })
 
@@ -232,11 +233,11 @@ function randExercise() {
 
 evalString("(do " + core + ")")
 
-//loadExercise(randExercise())
+loadExercise(randExercise())
 //loadExercise("armstrong_numbers")
 //oadSolution(randExercise())
 //testSolution("armstrong_numbers")
-loadSolution("robot_name")
+//loadSolution("zipper")
 //testSolution("accumulate")
 
 //testExercises()

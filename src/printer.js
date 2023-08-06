@@ -8,8 +8,9 @@ export function _println() {
 export function _pr_str(obj, print_readably) {
     if (typeof print_readably === 'undefined') { print_readably = true; }
     var _r = print_readably;
-    var ot = _obj_type(obj);
     //console.log("obj:", obj)
+    var ot = _obj_type(obj);
+    
     //console.log("ot:", ot)
     switch (ot) {
         case 'lazy-list':
@@ -27,19 +28,7 @@ export function _pr_str(obj, print_readably) {
             var keys = obj.keySeq().toArray().map(function (e) { return _pr_str(e, _r); });
             var vals = obj.valueSeq().toArray().map(function (e) { return _pr_str(e, _r); });
             let kvstring = Seq(keys).interleave(Seq(vals)).join(' ')
-            let kvs = kvstring.split(' ')
-            // Put commas between key/value pairs
-            let hmstring = ""
-            for (let i = 0; i < kvs.length; i++) {
-                if (i % 2 === 0) {
-                    hmstring = hmstring + kvs[i] + ' '
-                } else if (i === kvs.length-1) {
-                    hmstring = hmstring + kvs[i]
-                } else {
-                    hmstring = hmstring + kvs[i] + ', '
-                }
-            }
-            return "{" + hmstring + "}"
+            return "{" + kvstring + "}"
         case 'set':
             var arr = Array.from(obj)
             var ret = arr.map(function (e) { return _pr_str(e, _r); });

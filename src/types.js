@@ -1,6 +1,6 @@
 import { Env } from './env.js'
 import { seq } from './core.js'
-import {isSeq, Map} from 'immutable'
+import {isSeq, Map, is, Seq} from 'immutable'
 
 export function _obj_type(obj) {
     //console.log(obj)
@@ -41,13 +41,20 @@ export function _equal_Q(a, b) {
         case 'list':
         case 'vector':
         case 'set':
+            console.log("comparing", ota, "and", otb)
             if (a.length !== b.length) { return false; }
             for (var i = 0; i < a.length; i++) {
                 if (!_equal_Q(a[i], b[i])) { return false; }
             }
             return true;
         case 'hash-map':
-            return a.equals(b)
+            a = a.toObject()
+            b = b.toObject()
+            if (Object.keys(a).length !== Object.keys(b).length) { return false; }
+            for (var k in a) {
+                if (!_equal_Q(a[k], b[k])) { return false; }
+            }
+            return true;
         default:
             return a === b;
     }
@@ -140,10 +147,9 @@ function walk(inner, outer, form) {
         return v
     } else if (_hash_map_Q(form)) {
         const entries = seq(form).map(inner)
-        let newMap = {}
-        entries.forEach(mapEntry => {
-            newMap[mapEntry[0]] = mapEntry[1]
-        });
+       // console.log("Walking hash-map. Entries:", entries)
+        const newMap = new Map(entries)
+        //console.log("newMap:", newMap)
         return outer(newMap)
     } else if (form.__mapEntry__) {
         const k = inner(form[0])
@@ -190,7 +196,7 @@ function downloadObjectAsJson(exportObj, exportName) {
 
 // Functions
 export function _function(Eval, Env, ast, env, params) {
-   // console.log("fn AST:", ast)
+    //console.log("fn AST:", ast)
     var fn = function () {
         return Eval(ast, new Env(env, params, arguments))
     }
@@ -207,9 +213,6 @@ export function _function(Eval, Env, ast, env, params) {
         fn = function () {
             return Eval(ast, new Env(env, params, arguments))
         }
-    }
-    fn = function () {
-        return Eval(ast, new Env(env, params, arguments))
     }
     //console.log("fn AST (after):", ast)
     //downloadObjectAsJson(ast, "ast.json")
