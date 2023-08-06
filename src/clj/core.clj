@@ -1,5 +1,4 @@
-(ns core {:clj-kondo/ignore true} 
-  (:require [go-counting :as g]))
+(ns core {:clj-kondo/ignore true})
 
 (def not (fn [a] (if a false true)))
 
