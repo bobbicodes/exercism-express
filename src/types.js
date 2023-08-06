@@ -1,8 +1,9 @@
 import { Env } from './env.js'
 import { seq } from './core.js'
-import {isSeq} from 'immutable'
+import {isSeq, Map, is, Seq} from 'immutable'
 
 export function _obj_type(obj) {
+    //console.log(obj)
     if (_symbol_Q(obj)) { return 'symbol'; }
     else if (_list_Q(obj)) { return 'list'; }
     else if (_vector_Q(obj)) { return 'vector'; }
@@ -40,12 +41,15 @@ export function _equal_Q(a, b) {
         case 'list':
         case 'vector':
         case 'set':
+            //console.log("comparing", ota, "and", otb)
             if (a.length !== b.length) { return false; }
             for (var i = 0; i < a.length; i++) {
                 if (!_equal_Q(a[i], b[i])) { return false; }
             }
             return true;
         case 'hash-map':
+            a = a.toObject()
+            b = b.toObject()
             if (Object.keys(a).length !== Object.keys(b).length) { return false; }
             for (var k in a) {
                 if (!_equal_Q(a[k], b[k])) { return false; }
@@ -143,10 +147,9 @@ function walk(inner, outer, form) {
         return v
     } else if (_hash_map_Q(form)) {
         const entries = seq(form).map(inner)
-        let newMap = {}
-        entries.forEach(mapEntry => {
-            newMap[mapEntry[0]] = mapEntry[1]
-        });
+       // console.log("Walking hash-map. Entries:", entries)
+        const newMap = new Map(entries)
+        //console.log("newMap:", newMap)
         return outer(newMap)
     } else if (form.__mapEntry__) {
         const k = inner(form[0])
@@ -193,7 +196,7 @@ function downloadObjectAsJson(exportObj, exportName) {
 
 // Functions
 export function _function(Eval, Env, ast, env, params) {
-   // console.log("fn AST:", ast)
+    //console.log("fn AST:", ast)
     var fn = function () {
         return Eval(ast, new Env(env, params, arguments))
     }
@@ -210,9 +213,6 @@ export function _function(Eval, Env, ast, env, params) {
         fn = function () {
             return Eval(ast, new Env(env, params, arguments))
         }
-    }
-    fn = function () {
-        return Eval(ast, new Env(env, params, arguments))
     }
     //console.log("fn AST (after):", ast)
     //downloadObjectAsJson(ast, "ast.json")
@@ -251,20 +251,15 @@ export function _vector_Q(obj) { return Array.isArray(obj) && !!obj.__isvector__
 
 // Hash Maps
 export function _hash_map() {
-    if (arguments.length % 2 === 1) {
-        throw new Error("Odd number of hash map arguments");
+    let args = []
+    for (let i = 0; i < arguments.length; i+=2) {
+        args.push([arguments[i], arguments[i+1]])
     }
-    var args = [{}].concat(Array.prototype.slice.call(arguments, 0));
-    return _assoc.apply(null, args);
+    return Map(args)
 }
 
 export function _hash_map_Q(hm) {
-    return typeof hm === "object" &&
-        !Array.isArray(hm) &&
-        !(hm === null) &&
-        !(hm instanceof Symbol) &&
-        !(hm instanceof Set) &&
-        !(hm instanceof Atom);
+    return Map.isMap(hm)
 }
 
 // Sets

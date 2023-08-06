@@ -128,11 +128,6 @@
 (defn butlast [s]
   (take (dec (count s)) s))
 
-(defn lazy-seq 
-  "Not real. Just a passthrough for compatibility."
-  [seq]
-  seq)
-
 (defn interleave [c1 c2]
   (loop [s1  (seq c1)
          s2  (seq c2)
@@ -151,12 +146,6 @@
       (seq res)
       (recur (drop n (seq c))
              (conj res (first (seq c)))))))
-
-(defn take-while [pred coll]
-  (lazy-seq
-   (when-let [s (seq coll)]
-     (when (pred (first s))
-       (cons (first s) (take-while pred (rest s)))))))
 
 (defn into [to from]
   (reduce conj to from))
@@ -216,3 +205,8 @@
 
 (defn quot [n d]
   (int (/ n d)))
+
+#_(defn frequencies [coll]
+   (reduce (fn [counts x]
+             (assoc counts x (inc (get counts x 0))))
+           {} coll))

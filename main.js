@@ -13,7 +13,8 @@ import {testCodeBeforeEval} from './src/eval-region'
 import core from './src/clj/core.clj?raw'
 
 let editorState = EditorState.create({
-  doc: `(partition 3 1 [0 1 2 3 1 2 5 6])`,
+  doc: `(= {"trail" []}
+   {"trail" []})`,
     extensions: [basicSetup, clojure()]
 })
 
@@ -236,7 +237,7 @@ loadExercise(randExercise())
 //loadExercise("armstrong_numbers")
 //oadSolution(randExercise())
 //testSolution("armstrong_numbers")
-//loadSolution("nth_prime")
+//loadSolution("zipper")
 //testSolution("accumulate")
 
 //testExercises()

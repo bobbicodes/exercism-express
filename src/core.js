@@ -4,10 +4,30 @@ import { _pr_str, _println } from './printer.js'
 import * as types from './types.js'
 import { evalString } from "./interpreter.js";
 import zip from './clj/zip.clj?raw'
-import { Range, Seq, getIn, setIn, updateIn } from 'immutable'
+import { Range, Seq, getIn, setIn, updateIn, update, get, set, List, Map } from 'immutable'
+
+function _groupBy(f, coll) {
+    return List(seq(coll)).groupBy(f)
+}
+
+function lazySeq(coll) {
+    return Seq(coll)
+}
+
+function _get(coll, key, notSetValue) {
+    return get(coll, key, notSetValue)
+}
+
+function _set(coll, key, notSetValue) {
+    return set(coll, key, notSetValue)
+}
 
 function _getIn(coll, keyPath, notSetValue) {
     return getIn(coll, keyPath, notSetValue)
+}
+
+function _update(coll, key, f) {
+    return update(coll, key, f)
 }
 
 function _updateIn(coll, keyPath, f) {
@@ -127,13 +147,13 @@ function dissoc(src) {
     return _dissoc.apply(null, args);
 }
 
-function get(hm, key) {
+/* function get(hm, key) {
     if (hm != null && key in hm) {
         return hm[key];
     } else {
         return null;
     }
-}
+} */
 
 function contains_Q(hm, key) {
     if (key in hm) { return true; } else { return false; }
@@ -218,7 +238,7 @@ function peek(lst) {
     if (types._list_Q(lst)) {
         return lst[0]
     } else {
-        return lst[lst.length-1]
+        return lst[lst.length - 1]
     }
 }
 
@@ -243,12 +263,7 @@ export function seq(obj) {
     } else if (types._string_Q(obj)) {
         return obj.length > 0 ? Seq(obj.split('')) : null;
     } else if (types._hash_map_Q(obj)) {
-        let kvs = []
-        Object.entries(obj).forEach(kv => {
-            kv.__mapEntry__ = true;
-            kvs.push(kv)
-        })
-        return kvs
+        return Seq(obj).toArray()
     } else if (obj === null) {
         return null;
     } else {
@@ -423,8 +438,8 @@ function rand_int() {
 }
 
 function rand_nth() {
-    const n = Math.floor(Math.random() * arguments[0].length)
-    return arguments[0][n]
+    const n = Math.floor(Math.random() * arguments[0].size)
+    return arguments[0].get(n)
 }
 
 // https://stackoverflow.com/a/31042089
@@ -471,7 +486,7 @@ function frequencies(seq) {
             freqs[seq[i]] = 1
         }
     }
-    return freqs
+    return new Map(Seq(freqs))
 }
 
 function hasValue(x, coll) {
@@ -609,7 +624,7 @@ export const ns = {
     'vector?': types._vector_Q,
     'hash-map': types._hash_map,
     'map?': types._hash_map_Q,
-    'assoc': assoc,
+    'assoc': _set,
     'partition': partition,
     'dissoc': dissoc,
     'get': get,
@@ -660,5 +675,8 @@ export const ns = {
     'cycle': cycle,
     'get-in': _getIn,
     'assoc-in': _setIn,
-    'update-in': _updateIn
+    'update': _update,
+    'update-in': _updateIn,
+    'lazy-seq': lazySeq,
+    'group-by': _groupBy
 };
