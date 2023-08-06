@@ -41,7 +41,7 @@ export function _equal_Q(a, b) {
         case 'list':
         case 'vector':
         case 'set':
-            console.log("comparing", ota, "and", otb)
+            //console.log("comparing", ota, "and", otb)
             if (a.length !== b.length) { return false; }
             for (var i = 0; i < a.length; i++) {
                 if (!_equal_Q(a[i], b[i])) { return false; }
