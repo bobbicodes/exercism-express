@@ -234,9 +234,9 @@ evalString("(do " + core + ")")
 
 loadExercise(randExercise())
 //loadExercise("armstrong_numbers")
-//oadSolution(randExercise())
+//loadSolution(randExercise())
 //testSolution("armstrong_numbers")
-//loadSolution("pascals_triangle")
+//loadSolution("atbash_cipher")
 //testSolution("accumulate")
 
 //testExercises()
