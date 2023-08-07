@@ -197,8 +197,13 @@ function range(start, end, step) {
     }
 }
 
-function first(lst) { return (lst === null) ? null : lst[0]; }
-function last(lst) { return (lst === null) ? null : lst.slice(-1)[0]; }
+function first(lst) {
+    return (lst === null) ? null : seq(lst).get(0) 
+}
+
+function last(lst) { 
+    return (lst === null) ? null : seq(lst).get(-1)
+}
 
 function rest(lst) { return (lst == null) ? [] : lst.slice(1); }
 function next(lst) {
