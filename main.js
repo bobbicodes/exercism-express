@@ -13,8 +13,7 @@ import {testCodeBeforeEval} from './src/eval-region'
 import core from './src/clj/core.clj?raw'
 
 let editorState = EditorState.create({
-  doc: `(= {"trail" []}
-   {"trail" []})`,
+  doc: `(partition 4 (range 20))`,
     extensions: [basicSetup, clojure()]
 })
 

@@ -214,14 +214,17 @@
              (assoc counts x (inc (get counts x 0))))
            {} coll))
 
-(defn nthrest [coll n]
-  (loop [n n xs coll]
-    (if-let [xs (and (pos? n) (seq xs))]
-      (recur (dec n) (rest xs))
-      xs)))
+(defn nthrest [coll1 n1]
+  (loop [n1 n1 xs coll1]
+    (if-not (and (pos? n1) (seq xs))
+      xs
+      (recur (dec n1) (rest xs)))))
 
 (defn partition [n step coll]
-  (loop [s coll p []]
-    (if (empty? s)
-      (filter #(= n (count %)) p)
-      (recur (nthrest s step) (conj p (take n s))))))
+  (if-not coll 
+    (partition n n step)
+    (loop [s coll p []]
+      (if (= 0 (count s))
+        (filter #(= n (count %)) p)
+        (recur (drop step s)
+               (conj p (take n s)))))))

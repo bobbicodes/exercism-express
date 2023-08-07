@@ -83,9 +83,11 @@ function print() {
 
 
 function prn() {
-    return Array.prototype.map.call(arguments, function (exp) {
+    const res = Array.prototype.map.call(arguments, function (exp) {
         return _pr_str(exp, false);
-    }).join("");
+    }).join("")
+    console.log(res)
+    return res
 }
 
 
@@ -93,7 +95,7 @@ function println() {
     const res = Array.prototype.map.call(arguments, function (exp) {
         return _pr_str(exp, false);
     }).join("")
-    //console.log(res)
+    console.log(res)
     return res
 }
 

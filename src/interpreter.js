@@ -232,6 +232,7 @@ function _EVAL(ast, env) {
       case "recur":
         const savedAST = eval_ast(ast.slice(1), loop_env)
         for (var i = 0; i < loopVars.length; i += 1) {
+          console.log("setting", loopVars[i].value, "to", savedAST[i])
           loop_env.set(loopVars[i], savedAST[i]);
         }
         ast = loopAST[0]
