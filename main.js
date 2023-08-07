@@ -237,7 +237,7 @@ loadExercise(randExercise())
 //loadExercise("armstrong_numbers")
 //oadSolution(randExercise())
 //testSolution("armstrong_numbers")
-//loadSolution("zipper")
+//loadSolution("pascals_triangle")
 //testSolution("accumulate")
 
 //testExercises()

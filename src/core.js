@@ -209,6 +209,7 @@ function next(lst) {
 function empty_Q(lst) { return lst.length === 0; }
 
 function count(s) {
+    if (Seq.isSeq(s)) { return s.size; }
     if (Array.isArray(s)) { return s.length; }
     else if (s === null) { return 0; }
     else { return Object.keys(s).length; }
@@ -264,6 +265,8 @@ export function seq(obj) {
         return obj.length > 0 ? Seq(obj.split('')) : null;
     } else if (types._hash_map_Q(obj)) {
         return Seq(obj).toArray()
+    } else if (Seq.isSeq(obj)) {
+        return obj
     } else if (obj === null) {
         return null;
     } else {
@@ -625,7 +628,7 @@ export const ns = {
     'hash-map': types._hash_map,
     'map?': types._hash_map_Q,
     'assoc': _set,
-    'partition': partition,
+    //'partition': partition,
     'dissoc': dissoc,
     'get': get,
     'contains?': contains_Q,

@@ -203,6 +203,9 @@
 (defn neg? [n]
   (> 0 n))
 
+(defn pos? [n]
+  (> n 0))
+
 (defn quot [n d]
   (int (/ n d)))
 
@@ -210,3 +213,15 @@
    (reduce (fn [counts x]
              (assoc counts x (inc (get counts x 0))))
            {} coll))
+
+(defn nthrest [coll n]
+  (loop [n n xs coll]
+    (if-let [xs (and (pos? n) (seq xs))]
+      (recur (dec n) (rest xs))
+      xs)))
+
+(defn partition [n step coll]
+  (loop [s coll p []]
+    (if (empty? s)
+      (filter #(= n (count %)) p)
+      (recur (nthrest s step) (conj p (take n s))))))

@@ -238,4 +238,46 @@
         (when (= n (count p))
           (cons p (partition n step (nthrest s step)))))))))
 
+
+(defn partition [n step coll]
+   (lazy-seq
+    (when-let [s (seq coll)]
+      (let [p (doall (take n s))]
+        (when (= n (count p))
+          (cons p (partition n step (nthrest s step))))))))
+
 (partition 4 6 (range 20))
+
+(def coll (range 20))
+
+(defn partition [n step coll]
+  (loop [s coll p []]
+    (if (empty? s)
+      (filter #(= n (count %)) p)
+      (recur (nthrest s step) (conj p (take n s))))))
+
+(partition 4 6 (range 20))
+
+(when-let [s (seq coll)]
+  (let [p (doall (take n s))]
+    (when (= n (count p))
+      (cons p (partition n step (nthrest s step))))))
+
+
+(partition 4 6 (range 20))
+
+(defn row-sum [row]
+  (map #(apply + %)
+       (partition 2 1 (concat [0] row [0]))))
+
+(defn row [n]
+  (if (= n 1)
+    [1]
+    (row-sum (row (- n 1)))))
+
+(def triangle
+  (map row (drop 1 (range))))
+
+(take 2 triangle)
+
+(partition 2 1 (concat [0] [1] [0]))

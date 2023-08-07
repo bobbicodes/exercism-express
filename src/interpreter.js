@@ -35,6 +35,7 @@ function quasiquote(ast) {
 }
 
 function is_macro_call(ast, env) {
+  //console.log("ast:", ast, "env:", env)
   return types._list_Q(ast) &&
          types._symbol_Q(ast[0]) &&
          env.find(ast[0]) &&
