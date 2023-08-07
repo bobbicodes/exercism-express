@@ -214,7 +214,7 @@ function next(lst) {
 }
 
 function empty_Q(lst) {
-    return seq(lst).size === 0
+    return count(lst) === 0
 }
 
 function count(s) {

@@ -236,7 +236,7 @@ loadExercise(randExercise())
 //loadExercise("armstrong_numbers")
 //loadSolution(randExercise())
 //testSolution("armstrong_numbers")
-//loadSolution("protein_translation")
+//loadSolution("anagram")
 //testSolution("accumulate")
 
 //testExercises()
