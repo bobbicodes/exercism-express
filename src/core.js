@@ -213,7 +213,9 @@ function next(lst) {
     return (lst == null) ? [] : lst.slice(1);
 }
 
-function empty_Q(lst) { return lst.length === 0; }
+function empty_Q(lst) {
+    return seq(lst).size === 0
+}
 
 function count(s) {
     if (Seq.isSeq(s)) { return s.size; }
