@@ -3,7 +3,7 @@ import { _pr_str } from './printer.js';
 import * as core from './core.js';
 import * as types from './types.js'
 import { Env } from './env.js'
-import {Map, Seq} from 'immutable'
+import { Map, Seq } from 'immutable'
 
 // read
 function READ(str) {
@@ -37,9 +37,9 @@ function quasiquote(ast) {
 function is_macro_call(ast, env) {
   //console.log("ast:", ast, "env:", env)
   return types._list_Q(ast) &&
-         types._symbol_Q(ast[0]) &&
-         env.find(ast[0]) &&
-         env.get(ast[0])._ismacro_;
+    types._symbol_Q(ast[0]) &&
+    env.find(ast[0]) &&
+    env.get(ast[0])._ismacro_;
 }
 
 function macroexpand(ast, env) {
@@ -114,6 +114,69 @@ function fnConfig(ast) {
   }
 }
 
+const bindings = ["x", ["a", "b", "c"],
+  "y", ["d", "e", "f"]]
+
+let locals = []
+let seqs = []
+for (let binding = 0; binding < bindings.length; binding += 2) {
+  locals.push(bindings[binding])
+  seqs.push(bindings[binding + 1])
+}
+
+let result = []
+for (let i = 0; i < seqs[0].length; i++) {
+  for (let j = 0; j < seqs[1].length; j++) {
+    result.push([seqs[0][i], seqs[1][j]])
+  }
+}
+
+console.log(result)
+
+function eval_for(ast, env) {
+  var a0 = ast[0], a1 = ast[1], a2 = ast[2], a3 = ast[3], a4 = ast[4]
+  var for_env = new Env(env);
+  var forRes = []
+  let locals = []
+  let seqs = []
+  const bindings = a1
+  for (let binding = 0; binding < bindings.length; binding += 2) {
+    locals.push(bindings[binding])
+    seqs.push(bindings[binding + 1])
+  }
+  if (locals.length === 1) {
+    for (let i = 0; i < seqs[0].length; i++) {
+      for_env.set(locals[0], seqs[0][i])
+      forRes.push(EVAL(a2, for_env))
+    }
+    return forRes
+  }
+  if (locals.length === 2) {
+    for (let i = 0; i < seqs[0].length; i++) {
+      for (let j = 0; j < seqs[1].length; j++) {
+        for_env.set(locals[0], seqs[0][i])
+        for_env.set(locals[1], seqs[1][j])
+        forRes.push(EVAL(a2, for_env))
+      }
+    }
+    return forRes
+  }
+  if (locals.length === 3) {
+    for (let i = 0; i < seqs[0].length; i++) {
+      for (let j = 0; j < seqs[1].length; j++) {
+        for (let k = 0; k < seqs[2].length; k++) {
+          for_env.set(locals[0], seqs[0][i])
+          for_env.set(locals[1], seqs[1][j])
+          for_env.set(locals[2], seqs[2][k])
+          forRes.push(EVAL(a2, for_env))
+        }
+      }
+    }
+    return forRes
+  }
+  return "`for` not implemented for " + locals.length + " bindings"
+}
+
 function _EVAL(ast, env) {
   //console.log("Calling _EVAL", ast)
 
@@ -156,6 +219,8 @@ function _EVAL(ast, env) {
         ast = a2;
         env = let_env;
         break;
+      case "for":
+        return eval_for(ast, env)
       case "def":
         var res = EVAL(a2, env);
         env.set(types._symbol(a1), res);

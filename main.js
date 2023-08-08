@@ -13,7 +13,10 @@ import {testCodeBeforeEval} from './src/eval-region'
 import core from './src/clj/core.clj?raw'
 
 let editorState = EditorState.create({
-  doc: `(take-nth 2 (range 10))`,
+  doc: `(for [x ["a" "b" "c"]
+      y ["d" "e" "f"]
+      z ["g" "h" "i"]]
+(str x y z))`,
     extensions: [basicSetup, clojure()]
 })
 
@@ -233,10 +236,7 @@ function randExercise() {
 evalString("(do " + core + ")")
 
 loadExercise(randExercise())
-//loadExercise("armstrong_numbers")
 //loadSolution(randExercise())
-//testSolution("armstrong_numbers")
 //loadSolution("anagram")
-//testSolution("accumulate")
 
 //testExercises()
