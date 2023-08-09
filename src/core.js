@@ -15,6 +15,16 @@ function _union(setA, setB) {
         return _union;
 }
 
+function _intersection(setA, setB) {
+    const _intersection = new Set();
+    for (const elem of setB) {
+      if (setA.has(elem)) {
+        _intersection.add(elem);
+      }
+    }
+    return _intersection;
+  }
+
 function _groupBy(f, coll) {
     return List(seq(coll)).groupBy(f)
 }
@@ -701,5 +711,6 @@ export const ns = {
     'update': _update,
     'update-in': _updateIn,
     'group-by': _groupBy,
-    'set/union': _union
+    'set/union': _union,
+    'set/intersection': _intersection
 };

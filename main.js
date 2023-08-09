@@ -234,7 +234,7 @@ function randExercise() {
 
 evalString("(do " + core + ")")
 
-//loadExercise(randExercise())
+loadExercise(randExercise())
 //loadSolution(randExercise())
 //loadSolution("two_fer")
 
