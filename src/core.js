@@ -7,6 +7,14 @@ import zip from './clj/zip.clj?raw'
 import clj_set from './clj/set.clj?raw'
 import { Range, Seq, getIn, setIn, updateIn, update, get, set, List, Map } from 'immutable'
 
+function _union(setA, setB) {
+    const _union = new Set(setA);
+        for (const elem of setB) {
+          _union.add(elem);
+        }
+        return _union;
+}
+
 function _groupBy(f, coll) {
     return List(seq(coll)).groupBy(f)
 }
@@ -692,5 +700,6 @@ export const ns = {
     'assoc-in': _setIn,
     'update': _update,
     'update-in': _updateIn,
-    'group-by': _groupBy
+    'group-by': _groupBy,
+    'set/union': _union
 };
