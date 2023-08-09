@@ -10,10 +10,6 @@ function _groupBy(f, coll) {
     return List(seq(coll)).groupBy(f)
 }
 
-function lazySeq(coll) {
-    return Seq(coll)
-}
-
 function _get(coll, key, notSetValue) {
     return get(coll, key, notSetValue)
 }
@@ -689,6 +685,5 @@ export const ns = {
     'assoc-in': _setIn,
     'update': _update,
     'update-in': _updateIn,
-    'lazy-seq': lazySeq,
     'group-by': _groupBy
 };
