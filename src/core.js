@@ -4,6 +4,7 @@ import { _pr_str, _println } from './printer.js'
 import * as types from './types.js'
 import { evalString } from "./interpreter.js";
 import zip from './clj/zip.clj?raw'
+import clj_set from './clj/set.clj?raw'
 import { Range, Seq, getIn, setIn, updateIn, update, get, set, List, Map } from 'immutable'
 
 function _groupBy(f, coll) {
@@ -49,6 +50,9 @@ function require(lib) {
     switch (lib) {
         case 'zip':
             evalString("(do " + zip + ")")
+            break;
+        case 'set':
+            evalString("(do " + clj_set + ")")
             break;
         default:
             break;
@@ -194,10 +198,10 @@ function range(start, end, step) {
 }
 
 function first(lst) {
-    return (lst === null) ? null : seq(lst).get(0) 
+    return (lst === null) ? null : seq(lst).get(0)
 }
 
-function last(lst) { 
+function last(lst) {
     return (lst === null) ? null : seq(lst).get(-1)
 }
 
@@ -269,6 +273,8 @@ export function seq(obj) {
     } else if (types._string_Q(obj)) {
         return obj.length > 0 ? Seq(obj.split('')) : null;
     } else if (types._hash_map_Q(obj)) {
+        return Seq(obj).toArray()
+    } else if (types._set_Q(obj)) {
         return Seq(obj).toArray()
     } else if (Seq.isSeq(obj)) {
         return obj

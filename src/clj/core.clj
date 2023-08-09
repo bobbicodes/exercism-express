@@ -229,6 +229,23 @@
         (recur (drop step s)
                (conj p (take n s)))))))
 
+(defn max-key
+  "Returns the x for which (k x), a number, is greatest.
+  If there are multiple such xs, the last one is returned."
+  ([k x] x)
+  ([k x y] (if (> (k x) (k y)) x y))
+  ([k x y & more]
+   (let [kx (k x) ky (k y)
+         [v kv] (if (> kx ky) [x kx] [y ky])]
+     (loop [v v kv kv more more]
+       (if more
+         (let [w (first more)
+               kw (k w)]
+           (if (>= kw kv)
+             (recur w kw (next more))
+             (recur v kv (next more))))
+         v)))))
+
 ;; for
 
 (defn to-groups [seq-exprs]

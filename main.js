@@ -13,19 +13,9 @@ import {testCodeBeforeEval} from './src/eval-region'
 import core from './src/clj/core.clj?raw'
 
 let editorState = EditorState.create({
-  doc: `(require "zip")
+  doc: `(require "set")
 
-(def tree {:value 1
-                :left  {:value 2
-                        :left  nil
-                        :right {:value 3
-                                :left  nil
-                                :right nil}}
-                :right {:value 4
-                        :left  nil
-                        :right nil}})
-  
-(-> tree zip/from-tree zip/to-tree)`,
+(set/union #{:a :b :c} #{:b :c :d})`,
     extensions: [basicSetup, clojure()]
 })
 
@@ -248,4 +238,4 @@ evalString("(do " + core + ")")
 //loadSolution(randExercise())
 //loadSolution("two_fer")
 
-testExercises()
+//testExercises()
