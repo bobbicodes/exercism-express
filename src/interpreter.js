@@ -178,17 +178,21 @@ function eval_for(ast, env) {
 }
 
 function eval_lazy_seq(ast, env) {
-  var lazySeq = {'ast': ast.slice(1),
-                       'head': 0,
-                      '__lazy_seq__': true}
-        switch (ast[1][0].value) {
-          case 'range':
-            return "(0, 1, 2, 3, ...)"
-          default:
-            return lazySeq
-        }
+  while (true) {
+    var lazySeq = {
+      'ast': ast.slice(1),
+      'head': 0,
+      '__lazy_seq__': true
+    }
+    switch (ast[1][0].value) {
+      case 'range':
+        return "(0, 1, 2, 3, ...)"
+      default:
         return lazySeq
-      }
+    }
+    return lazySeq
+  }
+}
 
 function _EVAL(ast, env) {
   //console.log("Calling _EVAL", ast)
