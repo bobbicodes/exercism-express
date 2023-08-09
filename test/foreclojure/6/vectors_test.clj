@@ -1,3 +1,2 @@
 (deftest vectors-test
-  (is (= v (conj [1 2 3] 4)))
-  (is (= v (conj [1 2] 3 4))))
+  (is (= v (list :a :b :c) (vec '(:a :b :c)) (vector :a :b :c))))

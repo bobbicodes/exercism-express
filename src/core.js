@@ -4,7 +4,6 @@ import { _pr_str, _println } from './printer.js'
 import * as types from './types.js'
 import { evalString } from "./interpreter.js";
 import zip from './clj/zip.clj?raw'
-import clj_set from './clj/set.clj?raw'
 import { Range, Seq, getIn, setIn, updateIn, update, get, set, List, Map } from 'immutable'
 
 function _union(setA, setB) {
