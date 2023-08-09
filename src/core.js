@@ -330,6 +330,7 @@ export function js_eval(str) {
 }
 
 function js_method_call(object_method_str) {
+    console.log(object_method_str)
     var args = Array.prototype.slice.call(arguments, 1),
         r = resolve_js(object_method_str),
         obj = r[0], f = r[1];

@@ -6,7 +6,7 @@ Live app: https://bobbicodes.github.io/exercism-express/
 
 ## About the interpreter
 
-The interpreter that powers the platform is written in JavaScript, and is only meant to implement a subset of Clojure for the purpose of education. The eventual goal is to reach feature parity with Clojure so that it will be able to run arbitrary code, but certain things, like namespaces, are not implemented because they are mostly necessary for libraries and applications which are out of scope for a basic teaching language.
+The interpreter that powers the platform is written in JavaScript, and is only meant to implement a subset of Clojure for the purpose of learning. The project's long term goal is to support most of the language, but does not strive to be used for production software. It is intentionally written in a very naïve style in order to be as easy to understand as possible, in the spirit of the [Mal (Make a Lisp)](https://github.com/kanaka/mal) process upon which this is built.
 
 ## Built-in libraries
 

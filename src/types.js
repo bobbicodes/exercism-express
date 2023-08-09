@@ -32,7 +32,11 @@ export function _seq_Q(x) {
 }
 
 export function _lazy_seq_Q(x) {
-    return x.__lazy_seq__
+    console.log(x)
+    if (x != null && typeof x === 'object' && x.__lazy_seq__ === true) {
+        return x.__lazy_seq__
+    }
+    return false
 }
 
 export function _sequential_Q(lst) { return _list_Q(lst) || _vector_Q(lst); }

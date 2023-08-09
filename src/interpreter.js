@@ -387,7 +387,7 @@ function _EVAL(ast, env) {
         const arity = args.length
         var f
         var fSym
-        fnName = ast[0].value.split("/")[1] || ast[0].value
+        fnName = ast[0].value
         // First check if there is a variadic arity defined
         if (Object.keys(env.data).includes(fnName + "-variadic")) {
           console.log("Fn has variadic arity defined")

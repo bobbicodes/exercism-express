@@ -1,57 +1,57 @@
 (ns clj.zip)
 
-(defn from-trail [tree last]
+(defn zip/from-trail [tree last]
   (if (= (nth last 0) "left")
     {:value (nth last 1), :left tree, :right (nth last 2)}
     {:value (nth last 1), :left (nth last 2), :right tree}))
 
-(defn from-tree [tree]
+(defn zip/from-tree [tree]
   {:tree tree :trail []})
 
-(defn value [z]
+(defn zip/value [z]
   (:value (:tree z)))
 
-(defn zipper [tree trail]
+(defn zip/zipper [tree trail]
   {:tree tree :trail trail})
 
-(defn left [z]
+(defn zip/left [z]
   (when (:left (:tree z))
-    (zipper (:left (:tree z))
+    (zip/zipper (:left (:tree z))
             (conj [["left" (:value (:tree z)) (:right (:tree z))]]
                   (:trail z)))))
-(defn right [z]
+(defn zip/right [z]
   (when (:right (:tree z))
-    (zipper (:right (:tree z))
+    (zip/zipper (:right (:tree z))
             (conj [["right" (:value (:tree z)) (:left (:tree z))]]
                   (:trail z)))))
 
-(defn rebuild-tree [tree trail]
+(defn zip/rebuild-tree [tree trail]
   (if (= 0 (count trail))
     tree
-    (recur (from-trail tree (first trail)) (fnext trail))))
+    (recur (zip/from-trail tree (first trail)) (fnext trail))))
 
-(defn to-tree [z]
-  (rebuild-tree (:tree z) (:trail z)))
+(defn zip/to-tree [z]
+  (zip/rebuild-tree (:tree z) (:trail z)))
 
-(defn up [z]
+(defn zip/up [z]
   (when-not (zero? (count (:trail z)))
-    (zipper (from-trail (:tree z) (first (:trail z)))
+    (zip/zipper (zip/from-trail (:tree z) (first (:trail z)))
             (fnext (:trail z)))))
 
-(defn set-value [z value]
-  (zipper {:value value,
+(defn zip/set-value [z value]
+  (zip/zipper {:value value,
            :left  (:left (:tree z)),
            :right (:right (:tree z))}
           (:trail z)))
 
-(defn set-left [z left]
-  (zipper {:value (:value (:tree z)),
+(defn zip/set-left [z left]
+  (zip/zipper {:value (:value (:tree z)),
            :left  left,
            :right (:right (:tree z))}
           (:trail z)))
 
-(defn set-right [z right]
-  (zipper {:value (:value (:tree z)),
+(defn zip/set-right [z right]
+  (zip/zipper {:value (:value (:tree z)),
            :left  (:left (:tree z)),
            :right right}
           (:trail z)))
