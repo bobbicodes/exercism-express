@@ -1,5 +1,5 @@
 import { _obj_type } from './types.js'
-import {Seq} from 'immutable'
+import { Seq } from 'immutable'
 
 export function _println() {
     console.log.apply(console, arguments)
@@ -10,7 +10,7 @@ export function _pr_str(obj, print_readably) {
     var _r = print_readably;
     //console.log("obj:", obj)
     var ot = _obj_type(obj);
-    
+
     //console.log("ot:", ot)
     switch (ot) {
         case 'lazy-list':
@@ -49,6 +49,8 @@ export function _pr_str(obj, print_readably) {
             return "nil";
         case 'atom':
             return "(atom " + _pr_str(obj.val, _r) + ")";
+        case 'lazy-seq':
+            return obj.ast
         default:
             return obj.toString();
     }

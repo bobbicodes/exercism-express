@@ -3,7 +3,8 @@ import { seq } from './core.js'
 import {isSeq, Map, is, Seq} from 'immutable'
 
 export function _obj_type(obj) {
-    //console.log(obj)
+    console.log(obj)
+    console.log(_lazy_seq_Q(obj))
     if (_symbol_Q(obj)) { return 'symbol'; }
     else if (_list_Q(obj)) { return 'list'; }
     else if (_vector_Q(obj)) { return 'vector'; }
@@ -15,6 +16,7 @@ export function _obj_type(obj) {
     else if (_true_Q(obj)) { return 'true'; }
     else if (_false_Q(obj)) { return 'false'; }
     else if (_atom_Q(obj)) { return 'atom'; }
+    else if (_lazy_seq_Q(obj)) { return 'lazy-seq'; }
     else {
         switch (typeof (obj)) {
             case 'number': return 'number';
@@ -27,6 +29,10 @@ export function _obj_type(obj) {
 
 export function _seq_Q(x) {
     return isSeq(x)
+}
+
+export function _lazy_seq_Q(x) {
+    return x.__lazy_seq__
 }
 
 export function _sequential_Q(lst) { return _list_Q(lst) || _vector_Q(lst); }
@@ -247,7 +253,9 @@ export function _vector() {
     v.__isvector__ = true;
     return v;
 }
-export function _vector_Q(obj) { return Array.isArray(obj) && !!obj.__isvector__; }
+export function _vector_Q(obj) {
+    return Array.isArray(obj) && !!obj.__isvector__;
+}
 
 // Hash Maps
 export function _hash_map() {

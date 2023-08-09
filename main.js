@@ -13,10 +13,11 @@ import {testCodeBeforeEval} from './src/eval-region'
 import core from './src/clj/core.clj?raw'
 
 let editorState = EditorState.create({
-  doc: `(for [x ["a" "b" "c"]
-      y ["d" "e" "f"]
-      z ["g" "h" "i"]]
-(str x y z))`,
+  doc: `(defn fib 
+    ([]
+      (fib 1 1))
+    ([a b]
+      (lazy-seq (cons a (fib b (+ a b))))))`,
     extensions: [basicSetup, clojure()]
 })
 
@@ -235,8 +236,8 @@ function randExercise() {
 
 evalString("(do " + core + ")")
 
-loadExercise(randExercise())
+//loadExercise(randExercise())
 //loadSolution(randExercise())
-//loadSolution("anagram")
+//loadSolution("two_fer")
 
 //testExercises()
