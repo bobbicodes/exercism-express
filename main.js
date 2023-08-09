@@ -13,11 +13,13 @@ import {testCodeBeforeEval} from './src/eval-region'
 import core from './src/clj/core.clj?raw'
 
 let editorState = EditorState.create({
-  doc: `(defn fib 
-    ([]
-      (fib 1 1))
-    ([a b]
-      (lazy-seq (cons a (fib b (+ a b))))))`,
+  doc: `(defn lz-rec-step [s]
+  (lazy-seq
+    (if (seq s)
+        [(first s) (lz-rec-step (rest s))]
+        [])))
+    
+(lz-rec-step [1 2 3 4])`,
     extensions: [basicSetup, clojure()]
 })
 
