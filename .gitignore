@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 *.cache
 *.calva/
+.nrepl-port
+.cpcache/

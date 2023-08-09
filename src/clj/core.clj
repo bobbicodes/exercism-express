@@ -228,3 +228,13 @@
         (filter #(= n (count %)) p)
         (recur (drop step s)
                (conj p (take n s)))))))
+
+;; for
+
+(defn to-groups [seq-exprs]
+  (reduce (fn [groups binding]
+            (if (keyword? (first binding))
+              (conj (pop groups) (conj (peek groups) [(first binding) (last binding)]))
+              (conj groups [(first binding) (last binding)])))
+          [] (partition 2 seq-exprs)))
+
