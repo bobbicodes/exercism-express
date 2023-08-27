@@ -1,5 +1,9 @@
 ﻿# exercism-express
 
+## Archived August 2023
+
+Development has moved to https://github.com/bobbicodes/bien
+
 Platform for doing Exercism exercises with live evaluation
 
 Live app: https://bobbicodes.github.io/exercism-express/
